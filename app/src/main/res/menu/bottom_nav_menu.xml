@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/nav_modules"
+        android:icon="@drawable/baseline_menu_book_24"
+        android:title="Modules" />
+
+    <item
+        android:id="@+id/nav_games"
+        android:icon="@drawable/baseline_games_24"
+        android:title="Games" />
+
+    <item
+        android:id="@+id/nav_tutorials"
+        android:icon="@drawable/baseline_video_library_24"
+        android:title="Tutorials" />
+
+    <item
+        android:id="@+id/nav_account"
+        android:icon="@drawable/baseline_person_outline_24"
+        android:title="Account" />
+
+</menu>

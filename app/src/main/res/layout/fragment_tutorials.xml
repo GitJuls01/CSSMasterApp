@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/background_1"
+    tools:context=".TutorialsFragment">
+
+    <!-- Vertical Guidelines -->
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline_vertical"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.05" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline_vertical_2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.95" />
+
+    <!-- Vertical Guidelines -->
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline_horizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.05" />
+
+    <!-- Setting Button -->
+    <ImageButton
+        android:id="@+id/setting_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@null"
+        android:scaleType="fitCenter"
+        android:src="@drawable/setting_button"
+        app:layout_constraintEnd_toStartOf="@id/guideline_vertical_2"
+        app:layout_constraintTop_toBottomOf="@id/guideline_horizontal"
+        tools:ignore="SpeakableTextPresentCheck" />
+
+    <!-- Logo -->
+    <ImageView
+        android:id="@+id/logo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:contentDescription="Logo"
+        android:src="@drawable/logo2"
+        app:layout_constraintTop_toBottomOf="@id/setting_button"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="-25dp"/>
+
+    <!-- CSS Master -->
+    <ImageView
+        android:id="@+id/css_master"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:contentDescription="CSS Master"
+        android:src="@drawable/text_css_master_2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/logo" />
+
+    <!-- Layout for content below CSS Master -->
+    <LinearLayout
+        android:id="@+id/section_below_css_master"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintTop_toBottomOf="@id/css_master"
+        app:layout_constraintStart_toStartOf="@id/guideline_vertical"
+        app:layout_constraintEnd_toEndOf="@id/guideline_vertical_2"
+        android:layout_marginTop="30dp">
+
+        <!-- Tutor Board Image -->
+        <ImageView
+            android:id="@+id/tutor_board"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:contentDescription="Tutor Board"
+            android:scaleType="fitXY"
+            android:src="@drawable/tutor_board"
+            android:layout_gravity="center_horizontal"/>
+
+        <!-- "Our Courses" Text -->
+        <TextView
+            android:id="@+id/our_courses_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Our Courses"
+            android:textColor="@color/dark_green"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:layout_marginTop="10dp"/>
+
+        <!-- Horizontal Layout for Hardware & Software Cards -->
+        <LinearLayout
+            android:id="@+id/course_buttons"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:layout_marginTop="10dp">
+
+            <!-- Hardware Card -->
+            <ImageButton
+                android:id="@+id/hardware_card"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@null"
+                android:src="@drawable/hardware_card"
+                android:contentDescription="Hardware Course"
+                android:layout_marginEnd="20dp"/>
+
+            <!-- Software Card -->
+            <ImageButton
+                android:id="@+id/software_card"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@null"
+                android:src="@drawable/software_card"
+                android:contentDescription="Software Course"/>
+
+        </LinearLayout>
+    </LinearLayout>
+
+    <!-- "Continue Watching" Text -->
+    <TextView
+        android:id="@+id/continue_watching_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:text="Continue Watching"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:textColor="@color/dark_green"
+        app:layout_constraintTop_toBottomOf="@id/section_below_css_master"
+        app:layout_constraintStart_toStartOf="@id/guideline_vertical"/>
+
+    <!-- Continue Watching Card -->
+    <ImageView
+        android:id="@+id/progress_card"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:src="@drawable/progress_card"
+        android:contentDescription="Continue Watching Card"
+        android:scaleType="fitXY"
+        app:layout_constraintStart_toStartOf="@id/guideline_vertical"
+        app:layout_constraintEnd_toEndOf="@id/guideline_vertical_2"
+        app:layout_constraintTop_toBottomOf="@id/continue_watching_text"/>
+
+    <!-- Progress Logo Inside Continue Watching Card -->
+    <ImageView
+        android:id="@+id/cont_watch_card"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:contentDescription="Progress Logo"
+        android:scaleType="fitXY"
+        android:src="@drawable/progress_logo"
+        app:layout_constraintBottom_toBottomOf="@id/progress_card"
+        app:layout_constraintStart_toStartOf="@id/progress_card"
+        app:layout_constraintTop_toTopOf="@id/progress_card"
+        app:layout_constraintVertical_bias="0.5" />
+
+    <!-- Computer Setup Text -->
+    <TextView
+        android:id="@+id/cont_watch_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:text="Computer Set up!"
+        android:textColor="@color/dark_green"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toEndOf="@id/cont_watch_card"
+        app:layout_constraintTop_toTopOf="@id/cont_watch_card" />
+
+    <!-- Learn how to .. -->
+    <TextView
+        android:id="@+id/learn_how_to"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="Learn how to set up a\nComputer at home"
+        android:textColor="@color/dark_green"
+        android:textSize="14sp"
+        app:layout_constraintStart_toStartOf="@id/cont_watch_title"
+        app:layout_constraintTop_toBottomOf="@id/cont_watch_title" />
+
+    <ImageButton
+        android:id="@+id/tutor_play_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:background="@null"
+        android:contentDescription="Play Button"
+        android:src="@drawable/tutor_play_button"
+        app:layout_constraintStart_toStartOf="@id/learn_how_to"
+        app:layout_constraintTop_toBottomOf="@id/learn_how_to"
+        tools:ignore="TouchTargetSizeCheck" />
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

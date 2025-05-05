@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/background_1"
+    tools:context=".TutorialsHardware">
+
+    <!-- Vertical Guidelines -->
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline_vertical"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.05" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline_vertical_2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.95" />
+
+    <!-- Vertical Guidelines -->
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline_horizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.05" />
+
+    <!-- Back Button -->
+    <ImageButton
+        android:id="@+id/back_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="14dp"
+        android:background="@null"
+        android:scaleType="fitCenter"
+        android:src="@drawable/back_button"
+        app:layout_constraintStart_toStartOf="@id/guideline_vertical"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="SpeakableTextPresentCheck" />
+
+    <!-- Setting Button -->
+    <ImageButton
+        android:id="@+id/setting_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:background="@null"
+        android:scaleType="fitCenter"
+        android:src="@drawable/setting_button"
+        app:layout_constraintEnd_toEndOf="@id/guideline_vertical_2"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="SpeakableTextPresentCheck" />
+
+    <!-- Logo -->
+    <ImageView
+        android:id="@+id/logo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:contentDescription="Logo"
+        android:src="@drawable/logo2"
+        app:layout_constraintTop_toBottomOf="@id/guideline_horizontal"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="1dp"/>
+
+    <!-- CSS Master Image -->
+    <ImageView
+        android:id="@+id/css_master"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:contentDescription="CSS Master"
+        android:src="@drawable/text_css_master_2"
+        app:layout_constraintTop_toBottomOf="@id/logo"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="15dp"/>
+
+    <!-- Our Courses -->
+    <TextView
+        android:id="@+id/our_courses"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Our Courses"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:textColor="@color/dark_green"
+        app:layout_constraintTop_toBottomOf="@id/css_master"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="20dp"/>
+
+    <!-- Computer Hardware & Components -->
+    <TextView
+        android:id="@+id/computer_hardware"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Computer Hardware and Components"
+        android:textSize="16sp"
+        android:textStyle="normal"
+        android:textColor="@color/dark_green"
+        app:layout_constraintTop_toBottomOf="@id/our_courses"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="8dp"/>
+
+    <!-- Tutor Video ImageButton -->
+    <ImageButton
+        android:id="@+id/tutor_video_card"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="@null"
+        android:scaleType="fitXY"
+        android:src="@drawable/tutor_video_card"
+        android:contentDescription="Tutor Video"
+        app:layout_constraintTop_toBottomOf="@id/computer_hardware"
+        app:layout_constraintStart_toStartOf="@id/guideline_vertical"
+        app:layout_constraintEnd_toEndOf="@id/guideline_vertical_2"
+        android:layout_marginTop="30dp"/>
+
+    <!-- Computer Setup Text -->
+    <TextView
+        android:id="@+id/cont_watch_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="4dp"
+        android:text="Tutorial Title"
+        android:textColor="@color/dark_green"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="@id/tutor_video_card"
+        app:layout_constraintStart_toStartOf="@id/tutor_video_card"
+        app:layout_constraintTop_toTopOf="@id/tutor_video_card" />
+
+    <!-- Learn how to .. -->
+    <TextView
+        android:id="@+id/time_duration"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Time duration of the video"
+        android:textColor="#8F928F"
+        android:textSize="11sp"
+        app:layout_constraintStart_toStartOf="@id/cont_watch_title"
+        app:layout_constraintTop_toBottomOf="@id/cont_watch_title" />
+
+    <TextView
+        android:id="@+id/sypnosis"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Sypnosis of the video"
+        android:textColor="#8F928F"
+        android:textSize="11sp"
+        app:layout_constraintStart_toStartOf="@id/time_duration"
+        app:layout_constraintTop_toBottomOf="@id/time_duration" />
+
+    <ImageButton
+        android:id="@+id/tutor_play_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="15dp"
+        android:background="@null"
+        android:contentDescription="Play Button"
+        android:src="@drawable/tutor_play_button"
+        app:layout_constraintEnd_toEndOf="@id/tutor_video_card"
+        app:layout_constraintTop_toBottomOf="@id/sypnosis"
+        tools:ignore="TouchTargetSizeCheck" />
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

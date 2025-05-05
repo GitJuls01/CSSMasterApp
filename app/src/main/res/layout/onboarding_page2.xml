@@ -1,0 +1,33 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <!-- Background container image -->
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:src="@drawable/get_started_container"
+        android:contentDescription="Container"
+        android:scaleType="fitCenter" />
+
+    <!-- Scrollable paragraph -->
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="24dp"
+        android:fillViewport="true">
+
+        <TextView
+            android:id="@+id/welcomeParagraph"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Welcome future developer!\nAre you having trouble\nunderstanding coding? \nStruggling to comprehend \nCSS processes? Don't worry! \nThis CSS Course Learning App \nis meant to help you learn CSS \nin an entertaining way. With \nentertaining games and \nextensive handouts, you'll \nlearn the skills you need to \nbuild and develop websites \neasily. Good luck with your \ntrip, Future Developer!"
+            android:textColor="#000000"
+            android:padding="24dp"
+            android:textSize="16sp"
+            android:textAlignment="center"
+            android:gravity="center"
+            android:fontFamily="sans-serif-medium"
+            android:lineSpacingExtra="4dp" />
+    </ScrollView>
+</FrameLayout>
