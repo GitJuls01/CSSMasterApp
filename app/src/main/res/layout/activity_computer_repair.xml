@@ -5,7 +5,7 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/background_1"
+    android:background="@drawable/cp_background"
     tools:context=".ComputerRepair">
 
     <!-- Guidelines for margins -->
@@ -59,7 +59,8 @@
         android:layout_marginEnd="16dp"
         android:text="Welcome to the ultimate step-by-step guide to\nbuilding your own computer. Whether you're\nchasing performance, style, or the thrill of DIY,\nthis journey turns every screw and click into\nsomething amazing — your dream machine!"
         android:textAlignment="viewStart"
-        android:textSize="14sp"
+        android:textStyle="bold"
+        android:textSize="13sp"
         app:layout_constraintTop_toBottomOf="@id/back_button"
         app:layout_constraintStart_toStartOf="@id/guideline_vertical"
         app:layout_constraintEnd_toStartOf="@+id/center_guideline"
@@ -72,12 +73,12 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="30dp"
         android:background="@null"
-        android:src="@drawable/cp_play_button"
         android:scaleType="fitCenter"
-        app:layout_constraintTop_toBottomOf="@id/welcome_text"
-        app:layout_constraintStart_toStartOf="@id/welcome_text"
+        android:src="@drawable/cp_play_button"
         app:layout_constraintEnd_toEndOf="@id/welcome_text"
-        />
+        app:layout_constraintStart_toStartOf="@id/welcome_text"
+        app:layout_constraintTop_toBottomOf="@id/welcome_text"
+        tools:ignore="SpeakableTextPresentCheck" />
 
     <!-- Center guideline to split left and right -->
     <androidx.constraintlayout.widget.Guideline

@@ -12,6 +12,7 @@ import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.text.HtmlCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 
@@ -29,6 +30,7 @@ class ComputerRepair : AppCompatActivity() {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
+
         //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
         // Register the back press callback to handle back button presses
         val backPressedCallback = object : OnBackPressedCallback(true) {
@@ -62,6 +64,25 @@ class ComputerRepair : AppCompatActivity() {
             val intent = Intent(this, ComputerRepairMainGame::class.java)
             startActivity(intent)
         }
+
+        val welcomeText = findViewById<TextView>(R.id.welcome_text)
+
+        val showCompletion = intent.getBooleanExtra("showCompletion", false)
+
+        if (showCompletion) {
+            // Change text to final congratulations message (with bold style)
+            welcomeText.text = HtmlCompat.fromHtml(
+                "Congratulations - you've officially built<br>" +
+                        "your own PC! Every part you connected,<br>" +
+                        "every cable you managed, and every<br>" +
+                        "choice you made has come together to<br>" +
+                        "create a machine that's 100% yours.",
+                HtmlCompat.FROM_HTML_MODE_LEGACY
+            )
+
+            // Change play button image
+            playButton.setImageResource(R.drawable.cp_play_again_button)
+        }
     }
 
     private fun showExitDialog() {
@@ -73,7 +94,17 @@ class ComputerRepair : AppCompatActivity() {
 
         btnYes.setOnClickListener {
             dialog.dismiss()
-            finish() // Exit the activity
+            val showCompletion = intent.getBooleanExtra("showCompletion", false)
+            if (showCompletion) {
+                val intent = Intent(this, MainActivity::class.java)
+                intent.putExtra("openFragment", "games")
+                intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP
+                startActivity(intent)
+                finish()
+            } else {
+                finish()
+            }
+
         }
 
         btnNo.setOnClickListener {
