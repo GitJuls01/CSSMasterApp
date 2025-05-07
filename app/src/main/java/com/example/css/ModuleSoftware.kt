@@ -1,7 +1,6 @@
 package com.example.css
 
 import android.content.ContentValues
-import android.content.Intent
 import android.os.Bundle
 import android.os.Environment
 import android.provider.MediaStore
@@ -22,6 +21,12 @@ class ModuleSoftware : BottomNav() {
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
+        }
+
+        if (android.os.Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.Q) {
+            if (checkSelfPermission(android.Manifest.permission.WRITE_EXTERNAL_STORAGE) != android.content.pm.PackageManager.PERMISSION_GRANTED) {
+                requestPermissions(arrayOf(android.Manifest.permission.WRITE_EXTERNAL_STORAGE), 100)
+            }
         }
 
         val backButton = findViewById<ImageButton>(R.id.back_button)
@@ -52,10 +57,19 @@ class ModuleSoftware : BottomNav() {
         }
     }
 
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        if (requestCode == 100 && grantResults.isNotEmpty() && grantResults[0] == android.content.pm.PackageManager.PERMISSION_GRANTED) {
+            Toast.makeText(this, "Storage permission granted", Toast.LENGTH_SHORT).show()
+        } else {
+            Toast.makeText(this, "Storage permission is required to download files", Toast.LENGTH_LONG).show()
+        }
+    }
+
     private fun showDownloadConfirmationDialog(fileName: String) {
         val builder = android.app.AlertDialog.Builder(this)
         builder.setTitle("Download PDF")
-        builder.setMessage("Are you sure you want to download the PDF?")
+        builder.setMessage("Are you sure you want to download the $fileName?")
         builder.setPositiveButton("Yes") { dialog, _ ->
             Toast.makeText(this, "Downloading...", Toast.LENGTH_SHORT).show()
 
