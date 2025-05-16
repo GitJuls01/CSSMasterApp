@@ -1,0 +1,265 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/background_1"
+    tools:context=".QuizTime">
+
+    <!-- Guidelines for padding -->
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline_vertical"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.05" />
+
+    <!-- Dashboard Holder -->
+    <ImageView
+        android:id="@+id/qt_dashboard_holder"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:scaleType="fitXY"
+        android:src="@drawable/qt_dashboard_holder"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <!-- Back button -->
+    <ImageButton
+        android:id="@+id/back_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="14dp"
+        android:background="@null"
+        android:scaleType="fitCenter"
+        android:src="@drawable/back_button"
+        app:layout_constraintStart_toStartOf="@id/guideline_vertical"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="SpeakableTextPresentCheck" />
+
+    <!-- Centered Quiz title -->
+    <TextView
+        android:id="@+id/quiz_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Quiz"
+        android:textStyle="bold"
+        android:textSize="28sp"
+        android:textColor="#000"
+        app:layout_constraintTop_toTopOf="@+id/qt_dashboard_holder"
+        app:layout_constraintBottom_toBottomOf="@+id/back_button"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <!-- Name Holder -->
+    <ImageView
+        android:id="@+id/qt_name_holder"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:src="@drawable/qt_name_holder"
+        android:scaleType="fitXY"
+        android:layout_marginTop="8dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="8dp"
+        app:layout_constraintTop_toBottomOf="@id/back_button"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/qt_trophy"
+        app:layout_constraintHorizontal_chainStyle="spread"
+        app:layout_constraintHorizontal_weight="0.7" />
+
+    <!-- Trophy Icon -->
+    <ImageView
+        android:id="@+id/qt_trophy"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:src="@drawable/qt_trophy"
+        android:layout_marginEnd="16dp"
+        app:layout_constraintTop_toTopOf="@+id/qt_name_holder"
+        app:layout_constraintBottom_toBottomOf="@+id/qt_name_holder"
+        app:layout_constraintStart_toEndOf="@id/qt_name_holder"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_weight="0.3" />
+
+    <!-- Content inside Name Holder -->
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/name_holder_content"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="@+id/qt_name_holder"
+        app:layout_constraintBottom_toBottomOf="@+id/qt_name_holder"
+        app:layout_constraintStart_toStartOf="@+id/qt_name_holder"
+        app:layout_constraintEnd_toEndOf="@+id/qt_name_holder"
+        android:layout_marginStart="12dp"
+        android:layout_marginEnd="12dp"
+        >
+
+        <!-- Profile Pic -->
+        <ImageView
+            android:id="@+id/qt_pic_holder"
+            android:layout_width="60dp"
+            android:layout_height="0dp"
+            android:src="@drawable/qt_pic_holder"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintHorizontal_weight="0.3"/>
+
+        <!-- Greeting -->
+        <TextView
+            android:id="@+id/greeting_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Hi, Student Name"
+            android:textSize="16sp"
+            android:textColor="#000"
+            app:layout_constraintStart_toEndOf="@+id/qt_pic_holder"
+            app:layout_constraintTop_toTopOf="@+id/qt_pic_holder"
+            android:layout_marginStart="8dp"
+            app:layout_constraintHorizontal_weight="0.7"/>
+
+        <!-- Rank and Medal -->
+        <ImageView
+            android:id="@+id/qt_medal"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:src="@drawable/qt_medal"
+            app:layout_constraintStart_toEndOf="@+id/qt_pic_holder"
+            app:layout_constraintTop_toBottomOf="@+id/greeting_text"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="4dp" />
+
+        <TextView
+            android:id="@+id/rank_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Rank: 524"
+            android:textStyle="bold"
+            android:textSize="14sp"
+            android:textColor="#000"
+            app:layout_constraintTop_toBottomOf="@id/greeting_text"
+            app:layout_constraintStart_toEndOf="@+id/qt_medal"
+            android:layout_marginStart="4dp" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <!-- Leaderboard Icon -->
+    <ImageView
+        android:id="@+id/qt_leaderboard"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/qt_leaderboard"
+        app:layout_constraintTop_toBottomOf="@+id/qt_name_holder"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="16dp"/>
+
+    <!-- Quiz Category Text -->
+    <TextView
+        android:id="@+id/quiz_category_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Quiz Category"
+        android:textSize="18sp"
+        android:textColor="#424242"
+        app:layout_constraintTop_toBottomOf="@+id/qt_leaderboard"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="16dp" />
+
+
+    <!-- Scrollable Area -->
+    <ScrollView
+        android:id="@+id/quiz_scroll_area"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:fillViewport="true"
+        app:layout_constraintTop_toBottomOf="@id/quiz_category_title"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="12dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingHorizontal="16dp">
+
+            <!-- Category Buttons Row 1 -->
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/category_row1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="12dp">
+
+                <ImageButton
+                    android:id="@+id/qt_teacher_quiz_category"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="8dp"
+                    android:background="@null"
+                    android:src="@drawable/qt_teacher_quiz"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/qt_software_category"
+                    app:layout_constraintHorizontal_weight="1"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:ignore="SpeakableTextPresentCheck" />
+
+                <ImageButton
+                    android:id="@+id/qt_software_category"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:background="@null"
+                    android:src="@drawable/qt_software_category"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_weight="1"
+                    app:layout_constraintStart_toEndOf="@id/qt_teacher_quiz_category"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:ignore="SpeakableTextPresentCheck" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <!-- Category Buttons Row 2 -->
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/category_row2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="12dp">
+
+                <ImageButton
+                    android:id="@+id/qt_hardware_category"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="8dp"
+                    android:background="@null"
+                    android:src="@drawable/qt_hardware_category"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/qt_inventors_category"
+                    app:layout_constraintHorizontal_weight="1"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:ignore="SpeakableTextPresentCheck" />
+
+                <ImageButton
+                    android:id="@+id/qt_inventors_category"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:background="@null"
+                    android:src="@drawable/qt_inventors_category"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_weight="1"
+                    app:layout_constraintStart_toEndOf="@id/qt_hardware_category"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:ignore="SpeakableTextPresentCheck" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </LinearLayout>
+    </ScrollView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

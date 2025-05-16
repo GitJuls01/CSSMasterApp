@@ -17,10 +17,15 @@ class GamesFragment : Fragment() {
         val view = inflater.inflate(R.layout.fragment_games, container, false)
 
         val btnCompRepair = view.findViewById<ImageButton>(R.id.btn_comp_repair)
-
         btnCompRepair.setOnClickListener {
             // Create an Intent to start ComputerRepair activity
             val intent = Intent(requireContext(), ComputerRepair::class.java)
+            startActivity(intent)
+        }
+
+        val btnQuizTime = view.findViewById<ImageButton>(R.id.btn_quiz_time)
+        btnQuizTime.setOnClickListener {
+            val intent = Intent(requireContext(), QuizTime::class.java)
             startActivity(intent)
         }
 
