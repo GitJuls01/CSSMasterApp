@@ -1,6 +1,8 @@
 <resources>
     <string name="app_name">CSS</string>
     <string name="name_label">Name: %1$s</string>
+    <string name="name_label2">%1$s</string>
     <string name="email_label">Email Address: %1$s</string>
+    <string name="items_quiz">Items: %1$s</string>
 
 </resources>

@@ -44,7 +44,6 @@
         android:id="@+id/tq_quiz_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Questions 1/40"
         android:textSize="18sp"
         android:textColor="#000"
         app:layout_constraintTop_toBottomOf="@+id/back_button"
@@ -56,7 +55,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
-        android:text="What is a Micro Computers?"
         android:textColor="#000"
         android:textSize="25sp"
         android:textStyle="bold"
@@ -110,7 +108,6 @@
                 android:id="@+id/choice_a_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="A) Answer text here"
                 android:textSize="16sp"
                 android:textColor="#000"
                 android:layout_marginStart="8dp"/>
@@ -148,7 +145,6 @@
                 android:id="@+id/choice_b_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="B) Answer text here"
                 android:textSize="16sp"
                 android:textColor="#000"
                 android:layout_marginStart="8dp"/>
@@ -184,7 +180,6 @@
                 android:id="@+id/choice_c_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="C) Answer text here"
                 android:textSize="16sp"
                 android:textColor="#000"
                 android:layout_marginStart="8dp"/>
@@ -220,7 +215,6 @@
                 android:id="@+id/choice_d_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="D) Answer text here"
                 android:textSize="16sp"
                 android:textColor="#000"
                 android:layout_marginStart="8dp"/>

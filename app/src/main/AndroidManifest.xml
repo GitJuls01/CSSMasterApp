@@ -17,6 +17,8 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.CSS"
         tools:targetApi="31">
+        <activity android:name=".CreateQuiz" />
+
         <activity
             android:name=".QT_TeacherQuiz_Congratulation"
             android:exported="false" />

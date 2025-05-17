@@ -26,6 +26,7 @@ class TeacherDashboard : AppCompatActivity() {
 
         // Set OnClickListener to navigate to TeacherDashboard
         val viewQuizButton = findViewById<Button>(R.id.btn_view_quiz)
+        val createQuizButton = findViewById<Button>(R.id.btn_create_quiz)
 
         //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
         // Register the back press callback to handle back button presses
@@ -51,6 +52,11 @@ class TeacherDashboard : AppCompatActivity() {
 
         viewQuizButton.setOnClickListener {
             val intent = Intent(this, TeacherViewQuiz::class.java)
+            startActivity(intent)
+        }
+
+        createQuizButton.setOnClickListener {
+            val intent = Intent(this, CreateQuiz::class.java)
             startActivity(intent)
         }
     }
