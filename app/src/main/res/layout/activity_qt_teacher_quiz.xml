@@ -141,69 +141,17 @@
 
             <!-- Repeatable Containers (4) -->
             <!-- Container 2 -->
-            <androidx.constraintlayout.widget.ConstraintLayout
+            <!-- Dynamic quiz list container (initially invisible) -->
+            <LinearLayout
+                android:id="@+id/quiz_list_container"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="12dp"
-                android:background="@drawable/tq_quiz_container"
-                android:paddingLeft="20dp"
-                android:paddingRight="20dp"
-                >
-
-                <TextView
-                    android:id="@+id/title_quiz_1"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:text="Quiz Title"
-                    android:textStyle="bold"
-                    android:textSize="22sp"
-                    android:layout_marginLeft="10dp"
-                    android:textColor="@color/dark_green"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintEnd_toStartOf="@+id/btn_take_quiz_1" />
-
-                <ImageButton
-                    android:id="@+id/btn_take_quiz_1"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="@null"
-                    android:src="@drawable/tq_take_quiz_button"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    tools:ignore="SpeakableTextPresentCheck" />
-
-
-                <TextView
-                    android:id="@+id/desc_quiz_1"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:text="Description"
-                    android:textSize="14sp"
-                    android:layout_marginLeft="15dp"
-                    android:textColor="@color/dark_green"
-                    app:layout_constraintTop_toBottomOf="@id/title_quiz_1"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintEnd_toStartOf="@+id/btn_take_quiz_1"
-                    />
-
-                <TextView
-                    android:id="@+id/items_quiz_1"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:text="Items 10/10"
-                    android:textSize="14sp"
-                    android:layout_marginLeft="15dp"
-                    android:layout_marginBottom="10dp"
-                    android:textColor="@color/dark_green"
-                    app:layout_constraintEnd_toStartOf="@+id/btn_take_quiz_1"
-                    app:layout_constraintTop_toBottomOf="@id/desc_quiz_1"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    />
-
-            </androidx.constraintlayout.widget.ConstraintLayout>
+                android:layout_marginStart="-10dp"
+                android:layout_marginEnd="-10dp"
+                android:layout_marginTop="-10dp"
+                android:orientation="vertical"
+                android:padding="12dp"
+                android:gravity="center_horizontal" />
 
             <!-- Copy the above container 3 more times -->
 

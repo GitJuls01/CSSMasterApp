@@ -1,14 +1,19 @@
 package com.example.css
 
 import android.content.Intent
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.widget.ImageButton
+import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 
 class QuizTime : AppCompatActivity() {
+
+    private lateinit var sharedPreferences: SharedPreferences
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -35,10 +40,13 @@ class QuizTime : AppCompatActivity() {
             startActivity(intent)
         }
 
-        val hardwareQuizCategory = findViewById<ImageButton>(R.id.qt_hardware_category)
-        hardwareQuizCategory.setOnClickListener {
-            val intent = Intent(this, QT_ComputerHardware_MainGame::class.java)
-            startActivity(intent)
-        }
+        // Access SharedPreferences
+        sharedPreferences = getSharedPreferences("user_data", MODE_PRIVATE)
+
+        val userName = sharedPreferences.getString("name", "Default Name") // Default name if not found
+
+        val greetingTextName = findViewById<TextView>(R.id.greeting_text)
+
+        greetingTextName?.text = getString(R.string.name_label2, userName)
     }
 }
