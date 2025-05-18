@@ -34,5 +34,11 @@ class QuizTime : AppCompatActivity() {
             val intent = Intent(this, QT_TeacherQuiz::class.java)
             startActivity(intent)
         }
+
+        val hardwareQuizCategory = findViewById<ImageButton>(R.id.qt_hardware_category)
+        hardwareQuizCategory.setOnClickListener {
+            val intent = Intent(this, QT_ComputerHardware_MainGame::class.java)
+            startActivity(intent)
+        }
     }
 }
