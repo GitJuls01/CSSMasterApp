@@ -25,6 +25,11 @@ class QT_TeacherQuiz : AppCompatActivity() {
         quizListContainer.visibility = View.GONE // initially invisible
 
         fetchAndDisplayQuizzes()
+
+        val backButton = findViewById<ImageButton>(R.id.back_button)
+        backButton.setOnClickListener {
+            finish() // Go back to the previous screen
+        }
     }
 
     private fun fetchAndDisplayQuizzes() {

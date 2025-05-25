@@ -17,8 +17,16 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.CSS"
         tools:targetApi="31">
+        <activity
+            android:name=".GuessCSSCongratulation"
+            android:exported="false" />
+        <activity
+            android:name=".GuessCSSAnswerPage"
+            android:exported="false" />
+        <activity
+            android:name=".GuessCSSMainGame"
+            android:exported="false" />
         <activity android:name=".CreateQuiz" />
-
         <activity
             android:name=".QT_ComputerHardware_Congratulation"
             android:exported="false" />
