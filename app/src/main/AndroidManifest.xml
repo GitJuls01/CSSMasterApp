@@ -20,6 +20,12 @@
         <activity android:name=".CreateQuiz" />
 
         <activity
+            android:name=".QT_ComputerHardware_Congratulation"
+            android:exported="false" />
+        <activity
+            android:name=".QT_ComputerHardware_MainGame"
+            android:exported="false" />
+        <activity
             android:name=".QT_TeacherQuiz_Congratulation"
             android:exported="false" />
         <activity
