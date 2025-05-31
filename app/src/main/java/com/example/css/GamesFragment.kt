@@ -29,6 +29,12 @@ class GamesFragment : Fragment() {
             startActivity(intent)
         }
 
+        val btnGuessCss = view.findViewById<ImageButton>(R.id.btn_guess_css)
+        btnGuessCss.setOnClickListener {
+            val intent = Intent(requireContext(), GuessCSSMainGame::class.java)
+            startActivity(intent)
+        }
+
         return view
     }
 }

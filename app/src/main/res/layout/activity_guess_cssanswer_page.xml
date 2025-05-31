@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/gc_answer_holder"
+    tools:context=".GuessCSSAnswerPage">
+
+    <!-- Guidelines for padding -->
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline_vertical"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.05" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline_horizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.45" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline_horizontal_2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.15" />
+
+    <!-- Back button -->
+    <ImageButton
+        android:id="@+id/back_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="14dp"
+        android:background="@null"
+        android:scaleType="fitCenter"
+        android:src="@drawable/back_button"
+        app:layout_constraintStart_toStartOf="@id/guideline_vertical"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="SpeakableTextPresentCheck" />
+
+    <ImageView
+        android:id="@+id/tq_question_image"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:src="@drawable/gc_sample_image"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/back_button" />
+
+    <TextView
+        android:id="@+id/tq_question_feedback"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Correct!"
+        android:textSize="22sp"
+        android:textColor="@color/dark_green"
+        android:textStyle="bold"
+        app:layout_constraintTop_toBottomOf="@+id/tq_question_image"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="4dp"/>
+
+    <FrameLayout
+        android:id="@+id/gc_meaning_holder"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/guideline_horizontal"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/gc_meaning_holder"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:layout_gravity="center">
+
+            <TextView
+                android:id="@+id/gc_term"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="RAM"
+                android:textSize="23sp"
+                android:textStyle="bold"
+                android:textColor="@color/dark_green"
+                android:gravity="center" />
+
+            <TextView
+                android:id="@+id/gc_meaning"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Random access memory (RAM) is the hardware in a\ncomputing device that provides temporary storage\nfor the operating system (OS), software programs\nand any other data in current use so they're quickly\navailable to the device's processor. RAM is often\nreferred to as a computer's main memory, as\nopposed to the processor cache or other memory types."
+                android:textSize="13sp"
+                android:gravity="center_horizontal"
+                android:layout_marginTop="8dp" />
+        </LinearLayout>
+    </FrameLayout>
+
+    <ImageButton
+        android:id="@+id/gc_next_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:background="@null"
+        android:scaleType="fitCenter"
+        android:src="@drawable/gc_next_button"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/gc_meaning_holder"
+        tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
+
+
+    <!--    <ImageView-->
+    <!--        android:id="@+id/correctWrongAnswerPopup"-->
+    <!--        android:layout_width="wrap_content"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:src="@drawable/qt_ch_correct"-->
+    <!--        android:visibility="gone"-->
+    <!--        app:layout_constraintTop_toTopOf="parent"-->
+    <!--        app:layout_constraintBottom_toBottomOf="parent"-->
+    <!--        app:layout_constraintStart_toStartOf="parent"-->
+    <!--        app:layout_constraintEnd_toEndOf="parent" />-->
+
+</androidx.constraintlayout.widget.ConstraintLayout>

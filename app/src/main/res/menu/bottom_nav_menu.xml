@@ -11,10 +11,10 @@
         android:icon="@drawable/baseline_games_24"
         android:title="Games" />
 
-    <item
-        android:id="@+id/nav_tutorials"
-        android:icon="@drawable/baseline_video_library_24"
-        android:title="Tutorials" />
+<!--    <item-->
+<!--        android:id="@+id/nav_tutorials"-->
+<!--        android:icon="@drawable/baseline_video_library_24"-->
+<!--        android:title="Tutorials" />-->
 
     <item
         android:id="@+id/nav_account"

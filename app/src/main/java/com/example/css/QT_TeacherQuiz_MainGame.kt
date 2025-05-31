@@ -1,9 +1,11 @@
 package com.example.css
 
+import android.content.Intent
 import android.os.Bundle
 import android.os.CountDownTimer
 import android.util.Log
 import android.widget.CheckBox
+import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.ProgressBar
 import android.widget.TextView
@@ -32,6 +34,11 @@ class QT_TeacherQuiz_MainGame : AppCompatActivity() {
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
+        }
+
+        val backButton = findViewById<ImageButton>(R.id.back_button)
+        backButton.setOnClickListener {
+            finish() // Go back to the previous screen
         }
 
         timerProgressBar = findViewById(R.id.timer_progress)
@@ -166,7 +173,9 @@ class QT_TeacherQuiz_MainGame : AppCompatActivity() {
         if (currentIndex < questionList.size) {
             showQuestion(questionList[currentIndex], currentIndex + 1, questionList.size)
         } else {
-            Toast.makeText(this, "🎉 Quiz finished!", Toast.LENGTH_LONG).show()
+            val intent = Intent(this, QT_TeacherQuiz_Congratulation::class.java)
+            startActivity(intent)
+//            Toast.makeText(this, "🎉 Quiz finished!", Toast.LENGTH_LONG).show()
             finish()
         }
     }

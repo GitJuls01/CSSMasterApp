@@ -40,6 +40,18 @@ class QuizTime : AppCompatActivity() {
             startActivity(intent)
         }
 
+        val hardwareQuizCategory = findViewById<ImageButton>(R.id.qt_hardware_category)
+        hardwareQuizCategory.setOnClickListener {
+            val intent = Intent(this, QT_ComputerHardware_MainGame::class.java)
+            startActivity(intent)
+        }
+
+        val leaderboard = findViewById<ImageButton>(R.id.qt_leaderboard)
+        leaderboard.setOnClickListener {
+            val intent = Intent(this, QuizLeaderboard::class.java)
+            startActivity(intent)
+        }
+
         // Access SharedPreferences
         sharedPreferences = getSharedPreferences("user_data", MODE_PRIVATE)
 

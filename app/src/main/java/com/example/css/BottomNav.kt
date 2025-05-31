@@ -35,13 +35,13 @@ abstract class BottomNav : AppCompatActivity() {
                     }
                     true
                 }
-                R.id.nav_tutorials -> {
-                    if (currentActivity != TutorialsFragment::class.java) {
-                        startActivity(Intent(this, TutorialsFragment::class.java))
-                        finish()
-                    }
-                    true
-                }
+//                R.id.nav_tutorials -> {
+//                    if (currentActivity != TutorialsFragment::class.java) {
+//                        startActivity(Intent(this, TutorialsFragment::class.java))
+//                        finish()
+//                    }
+//                    true
+//                }
                 R.id.nav_account -> {
                     if (currentActivity != StudentAccountSettings::class.java) {
                         startActivity(Intent(this, StudentAccountSettings::class.java))

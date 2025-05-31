@@ -48,7 +48,7 @@ class MainActivity : AppCompatActivity() {
             when (openFragment) {
                 "studentDashboard" -> replaceFragment(StudentDashboardFragment())
                 "games" -> replaceFragment(GamesFragment())
-                "tutorials" -> replaceFragment(TutorialsFragment())
+//                "tutorials" -> replaceFragment(TutorialsFragment())
                 "account" -> replaceFragment(StudentAccountSettings())
                 else -> replaceFragment(StudentDashboardFragment())
             }
@@ -58,7 +58,7 @@ class MainActivity : AppCompatActivity() {
             when (item.itemId) {
                 R.id.nav_modules -> replaceFragment(StudentDashboardFragment())
                 R.id.nav_games -> replaceFragment(GamesFragment())
-                R.id.nav_tutorials -> replaceFragment(TutorialsFragment())
+//                R.id.nav_tutorials -> replaceFragment(TutorialsFragment())
                 R.id.nav_account -> replaceFragment(StudentAccountSettings())
             }
             true
