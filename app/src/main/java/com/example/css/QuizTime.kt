@@ -46,6 +46,12 @@ class QuizTime : AppCompatActivity() {
             startActivity(intent)
         }
 
+        val leaderboard = findViewById<ImageButton>(R.id.qt_leaderboard)
+        leaderboard.setOnClickListener {
+            val intent = Intent(this, QuizLeaderboard::class.java)
+            startActivity(intent)
+        }
+
         // Access SharedPreferences
         sharedPreferences = getSharedPreferences("user_data", MODE_PRIVATE)
 

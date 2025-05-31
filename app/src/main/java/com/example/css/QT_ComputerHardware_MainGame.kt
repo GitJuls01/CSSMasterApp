@@ -1,5 +1,6 @@
 package com.example.css
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
@@ -50,6 +51,13 @@ class QT_ComputerHardware_MainGame : AppCompatActivity() {
         correctWrongAnswerPopup.visibility = View.VISIBLE
         Handler(Looper.getMainLooper()).postDelayed({
             correctWrongAnswerPopup.visibility = View.GONE
+
+            // Navigate to congratulation page after delay
+            val intent = Intent(this, QT_ComputerHardware_Congratulation::class.java)
+            startActivity(intent)
+            // Optional: finish current activity
+            // finish()
         }, 1500) // 1.5 seconds
     }
+
 }

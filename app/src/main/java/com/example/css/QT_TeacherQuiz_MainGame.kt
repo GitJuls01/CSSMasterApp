@@ -1,5 +1,6 @@
 package com.example.css
 
+import android.content.Intent
 import android.os.Bundle
 import android.os.CountDownTimer
 import android.util.Log
@@ -172,7 +173,9 @@ class QT_TeacherQuiz_MainGame : AppCompatActivity() {
         if (currentIndex < questionList.size) {
             showQuestion(questionList[currentIndex], currentIndex + 1, questionList.size)
         } else {
-            Toast.makeText(this, "🎉 Quiz finished!", Toast.LENGTH_LONG).show()
+            val intent = Intent(this, QT_TeacherQuiz_Congratulation::class.java)
+            startActivity(intent)
+//            Toast.makeText(this, "🎉 Quiz finished!", Toast.LENGTH_LONG).show()
             finish()
         }
     }
