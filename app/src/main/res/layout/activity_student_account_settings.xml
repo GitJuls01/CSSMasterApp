@@ -114,17 +114,17 @@
         android:layout_marginTop="8dp" />
 
     <!-- Switch Account Button -->
-    <ImageButton
-        android:id="@+id/button_switch_account"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/button_switch_account"
-        android:background="@null"
-        android:contentDescription="Switch Account"
-        app:layout_constraintTop_toBottomOf="@id/guideline_horizontal_2"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="20dp" />
+<!--    <ImageButton-->
+<!--        android:id="@+id/button_switch_account"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:src="@drawable/button_switch_account"-->
+<!--        android:background="@null"-->
+<!--        android:contentDescription="Switch Account"-->
+<!--        app:layout_constraintTop_toBottomOf="@id/guideline_horizontal_2"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        android:layout_marginTop="20dp" />-->
 
     <!-- Logout Button -->
     <ImageButton
@@ -134,7 +134,7 @@
         android:src="@drawable/button_logout"
         android:background="@null"
         android:contentDescription="Logout"
-        app:layout_constraintTop_toBottomOf="@id/button_switch_account"
+        app:layout_constraintTop_toBottomOf="@id/text_email"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginTop="16dp" />

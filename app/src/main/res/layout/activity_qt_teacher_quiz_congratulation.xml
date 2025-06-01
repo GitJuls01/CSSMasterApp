@@ -77,8 +77,7 @@
             android:textColor="@android:color/black"
             android:textAlignment="center"
             android:gravity="center"
-            android:layout_marginBottom="40dp"
-            tools:text="You answered 12 out of 10 \n questions correctly!" />
+            android:layout_marginBottom="40dp"/>
 
         <!-- Done logo -->
         <ImageView
