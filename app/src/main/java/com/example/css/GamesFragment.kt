@@ -34,7 +34,6 @@ class GamesFragment : Fragment() {
             val intent = Intent(requireContext(), GuessCSSMainGame::class.java)
             startActivity(intent)
         }
-
         return view
     }
 }

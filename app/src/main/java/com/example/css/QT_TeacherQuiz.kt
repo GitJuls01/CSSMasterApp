@@ -1,6 +1,7 @@
 package com.example.css
 
 import android.content.Intent
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -8,6 +9,7 @@ import android.widget.ImageButton
 import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
+import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.firestore.FirebaseFirestore
 
@@ -15,6 +17,9 @@ class QT_TeacherQuiz : AppCompatActivity() {
 
     private lateinit var firestore: FirebaseFirestore
     private lateinit var quizListContainer: LinearLayout
+    private var backPressedOnce = false
+    private lateinit var sharedPreferences: SharedPreferences
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -24,15 +29,45 @@ class QT_TeacherQuiz : AppCompatActivity() {
         quizListContainer = findViewById(R.id.quiz_list_container)
         quizListContainer.visibility = View.GONE // initially invisible
 
+        // Access SharedPreferences
+        sharedPreferences = getSharedPreferences("user_data", MODE_PRIVATE)
+
         fetchAndDisplayQuizzes()
 
         val backButton = findViewById<ImageButton>(R.id.back_button)
         backButton.setOnClickListener {
-            finish() // Go back to the previous screen
+            val intent = Intent(this, QuizTime::class.java)
+            startActivity(intent)
+            finish()
         }
+
+        //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        // Register the back press callback to handle back button presses
+        val backPressedCallback = object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                if (backPressedOnce) {
+                    // Exit the app
+                    finishAffinity() // Properly exits the app from this point
+                } else {
+                    backPressedOnce = true
+                    // Show a Toast message
+                    Toast.makeText(applicationContext, "Double click to exit the app", Toast.LENGTH_SHORT).show()
+
+                    // Reset backPressedOnce flag after 2 seconds
+                    android.os.Handler().postDelayed({
+                        backPressedOnce = false
+                    }, 2000) // Reset after 2 seconds
+                }
+            }
+        }
+        onBackPressedDispatcher.addCallback(this, backPressedCallback)
+        //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
     }
 
     private fun fetchAndDisplayQuizzes() {
+        val userEmail = sharedPreferences.getString("email", "Default Email")
+
         firestore.collection("quizzes")
             .get()
             .addOnSuccessListener { snapshot ->
@@ -45,6 +80,8 @@ class QT_TeacherQuiz : AppCompatActivity() {
                         val title = doc.getString("title") ?: "Untitled Quiz"
                         val description = doc.getString("description") ?: ""
                         val questionCount = (doc.get("questions") as? List<*>)?.size ?: 0
+                        val participants = doc.get("participants") as? List<*> ?: emptyList<Any>()
+
                         val quizView = inflater.inflate(R.layout.quiz_item, quizListContainer, false)
 
                         val titleView = quizView.findViewById<TextView>(R.id.title_quiz)
@@ -56,12 +93,30 @@ class QT_TeacherQuiz : AppCompatActivity() {
                         descView.text = description
                         itemsView.text = getString(R.string.items_quiz, questionCount.toString())
 
-                        takeButton.setOnClickListener {
-                            val intent = Intent(this, QT_TeacherQuiz_MainGame::class.java)
-                            intent.putExtra("quiz_id", quizId)
-                            startActivity(intent)
+                        val alreadyTaken = participants.contains(userEmail)
+
+                        // Dim the button immediately if already participated
+                        if (alreadyTaken) {
+                            takeButton.alpha = 0.5f
                         }
 
+                        takeButton.setOnClickListener {
+                            // Check if user has already participated
+                            if (alreadyTaken) {
+                                Toast.makeText(this, "You already took this quiz: $title", Toast.LENGTH_SHORT).show()
+                            }  else {
+                                firestore.collection("quizzes").document(quizId)
+                                    .update("participants", com.google.firebase.firestore.FieldValue.arrayUnion(userEmail))
+                                    .addOnSuccessListener {
+                                        val intent =
+                                            Intent(this, QT_TeacherQuiz_MainGame::class.java)
+                                        intent.putExtra("quiz_id", quizId)
+                                        startActivity(intent)
+                                    }
+                                    .addOnFailureListener { e -> Toast.makeText(this, "Failed to join quiz: ${e.message}", Toast.LENGTH_SHORT).show()
+                                    }
+                            }
+                        }
                         quizListContainer.addView(quizView)
                     }
 
@@ -74,4 +129,5 @@ class QT_TeacherQuiz : AppCompatActivity() {
                 Toast.makeText(this, "Failed to load quizzes: ${e.message}", Toast.LENGTH_LONG).show()
             }
     }
+
 }

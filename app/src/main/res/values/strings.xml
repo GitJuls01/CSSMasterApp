@@ -2,7 +2,12 @@
     <string name="app_name">CSS</string>
     <string name="name_label">Name: %1$s</string>
     <string name="name_label2">%1$s</string>
+    <string name="points_label">%1$d</string>
     <string name="email_label">Email Address: %1$s</string>
     <string name="items_quiz">Items: %1$s</string>
+    <string name="quiz_summary">You answered %1$d out of %2$d \n questions correctly!</string>
+    <string name="quiz_percentage">You score: %1$d%%</string>
+    <string name="quiz_hardware_score">%1$d/%2$d</string>
+    <string name="user_rank">Rank: %1$d</string>
 
 </resources>
