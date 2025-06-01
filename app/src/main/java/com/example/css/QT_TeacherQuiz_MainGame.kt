@@ -1,6 +1,7 @@
 package com.example.css
 
 import android.content.Intent
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.os.CountDownTimer
 import android.util.Log
@@ -10,6 +11,7 @@ import android.widget.ImageView
 import android.widget.ProgressBar
 import android.widget.TextView
 import android.widget.Toast
+import androidx.activity.OnBackPressedCallback
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
@@ -18,12 +20,17 @@ import com.google.firebase.firestore.FirebaseFirestore
 
 class QT_TeacherQuiz_MainGame : AppCompatActivity() {
 
+    private var backPressedOnce = false
+
     private lateinit var questionList: List<QuestionData>
     private var currentIndex = 0  // Keeps track of the current question index
     private lateinit var timerProgressBar: ProgressBar
     private var countDownTimer: CountDownTimer? = null
-    private val totalTime = 15_000L // 15 seconds
-    private val interval = 100L     // update every 100ms
+    private val totalTime = 15_000L
+    private val interval = 100L
+    private var correctAnswers = 0
+    private lateinit var sharedPreferences: SharedPreferences
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -35,6 +42,32 @@ class QT_TeacherQuiz_MainGame : AppCompatActivity() {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
+
+        //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        // Register the back press callback to handle back button presses
+        val backPressedCallback = object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                if (backPressedOnce) {
+                    // Exit the app
+                    countDownTimer?.cancel()
+                    currentIndex = 0
+                    correctAnswers = 0
+                    finishAffinity() // Properly exits the app from this point
+                } else {
+                    backPressedOnce = true
+                    // Show a Toast message
+                    Toast.makeText(applicationContext, "Double click to exit the app", Toast.LENGTH_SHORT).show()
+
+                    // Reset backPressedOnce flag after 2 seconds
+                    android.os.Handler().postDelayed({
+                        backPressedOnce = false
+                    }, 2000) // Reset after 2 seconds
+                }
+            }
+        }
+        onBackPressedDispatcher.addCallback(this, backPressedCallback)
+        //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
 
         val backButton = findViewById<ImageButton>(R.id.back_button)
         backButton.setOnClickListener {
@@ -51,7 +84,6 @@ class QT_TeacherQuiz_MainGame : AppCompatActivity() {
             .addOnSuccessListener { document ->
                 if (document.exists()) {
                     val rawQuestions = document.get("questions") as? List<Map<String, Any>> ?: emptyList()
-                    val title = document.getString("title") ?: "Untitled Quiz"
 
                     questionList = rawQuestions.mapNotNull { map ->
                         val question = map["question"] as? String
@@ -133,19 +165,14 @@ class QT_TeacherQuiz_MainGame : AppCompatActivity() {
                 return@setOnClickListener
             }
 
-            val selectedAnswer = labels[selectedIndex].text.removePrefix("A) ")
-                .removePrefix("B) ")
-                .removePrefix("C) ")
-                .removePrefix("D) ")
-                .trim()
+            val selectedText = labels[selectedIndex].text.toString()
+            val selectedAnswer = selectedText.substringAfter(") ").trim()
 
             if (selectedAnswer == data.correctAnswer) {
-                Toast.makeText(this, "✅ Correct!", Toast.LENGTH_SHORT).show()
-            } else {
-                Toast.makeText(this, "❌ Wrong!", Toast.LENGTH_SHORT).show()
+                correctAnswers++
             }
 
-            nextBtn.postDelayed({ goToNextQuestion() }, 1000)
+            goToNextQuestion()
         }
     }
 
@@ -173,10 +200,44 @@ class QT_TeacherQuiz_MainGame : AppCompatActivity() {
         if (currentIndex < questionList.size) {
             showQuestion(questionList[currentIndex], currentIndex + 1, questionList.size)
         } else {
-            val intent = Intent(this, QT_TeacherQuiz_Congratulation::class.java)
-            startActivity(intent)
-//            Toast.makeText(this, "🎉 Quiz finished!", Toast.LENGTH_LONG).show()
-            finish()
+
+            sharedPreferences = getSharedPreferences("user_data", MODE_PRIVATE)
+            val userName = sharedPreferences.getString("name", "Default Name")
+
+            val percentage = ((correctAnswers.toFloat() / questionList.size) * 100).toInt()
+            val quizHistory = hashMapOf(
+                "id" to intent.getStringExtra("quiz_id"),
+                "user_name" to userName,
+                "score" to correctAnswers,
+                "created_date" to com.google.firebase.Timestamp.now()
+            )
+
+            val db = FirebaseFirestore.getInstance()
+            db.collection("quiz_history")
+                .add(quizHistory)
+                .addOnSuccessListener {
+                    val intent = Intent(this, QT_TeacherQuiz_Congratulation::class.java)
+                    intent.putExtra("correct_count", correctAnswers)
+                    intent.putExtra("total_count", questionList.size)
+                    intent.putExtra("percentage", percentage)
+                    startActivity(intent)
+                    finish()
+                }
+                .addOnFailureListener { e ->
+                    Toast.makeText(this, "Failed to save quiz result", Toast.LENGTH_SHORT).show()
+                    Log.e("QTQuiz", "Error writing quiz history", e)
+                }
+
+//            // Navigate to QT_TeacherQuiz_Congratulation
+//            val intent = Intent(this, QT_TeacherQuiz_Congratulation::class.java)
+//            intent.putExtra("correct_count", correctAnswers)
+//            intent.putExtra("total_count", questionList.size)
+//            val percentage = ((correctAnswers.toFloat() / questionList.size) * 100).toInt()
+//            intent.putExtra("percentage", percentage)
+//            startActivity(intent)
+//            finish()
+
+
         }
     }
 

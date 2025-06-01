@@ -7,7 +7,6 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
-import android.graphics.Color
 import android.graphics.drawable.GradientDrawable
 import android.text.Editable
 import android.text.TextWatcher
@@ -63,31 +62,56 @@ class CreateAccount : AppCompatActivity() {
                 return@setOnClickListener
             }
 
-            // Create a user map
-            val createdDate = Timestamp.now()
-            val userMap = hashMapOf(
-                "name" to name,
-                "section" to section,
-                "email" to email,
-                "password" to password,
-                "role" to role,
-                "createdDate" to createdDate
-            )
-
             firestore.collection("users")
-                .add(userMap)
-                .addOnSuccessListener {
-                    Toast.makeText(this, "Account Created Successfully!", Toast.LENGTH_SHORT).show()
+                .whereEqualTo("email", email)
+                .get()
+                .addOnSuccessListener { emailDocs ->
+                    if (!emailDocs.isEmpty) {
+                        Toast.makeText(this, "Email already exists", Toast.LENGTH_SHORT).show()
+                        return@addOnSuccessListener
+                    }
 
-                    val intent = Intent(this, LoginPage::class.java)
-                    intent.putExtra("userType", role)
-                    startActivity(intent)
-                    finish()
+                    firestore.collection("users")
+                        .whereEqualTo("name", name)
+                        .get()
+                        .addOnSuccessListener { nameDocs ->
+                            if (!nameDocs.isEmpty) {
+                                Toast.makeText(this, "Name already exists", Toast.LENGTH_SHORT).show()
+                                return@addOnSuccessListener
+                            }
 
+                            // Both name and email are unique, now create the account
+                            val createdDate = Timestamp.now()
+                            val userMap = hashMapOf(
+                                "name" to name,
+                                "section" to section,
+                                "email" to email,
+                                "password" to password,
+                                "role" to role,
+                                "createdDate" to createdDate
+                            )
+
+                            firestore.collection("users")
+                                .add(userMap)
+                                .addOnSuccessListener {
+                                    Toast.makeText(this, "Account Created Successfully!", Toast.LENGTH_SHORT).show()
+                                    val intent = Intent(this, LoginPage::class.java)
+                                    intent.putExtra("userType", role)
+                                    startActivity(intent)
+                                    finish()
+                                }
+                                .addOnFailureListener { e ->
+                                    Toast.makeText(this, "Failed: ${e.message}", Toast.LENGTH_SHORT).show()
+                                }
+                        }
+                        .addOnFailureListener { e ->
+                            Toast.makeText(this, "Error checking name: ${e.message}", Toast.LENGTH_SHORT).show()
+                        }
                 }
                 .addOnFailureListener { e ->
-                    Toast.makeText(this, "Failed: ${e.message}", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this, "Error checking email: ${e.message}", Toast.LENGTH_SHORT).show()
                 }
+
         }
 
         val loginButton = findViewById<ImageButton>(R.id.login_button)
