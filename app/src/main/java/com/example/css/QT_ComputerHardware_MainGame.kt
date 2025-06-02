@@ -9,6 +9,7 @@ import android.os.Looper
 import android.util.Log
 import android.view.View
 import android.widget.*
+import androidx.activity.OnBackPressedCallback
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
@@ -44,7 +45,9 @@ class QT_ComputerHardware_MainGame : AppCompatActivity() {
     private lateinit var circularProgress: CircularProgressIndicator
     private lateinit var progressText: TextView
     private var questionTimer: CountDownTimer? = null
+    private var currentIndex = 0  // Keeps track of the current question index
 
+    private var backPressedOnce = false
 
     private lateinit var sharedPreferences: SharedPreferences
 
@@ -58,6 +61,32 @@ class QT_ComputerHardware_MainGame : AppCompatActivity() {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
+
+        //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        // Register the back press callback to handle back button presses
+        val backPressedCallback = object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                if (backPressedOnce) {
+                    // Exit the app
+                    questionTimer?.cancel()
+                    questionList = emptyList()
+                    correctAnswers = 0
+                    finishAffinity() // Properly exits the app from this point
+                } else {
+                    backPressedOnce = true
+                    // Show a Toast message
+                    Toast.makeText(applicationContext, "Double click to exit the app", Toast.LENGTH_SHORT).show()
+
+                    // Reset backPressedOnce flag after 2 seconds
+                    android.os.Handler().postDelayed({
+                        backPressedOnce = false
+                    }, 2000) // Reset after 2 seconds
+                }
+            }
+        }
+        onBackPressedDispatcher.addCallback(this, backPressedCallback)
+        //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
 
         findViewById<ImageButton>(R.id.back_button).setOnClickListener { finish() }
 

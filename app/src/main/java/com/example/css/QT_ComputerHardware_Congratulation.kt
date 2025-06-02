@@ -32,6 +32,12 @@ class QT_ComputerHardware_Congratulation : AppCompatActivity() {
             startActivity(intent)
         }
 
+        val playAgainButton = findViewById<ImageButton>(R.id.play_again_button)
+        playAgainButton.setOnClickListener {
+            val intent = Intent(this, QuizTime::class.java)
+            startActivity(intent)
+        }
+
         val correctCount = intent.getIntExtra("correct_count", 0)
         val totalCount = intent.getIntExtra("total_count", 0)
         val name = intent.getStringExtra("name") ?: "default"
