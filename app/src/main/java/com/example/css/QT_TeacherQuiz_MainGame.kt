@@ -17,6 +17,8 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.google.firebase.firestore.FirebaseFirestore
+import android.os.Parcelable
+import kotlinx.parcelize.Parcelize
 
 class QT_TeacherQuiz_MainGame : AppCompatActivity() {
 
@@ -30,6 +32,9 @@ class QT_TeacherQuiz_MainGame : AppCompatActivity() {
     private val interval = 100L
     private var correctAnswers = 0
     private lateinit var sharedPreferences: SharedPreferences
+
+    private val questionResults = mutableListOf<QuestionResult>()
+
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -113,8 +118,15 @@ class QT_TeacherQuiz_MainGame : AppCompatActivity() {
         val wrongAnswers: List<String>
     )
 
+    @Parcelize
+    data class QuestionResult(
+        val question: String,
+        val correctAnswer: String,
+        val selectedAnswer: String
+    ) : Parcelable
+
     private fun showQuestion(data: QuestionData, index: Int, total: Int) {
-        startTimer()
+        startTimer(data)
         val quizTitle = findViewById<TextView>(R.id.tq_quiz_title)
         val questionView = findViewById<TextView>(R.id.tq_question)
         val choiceAText = findViewById<TextView>(R.id.choice_a_text)
@@ -157,16 +169,25 @@ class QT_TeacherQuiz_MainGame : AppCompatActivity() {
         val nextBtn = findViewById<ImageView>(R.id.btn_next)
         nextBtn.setOnClickListener {
             val selectedIndex = checkboxes.indexOfFirst { it.isChecked }
-            if (countDownTimer != null) countDownTimer?.cancel()
+            countDownTimer?.cancel()
 
             if (selectedIndex == -1) {
                 Toast.makeText(this, "Please select an answer", Toast.LENGTH_SHORT).show()
-                startTimer()
+                startTimer(data)
                 return@setOnClickListener
             }
 
             val selectedText = labels[selectedIndex].text.toString()
             val selectedAnswer = selectedText.substringAfter(") ").trim()
+
+            // Track result
+            questionResults.add(
+                QuestionResult(
+                    question = data.question,
+                    correctAnswer = data.correctAnswer,
+                    selectedAnswer = selectedAnswer
+                )
+            )
 
             if (selectedAnswer == data.correctAnswer) {
                 correctAnswers++
@@ -174,9 +195,10 @@ class QT_TeacherQuiz_MainGame : AppCompatActivity() {
 
             goToNextQuestion()
         }
+
     }
 
-    private fun startTimer() {
+    private fun startTimer(data: QuestionData) {
         countDownTimer?.cancel() // cancel previous timer if any
         timerProgressBar.progress = 100 // full progress at start
 
@@ -189,8 +211,21 @@ class QT_TeacherQuiz_MainGame : AppCompatActivity() {
 
             override fun onFinish() {
                 timerProgressBar.progress = 0
-                // Optionally auto move to next question if time runs out
                 Toast.makeText(this@QT_TeacherQuiz_MainGame, "Time's up!", Toast.LENGTH_SHORT).show()
+
+                // Check if user already answered this question
+                val isAlreadyAnswered = questionResults.any { it.question == data.question }
+
+                if (!isAlreadyAnswered) {
+                    // Track unanswered question
+                    questionResults.add(
+                        QuestionResult(
+                            question = data.question,
+                            correctAnswer = data.correctAnswer,
+                            selectedAnswer = "No answer"
+                        )
+                    )
+                }
                 goToNextQuestion()
             }
         }.start()
@@ -220,6 +255,10 @@ class QT_TeacherQuiz_MainGame : AppCompatActivity() {
                     intent.putExtra("correct_count", correctAnswers)
                     intent.putExtra("total_count", questionList.size)
                     intent.putExtra("percentage", percentage)
+                    intent.putParcelableArrayListExtra(
+                        "question_results",
+                        ArrayList(questionResults) // Convert to ArrayList for Intent
+                    )
                     startActivity(intent)
                     finish()
                 }
