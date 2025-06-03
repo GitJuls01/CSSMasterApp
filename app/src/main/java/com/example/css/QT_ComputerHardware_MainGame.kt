@@ -45,7 +45,6 @@ class QT_ComputerHardware_MainGame : AppCompatActivity() {
     private lateinit var circularProgress: CircularProgressIndicator
     private lateinit var progressText: TextView
     private var questionTimer: CountDownTimer? = null
-    private var currentIndex = 0  // Keeps track of the current question index
 
     private var backPressedOnce = false
 
