@@ -17,8 +17,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.google.firebase.firestore.FirebaseFirestore
-import android.os.Parcelable
-import kotlinx.parcelize.Parcelize
+import java.io.Serializable
 
 class QT_TeacherQuiz_MainGame : AppCompatActivity() {
 
@@ -118,12 +117,11 @@ class QT_TeacherQuiz_MainGame : AppCompatActivity() {
         val wrongAnswers: List<String>
     )
 
-    @Parcelize
     data class QuestionResult(
         val question: String,
         val correctAnswer: String,
         val selectedAnswer: String
-    ) : Parcelable
+    ) : Serializable
 
     private fun showQuestion(data: QuestionData, index: Int, total: Int) {
         startTimer(data)
@@ -255,10 +253,7 @@ class QT_TeacherQuiz_MainGame : AppCompatActivity() {
                     intent.putExtra("correct_count", correctAnswers)
                     intent.putExtra("total_count", questionList.size)
                     intent.putExtra("percentage", percentage)
-                    intent.putParcelableArrayListExtra(
-                        "question_results",
-                        ArrayList(questionResults) // Convert to ArrayList for Intent
-                    )
+                    intent.putExtra("question_results", ArrayList(questionResults))
                     startActivity(intent)
                     finish()
                 }
