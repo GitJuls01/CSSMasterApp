@@ -1,14 +1,12 @@
 package com.example.css
 
 import android.content.Intent
-import android.os.Build
 import android.os.Bundle
 import android.widget.ImageButton
 import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.activity.enableEdgeToEdge
-import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
@@ -17,7 +15,6 @@ class QT_TeacherQuiz_Congratulation : AppCompatActivity() {
 
     private var backPressedOnce = false
 
-    @RequiresApi(Build.VERSION_CODES.TIRAMISU)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -63,10 +60,7 @@ class QT_TeacherQuiz_Congratulation : AppCompatActivity() {
         val nextQuizBtn = findViewById<ImageButton>(R.id.btn_next)
         val reviewAnswerBtn = findViewById<ImageButton>(R.id.btn_review)
 
-        val results = intent.getParcelableArrayListExtra(
-            "question_results",
-            QT_TeacherQuiz_MainGame.QuestionResult::class.java
-        )
+        val results = intent.getSerializableExtra("question_results") as? ArrayList<QT_TeacherQuiz_MainGame.QuestionResult>
 
         backButton.setOnClickListener {
             val intent = Intent(this, QT_TeacherQuiz::class.java)
@@ -81,7 +75,7 @@ class QT_TeacherQuiz_Congratulation : AppCompatActivity() {
 
         reviewAnswerBtn.setOnClickListener {
             val intent = Intent(this, ReviewAnswers::class.java)
-            intent.putParcelableArrayListExtra("question_results", results)
+            intent.putExtra("question_results", results)
             startActivity(intent)
             finish()
         }

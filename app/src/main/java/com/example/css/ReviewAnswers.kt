@@ -23,17 +23,8 @@ class ReviewAnswers : AppCompatActivity() {
         }
 
         val resultsContainer = findViewById<LinearLayout>(R.id.results_container)
-
-        val results: ArrayList<QT_TeacherQuiz_MainGame.QuestionResult>? =
-            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.TIRAMISU) {
-                intent.getParcelableArrayListExtra(
-                    "question_results",
-                    QT_TeacherQuiz_MainGame.QuestionResult::class.java
-                )
-            } else {
-                @Suppress("DEPRECATION")
-                intent.getParcelableArrayListExtra("question_results")
-            }
+    
+        val results = intent.getSerializableExtra("question_results") as? ArrayList<QT_TeacherQuiz_MainGame.QuestionResult>
 
         results?.forEachIndexed { index, result ->
             val itemView = layoutInflater.inflate(R.layout.review_answer_item, resultsContainer, false)
