@@ -14,5 +14,9 @@
     <string name="your_answer_format">Your answer: %1$s</string>
     <string name="correct_answer_format">Correct answer: %1$s</string>
 
+    <string name="correct_answer_feedback">%1$s is Correct</string>
+    <string name="wrong_answer_feedback">%1$s is Wrong</string>
+    <string name="no_answer_feedback">You did not select an answer</string>
+
 
 </resources>
