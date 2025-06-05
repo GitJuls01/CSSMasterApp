@@ -8,6 +8,7 @@ import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
+import androidx.activity.OnBackPressedCallback
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
@@ -32,6 +33,9 @@ class GuessCSSMainGame : AppCompatActivity() {
     private lateinit var progressText: TextView
     private var questionTimer: CountDownTimer? = null
 
+    private var backPressedOnce = false
+
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -43,6 +47,29 @@ class GuessCSSMainGame : AppCompatActivity() {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
+
+        //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        // Register the back press callback to handle back button presses
+        val backPressedCallback = object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                if (backPressedOnce) {
+                    // Exit the app
+                    questionTimer?.cancel()
+                    finishAffinity() // Properly exits the app from this point
+                } else {
+                    backPressedOnce = true
+                    // Show a Toast message
+                    Toast.makeText(applicationContext, "Double click to exit the app", Toast.LENGTH_SHORT).show()
+
+                    // Reset backPressedOnce flag after 2 seconds
+                    android.os.Handler().postDelayed({
+                        backPressedOnce = false
+                    }, 2000) // Reset after 2 seconds
+                }
+            }
+        }
+        onBackPressedDispatcher.addCallback(this, backPressedCallback)
+        //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
         circularProgress = findViewById(R.id.circularProgress)
         progressText = findViewById(R.id.progressText)
