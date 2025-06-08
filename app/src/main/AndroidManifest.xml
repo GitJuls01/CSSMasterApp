@@ -32,7 +32,9 @@
         <activity
             android:name=".GuessCSSMainGame"
             android:exported="false" />
-        <activity android:name=".CreateQuiz" />
+        <activity
+            android:name=".CreateQuiz"
+            android:exported="false" />
         <activity
             android:name=".QT_ComputerHardware_Congratulation"
             android:exported="false" />

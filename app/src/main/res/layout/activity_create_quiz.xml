@@ -1,115 +1,373 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/scrollView"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="16dp">
+    android:background="@drawable/teacher_cq_bg"
+    tools:context=".CreateQuiz">
 
-    <LinearLayout
-        android:id="@+id/quizFormLayout"
-        android:layout_width="match_parent"
+    <!-- Guidelines for padding -->
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline_vertical"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.05" />
 
-        <!-- Title -->
-        <EditText
-            android:id="@+id/editTextTitle"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Quiz Title"
-            android:inputType="textCapSentences"
-            android:padding="12dp" />
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline_vertical_2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.95" />
 
-        <!-- Description -->
-        <EditText
-            android:id="@+id/editTextDescription"
-            android:layout_width="match_parent"
+    <!-- Back button -->
+    <ImageButton
+        android:id="@+id/back_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="14dp"
+        android:background="@null"
+        android:scaleType="fitCenter"
+        android:src="@drawable/back_button"
+        app:layout_constraintStart_toStartOf="@id/guideline_vertical"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="SpeakableTextPresentCheck" />
+
+    <!-- CSS Master -->
+    <ImageView
+        android:id="@+id/css_master"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:contentDescription="CSS Master"
+        android:src="@drawable/text_css_master_2"
+        app:layout_constraintHorizontal_chainStyle="spread"
+        app:layout_constraintBottom_toBottomOf="@id/back_button"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+    <!-- Tab Buttons -->
+    <LinearLayout
+        android:id="@+id/tab_container"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="24dp"
+        app:layout_constraintTop_toBottomOf="@id/css_master"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginStart="32dp"
+        android:layout_marginEnd="32dp"
+        android:padding="4dp">
+        <TextView
+            android:id="@+id/tab_mc"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:hint="Description"
-            android:inputType="textMultiLine"
-            android:minLines="3"
+            android:layout_weight="1"
+            android:gravity="center"
             android:padding="12dp"
-            android:layout_marginTop="8dp" />
+            android:text="Multiple Choice"
+            android:textColor="@android:color/black"
+            android:background="@drawable/teacher_cq_tab_selected"
+            android:textStyle="bold"/>
 
-        <!-- Container for Questions -->
-        <LinearLayout
-            android:id="@+id/questionContainer"
-            android:layout_width="match_parent"
+        <TextView
+            android:id="@+id/tab_tf"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_marginTop="16dp">
+            android:layout_weight="1"
+            android:gravity="center"
+            android:padding="12dp"
+            android:text="True/False"
+            android:textColor="#A09CAB"/>
+    </LinearLayout>
 
-            <!-- Question Block 1 -->
+    <!-- ViewFlipper to switch content -->
+    <ViewFlipper
+        android:id="@+id/tab_flipper"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="25dp"
+        app:layout_constraintTop_toBottomOf="@id/tab_container"
+        app:layout_constraintStart_toStartOf="@id/guideline_vertical"
+        app:layout_constraintEnd_toEndOf="@id/guideline_vertical_2"
+        app:layout_constraintBottom_toTopOf="@id/button_container">
+
+        <!-- Tab 1: Multiple Choice -->
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fillViewport="true">
+
             <LinearLayout
+                android:id="@+id/quizFormLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:padding="12dp"
-                android:layout_marginBottom="16dp">
+                android:orientation="vertical">
 
+                <!-- Title & Description -->
                 <EditText
-                    android:id="@+id/editTextQuestion1"
+                    android:id="@+id/editTextTitle"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Question 1"
-                    android:inputType="textCapSentences" />
-
-                <EditText
-                    android:id="@+id/editTextCorrectAnswer1"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="Correct Answer"
+                    android:hint="Quiz Title"
+                    android:background="@drawable/teacher_input_container"
                     android:inputType="textCapSentences"
+                    android:padding="12dp"
+                    android:minHeight="48dp"/>
+
+                <EditText
+                    android:id="@+id/editTextDescription"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Description"
+                    android:inputType="textMultiLine"
+                    android:background="@drawable/teacher_input_container"
+                    android:minLines="3"
+                    android:padding="12dp"
                     android:layout_marginTop="8dp" />
 
-                <EditText
-                    android:id="@+id/editTextWrongAnswer1_1"
+                <!-- Scrollable Question Container -->
+                <LinearLayout
+                    android:id="@+id/questionContainer"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Wrong Answer 1"
-                    android:inputType="textCapSentences"
-                    android:layout_marginTop="4dp" />
+                    android:orientation="vertical"
+                    android:layout_marginTop="16dp">
 
-                <EditText
-                    android:id="@+id/editTextWrongAnswer1_2"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="Wrong Answer 2"
-                    android:inputType="textCapSentences"
-                    android:layout_marginTop="4dp" />
+                    <!-- Question Block 1 -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:paddingBottom="12dp"
+                        android:layout_marginBottom="16dp">
 
-                <EditText
-                    android:id="@+id/editTextWrongAnswer1_3"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="Wrong Answer 3"
-                    android:inputType="textCapSentences"
-                    android:layout_marginTop="4dp" />
+                        <EditText
+                            android:id="@+id/editTextQuestion1"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/teacher_input_container"
+                            android:hint="Question 1"
+                            android:inputType="textCapSentences"
+                            android:minHeight="48dp"/>
+
+                        <EditText
+                            android:id="@+id/editTextCorrectAnswer1"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="8dp"
+                            android:background="@drawable/teacher_input_container"
+                            android:hint="Correct Answer"
+                            android:inputType="textCapSentences"
+                            android:minHeight="48dp" />
+
+                        <EditText
+                            android:id="@+id/editTextWrongAnswer1_1"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="4dp"
+                            android:background="@drawable/teacher_input_container"
+                            android:hint="Wrong Answer 1"
+                            android:inputType="textCapSentences"
+                            android:minHeight="48dp" />
+
+                        <EditText
+                            android:id="@+id/editTextWrongAnswer1_2"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="4dp"
+                            android:background="@drawable/teacher_input_container"
+                            android:hint="Wrong Answer 2"
+                            android:inputType="textCapSentences"
+                            android:minHeight="48dp" />
+
+                        <EditText
+                            android:id="@+id/editTextWrongAnswer1_3"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/teacher_input_container"
+                            android:hint="Wrong Answer 3"
+                            android:inputType="textCapSentences"
+                            android:layout_marginTop="4dp"
+                            android:minHeight="48dp" />
+                    </LinearLayout>
+                </LinearLayout>
             </LinearLayout>
+        </ScrollView>
 
-        </LinearLayout>
-
-        <!-- Submit Quiz aligned right on a new line -->
+        <!-- Tab 2: True/False -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_marginTop="24dp">
+            android:orientation="vertical">
 
-            <Button
-                android:id="@+id/btnAddQuestion"
-                android:layout_width="0dp"
+            <EditText
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Add Question" />
+                android:hint="TF Question Title"
+                android:background="@drawable/teacher_input_container"
+                android:padding="12dp"/>
 
-            <Button
-                android:id="@+id/btnSubmitQuiz"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Submit Quiz" />
         </LinearLayout>
+    </ViewFlipper>
 
+    <!-- Buttons Row -->
+    <LinearLayout
+        android:id="@+id/button_container"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginBottom="16dp"
+        app:layout_constraintStart_toStartOf="@id/guideline_vertical"
+        app:layout_constraintEnd_toEndOf="@id/guideline_vertical_2"
+        app:layout_constraintBottom_toBottomOf="parent">
 
+        <ImageButton
+            android:id="@+id/btnAddQuestion"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@null"
+            android:src="@drawable/teacher_add_quest_btn"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@id/guideline_vertical_2"
+            app:layout_constraintStart_toStartOf="@id/guideline_vertical"
+            tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
+
+        <ImageButton
+            android:id="@+id/btnSubmitQuiz"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@null"
+            android:src="@drawable/teacher_save_quiz_btn"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@id/guideline_vertical_2"
+            app:layout_constraintStart_toStartOf="@id/guideline_vertical"
+            tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
     </LinearLayout>
-</ScrollView>
+
+
+
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+<!--<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"-->
+<!--    android:id="@+id/scrollView"-->
+<!--    android:layout_width="match_parent"-->
+<!--    android:layout_height="match_parent"-->
+<!--    android:padding="16dp">-->
+
+<!--    <LinearLayout-->
+<!--        android:id="@+id/quizFormLayout"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:orientation="vertical">-->
+
+<!--        &lt;!&ndash; Title &ndash;&gt;-->
+<!--        <EditText-->
+<!--            android:id="@+id/editTextTitle"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:hint="Quiz Title"-->
+<!--            android:inputType="textCapSentences"-->
+<!--            android:padding="12dp" />-->
+
+<!--        &lt;!&ndash; Description &ndash;&gt;-->
+<!--        <EditText-->
+<!--            android:id="@+id/editTextDescription"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:hint="Description"-->
+<!--            android:inputType="textMultiLine"-->
+<!--            android:minLines="3"-->
+<!--            android:padding="12dp"-->
+<!--            android:layout_marginTop="8dp" />-->
+
+<!--        &lt;!&ndash; Container for Questions &ndash;&gt;-->
+<!--        <LinearLayout-->
+<!--            android:id="@+id/questionContainer"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:orientation="vertical"-->
+<!--            android:layout_marginTop="16dp">-->
+
+<!--            &lt;!&ndash; Question Block 1 &ndash;&gt;-->
+<!--            <LinearLayout-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:orientation="vertical"-->
+<!--                android:padding="12dp"-->
+<!--                android:layout_marginBottom="16dp">-->
+
+<!--                <EditText-->
+<!--                    android:id="@+id/editTextQuestion1"-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:hint="Question 1"-->
+<!--                    android:inputType="textCapSentences" />-->
+
+<!--                <EditText-->
+<!--                    android:id="@+id/editTextCorrectAnswer1"-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:hint="Correct Answer"-->
+<!--                    android:inputType="textCapSentences"-->
+<!--                    android:layout_marginTop="8dp" />-->
+
+<!--                <EditText-->
+<!--                    android:id="@+id/editTextWrongAnswer1_1"-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:hint="Wrong Answer 1"-->
+<!--                    android:inputType="textCapSentences"-->
+<!--                    android:layout_marginTop="4dp" />-->
+
+<!--                <EditText-->
+<!--                    android:id="@+id/editTextWrongAnswer1_2"-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:hint="Wrong Answer 2"-->
+<!--                    android:inputType="textCapSentences"-->
+<!--                    android:layout_marginTop="4dp" />-->
+
+<!--                <EditText-->
+<!--                    android:id="@+id/editTextWrongAnswer1_3"-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:hint="Wrong Answer 3"-->
+<!--                    android:inputType="textCapSentences"-->
+<!--                    android:layout_marginTop="4dp" />-->
+<!--            </LinearLayout>-->
+
+<!--        </LinearLayout>-->
+
+<!--        &lt;!&ndash; Submit Quiz aligned right on a new line &ndash;&gt;-->
+<!--        <LinearLayout-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:orientation="horizontal"-->
+<!--            android:layout_marginTop="24dp">-->
+
+<!--            <Button-->
+<!--                android:id="@+id/btnAddQuestion"-->
+<!--                android:layout_width="0dp"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_weight="1"-->
+<!--                android:text="Add Question" />-->
+
+<!--            <Button-->
+<!--                android:id="@+id/btnSubmitQuiz"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:text="Submit Quiz" />-->
+<!--        </LinearLayout>-->
+
+
+<!--    </LinearLayout>-->
+<!--</ScrollView>-->
