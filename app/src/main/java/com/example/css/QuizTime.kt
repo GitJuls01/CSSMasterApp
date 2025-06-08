@@ -92,7 +92,7 @@ class QuizTime : AppCompatActivity() {
 
         val inventorsQuizCategory = findViewById<ImageButton>(R.id.qt_inventors_category)
         inventorsQuizCategory.setOnClickListener {
-            val intent = Intent(this, QT_ComputerSoftware_MainGame::class.java)
+            val intent = Intent(this, QT_Inventors_MainGame::class.java)
             startActivity(intent)
         }
 
