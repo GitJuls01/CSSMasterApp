@@ -78,6 +78,7 @@ class GuessCSSMainGame : AppCompatActivity() {
         val backButton = findViewById<ImageButton>(R.id.back_button)
         backButton.setOnClickListener {
             val intent = Intent(this, MainActivity::class.java)
+            questionTimer?.cancel()
             intent.putExtra("openFragment", "games")
             intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP
             startActivity(intent)

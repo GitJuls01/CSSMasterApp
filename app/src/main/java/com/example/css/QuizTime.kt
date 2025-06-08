@@ -84,6 +84,18 @@ class QuizTime : AppCompatActivity() {
             startActivity(intent)
         }
 
+        val softwareQuizCategory = findViewById<ImageButton>(R.id.qt_software_category)
+        softwareQuizCategory.setOnClickListener {
+            val intent = Intent(this, QT_ComputerSoftware_MainGame::class.java)
+            startActivity(intent)
+        }
+
+        val inventorsQuizCategory = findViewById<ImageButton>(R.id.qt_inventors_category)
+        inventorsQuizCategory.setOnClickListener {
+            val intent = Intent(this, QT_ComputerSoftware_MainGame::class.java)
+            startActivity(intent)
+        }
+
         // Access SharedPreferences
         sharedPreferences = getSharedPreferences("user_data", MODE_PRIVATE)
         val userName = sharedPreferences.getString("name", "Default Name")
