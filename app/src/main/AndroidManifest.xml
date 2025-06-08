@@ -37,6 +37,9 @@
             android:name=".QT_ComputerHardware_Congratulation"
             android:exported="false" />
         <activity
+            android:name=".QT_ComputerSoftware_MainGame"
+            android:exported="false" />
+        <activity
             android:name=".QT_ComputerHardware_MainGame"
             android:exported="false" />
         <activity
