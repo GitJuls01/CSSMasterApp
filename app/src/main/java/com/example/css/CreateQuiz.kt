@@ -1,13 +1,17 @@
 package com.example.css
 
 import android.os.Bundle
-import android.widget.Button
 import android.widget.EditText
+import android.widget.ImageButton
 import android.widget.LinearLayout
 import androidx.appcompat.app.AppCompatActivity
 
 import com.google.firebase.firestore.FirebaseFirestore
 import android.widget.Toast
+import androidx.activity.enableEdgeToEdge
+import androidx.core.content.ContextCompat
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
 
 class CreateQuiz : AppCompatActivity() {
 
@@ -19,7 +23,13 @@ class CreateQuiz : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        enableEdgeToEdge()
         setContentView(R.layout.activity_create_quiz)
+        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
+            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
+            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
+            insets
+        }
 
         firestore = FirebaseFirestore.getInstance()
 
@@ -32,12 +42,12 @@ class CreateQuiz : AppCompatActivity() {
 
         questionBlocks.add(listOf(question1, correct1, wrong1, wrong2, wrong3))
 
-        val addQuestionBtn = findViewById<Button>(R.id.btnAddQuestion)
+        val addQuestionBtn = findViewById<ImageButton>(R.id.btnAddQuestion)
         addQuestionBtn.setOnClickListener {
             addQuestionBlock()
         }
 
-        val saveBtn = findViewById<Button>(R.id.btnSubmitQuiz)
+        val saveBtn = findViewById<ImageButton>(R.id.btnSubmitQuiz)
         saveBtn.setOnClickListener {
             saveQuizToFirestore()
         }
@@ -46,42 +56,86 @@ class CreateQuiz : AppCompatActivity() {
     private fun addQuestionBlock() {
         questionCount++
 
+        val container = findViewById<LinearLayout>(R.id.questionContainer)
+
         val questionBlock = LinearLayout(this).apply {
             orientation = LinearLayout.VERTICAL
-            setPadding(0, 24, 0, 24)
+            setPadding(0, 0, 0, dpToPx(12))  // paddingBottom = 12dp
+            layoutParams = LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT
+            ).apply {
+                bottomMargin = dpToPx(16)  // layout_marginBottom = 16dp
+            }
         }
 
         val question = EditText(this).apply {
             hint = "Question $questionCount"
+            minHeight = dpToPx(48)
+            background = ContextCompat.getDrawable(this@CreateQuiz, R.drawable.teacher_input_container)
         }
 
         val correct = EditText(this).apply {
             hint = "Correct Answer"
+            minHeight = dpToPx(48)
+            background = ContextCompat.getDrawable(this@CreateQuiz, R.drawable.teacher_input_container)
+            layoutParams = LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT
+            ).apply {
+                topMargin = dpToPx(8)
+            }
         }
 
         val wrong1 = EditText(this).apply {
             hint = "Wrong Answer 1"
+            minHeight = dpToPx(48)
+            background = ContextCompat.getDrawable(this@CreateQuiz, R.drawable.teacher_input_container)
+            layoutParams = LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT
+            ).apply {
+                topMargin = dpToPx(4)
+            }
         }
 
         val wrong2 = EditText(this).apply {
             hint = "Wrong Answer 2"
+            minHeight = dpToPx(48)
+            background = ContextCompat.getDrawable(this@CreateQuiz, R.drawable.teacher_input_container)
+            layoutParams = LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT
+            ).apply {
+                topMargin = dpToPx(4)
+            }
         }
 
         val wrong3 = EditText(this).apply {
             hint = "Wrong Answer 3"
+            minHeight = dpToPx(48)
+            background = ContextCompat.getDrawable(this@CreateQuiz, R.drawable.teacher_input_container)
+            layoutParams = LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT
+            ).apply {
+                topMargin = dpToPx(4)
+            }
         }
 
-        val inputList = listOf(question, correct, wrong1, wrong2, wrong3)
-        questionBlocks.add(inputList)
-
+        // Add them to block and register
         questionBlock.addView(question)
         questionBlock.addView(correct)
         questionBlock.addView(wrong1)
         questionBlock.addView(wrong2)
         questionBlock.addView(wrong3)
 
-        val container = findViewById<LinearLayout>(R.id.questionContainer)
         container.addView(questionBlock)
+        questionBlocks.add(listOf(question, correct, wrong1, wrong2, wrong3))
+    }
+
+    private fun dpToPx(dp: Int): Int {
+        return (dp * resources.displayMetrics.density).toInt()
     }
 
     private fun saveQuizToFirestore() {
