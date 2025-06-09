@@ -117,6 +117,7 @@
                     android:background="@drawable/teacher_input_container"
                     android:inputType="textCapSentences"
                     android:padding="12dp"
+                    android:singleLine="true"
                     android:minHeight="48dp"/>
 
                 <EditText
@@ -140,6 +141,7 @@
 
                     <!-- Question Block 1 -->
                     <LinearLayout
+                        android:id="@+id/quiz_question_block"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="vertical"
@@ -161,6 +163,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginTop="8dp"
                             android:background="@drawable/teacher_input_container"
+                            android:singleLine="true"
                             android:hint="Correct Answer"
                             android:inputType="textCapSentences"
                             android:minHeight="48dp" />
@@ -171,6 +174,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginTop="4dp"
                             android:background="@drawable/teacher_input_container"
+                            android:singleLine="true"
                             android:hint="Wrong Answer 1"
                             android:inputType="textCapSentences"
                             android:minHeight="48dp" />
@@ -181,6 +185,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginTop="4dp"
                             android:background="@drawable/teacher_input_container"
+                            android:singleLine="true"
                             android:hint="Wrong Answer 2"
                             android:inputType="textCapSentences"
                             android:minHeight="48dp" />
@@ -190,6 +195,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:background="@drawable/teacher_input_container"
+                            android:singleLine="true"
                             android:hint="Wrong Answer 3"
                             android:inputType="textCapSentences"
                             android:layout_marginTop="4dp"

@@ -1,6 +1,8 @@
 package com.example.css
 
+import android.content.SharedPreferences
 import android.os.Bundle
+import android.util.Log
 import android.widget.EditText
 import android.widget.ImageButton
 import android.widget.LinearLayout
@@ -17,6 +19,8 @@ class CreateQuiz : AppCompatActivity() {
 
     private var questionCount = 1
     private lateinit var firestore: FirebaseFirestore
+    private lateinit var sharedPreferences: SharedPreferences
+    private lateinit var participantsList: List<*>
 
     // Track all question blocks
     private val questionBlocks = mutableListOf<List<EditText>>()
@@ -50,6 +54,11 @@ class CreateQuiz : AppCompatActivity() {
         val saveBtn = findViewById<ImageButton>(R.id.btnSubmitQuiz)
         saveBtn.setOnClickListener {
             saveQuizToFirestore()
+        }
+
+        val quizId = intent.getStringExtra("quizId")
+        if (quizId != null) {
+            loadQuizData(quizId)
         }
     }
 
@@ -139,6 +148,9 @@ class CreateQuiz : AppCompatActivity() {
     }
 
     private fun saveQuizToFirestore() {
+        sharedPreferences = getSharedPreferences("user_data", MODE_PRIVATE)
+        val userName = sharedPreferences.getString("name", "Default Name")
+
         val title = findViewById<EditText>(R.id.editTextTitle).text.toString().trim()
         val description = findViewById<EditText>(R.id.editTextDescription).text.toString().trim()
         if (title.isEmpty() || description.isEmpty()) {
@@ -171,19 +183,87 @@ class CreateQuiz : AppCompatActivity() {
         }
 
         val quizData = mapOf(
+            "created_by" to userName,
+            "created_date" to com.google.firebase.Timestamp.now(),
             "title" to title,
             "description" to description,
-            "questions" to questionsList
+            "questions" to questionsList,
+            "participants" to participantsList
         )
 
-        firestore.collection("quizzes")
-            .add(quizData)
-            .addOnSuccessListener {
-                Toast.makeText(this, "Quiz saved successfully!", Toast.LENGTH_SHORT).show()
-                finish()
+        // Check if editing or creating new
+        val quizId = intent.getStringExtra("quizId")
+
+        if (quizId != null) {
+            // Editing existing quiz
+            firestore.collection("quizzes")
+                .document(quizId)
+                .set(quizData)
+                .addOnSuccessListener {
+                    Toast.makeText(this, "Quiz updated successfully!", Toast.LENGTH_SHORT).show()
+                    finish()
+                }
+                .addOnFailureListener { e ->
+                    Toast.makeText(this, "Failed to update quiz: ${e.message}", Toast.LENGTH_LONG).show()
+                }
+        } else {
+            // Creating new quiz
+            firestore.collection("quizzes")
+                .add(quizData)
+                .addOnSuccessListener {
+                    Toast.makeText(this, "Quiz saved successfully!", Toast.LENGTH_SHORT).show()
+                    finish()
+                }
+                .addOnFailureListener { e ->
+                    Toast.makeText(this, "Failed to save quiz: ${e.message}", Toast.LENGTH_LONG).show()
+                }
+        }
+    }
+
+    private fun loadQuizData(quizId: String) {
+        questionBlocks.clear()
+        val firestore = FirebaseFirestore.getInstance()
+        firestore.collection("quizzes").document(quizId).get()
+            .addOnSuccessListener { document ->
+                if (document.exists()) {
+                    val title = document.getString("title") ?: ""
+                    val description = document.getString("description") ?: ""
+                    val questions = document.get("questions") as? List<Map<String, Any>> ?: emptyList()
+                    participantsList = document.get("participants") as? List<*> ?: emptyList<Any>()
+
+                    // Set title and description
+                    findViewById<EditText>(R.id.editTextTitle).setText(title)
+                    findViewById<EditText>(R.id.editTextDescription).setText(description)
+
+                    // Load questions into UI
+                    val container = findViewById<LinearLayout>(R.id.questionContainer)
+                    container.removeAllViews()
+
+                    questionCount = 0 // Reset counter
+                    for (q in questions) {
+                        questionCount++ // Increment for each existing question
+                        val questionView = layoutInflater.inflate(R.layout.quiz_question_block, container, false)
+
+                        val questionEdit = questionView.findViewById<EditText>(R.id.editTextQuestion1)
+                        val correctEdit = questionView.findViewById<EditText>(R.id.editTextCorrectAnswer1)
+                        val wrong1Edit = questionView.findViewById<EditText>(R.id.editTextWrongAnswer1_1)
+                        val wrong2Edit = questionView.findViewById<EditText>(R.id.editTextWrongAnswer1_2)
+                        val wrong3Edit = questionView.findViewById<EditText>(R.id.editTextWrongAnswer1_3)
+
+                        questionEdit.setText(q["question"] as? String)
+                        correctEdit.setText(q["correct"] as? String)
+                        wrong1Edit.setText(q["wrong1"] as? String)
+                        wrong2Edit.setText(q["wrong2"] as? String)
+                        wrong3Edit.setText(q["wrong3"] as? String)
+
+                        container.addView(questionView)
+                        questionBlocks.add(listOf(questionEdit, correctEdit, wrong1Edit, wrong2Edit, wrong3Edit))
+                    }
+                }
             }
-            .addOnFailureListener { e ->
-                Toast.makeText(this, "Failed to save quiz: ${e.message}", Toast.LENGTH_LONG).show()
+            .addOnFailureListener {
+                Log.e("CreateQuiz", "Failed to load quiz", it)
             }
     }
+
 }

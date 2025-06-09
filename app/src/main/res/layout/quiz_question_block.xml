@@ -1,0 +1,61 @@
+<!-- Reuse this block layout when dynamically adding questions -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:paddingBottom="12dp"
+    android:layout_marginBottom="16dp">
+
+    <EditText
+        android:id="@+id/editTextQuestion1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/teacher_input_container"
+        android:hint="Question"
+        android:inputType="textCapSentences"
+        android:minHeight="48dp" />
+
+    <EditText
+        android:id="@+id/editTextCorrectAnswer1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/teacher_input_container"
+        android:singleLine="true"
+        android:hint="Correct Answer"
+        android:inputType="textCapSentences"
+        android:minHeight="48dp" />
+
+    <EditText
+        android:id="@+id/editTextWrongAnswer1_1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:background="@drawable/teacher_input_container"
+        android:singleLine="true"
+        android:hint="Wrong Answer 1"
+        android:inputType="textCapSentences"
+        android:minHeight="48dp" />
+
+    <EditText
+        android:id="@+id/editTextWrongAnswer1_2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:background="@drawable/teacher_input_container"
+        android:singleLine="true"
+        android:hint="Wrong Answer 2"
+        android:inputType="textCapSentences"
+        android:minHeight="48dp" />
+
+    <EditText
+        android:id="@+id/editTextWrongAnswer1_3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:background="@drawable/teacher_input_container"
+        android:singleLine="true"
+        android:hint="Wrong Answer 3"
+        android:inputType="textCapSentences"
+        android:minHeight="48dp" />
+</LinearLayout>
