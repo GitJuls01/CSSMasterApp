@@ -38,6 +38,7 @@
         android:layout_height="wrap_content"
         android:background="@null"
         android:scaleType="fitCenter"
+        android:visibility="gone"
         android:src="@drawable/setting_button"
         app:layout_constraintEnd_toStartOf="@id/guideline_vertical_2"
         app:layout_constraintTop_toBottomOf="@id/guideline_horizontal"
@@ -53,7 +54,7 @@
         app:layout_constraintTop_toBottomOf="@id/setting_button"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="-25dp"/>
+        android:layout_marginTop="26dp"/>
 
     <!-- CSS Master -->
     <ImageView

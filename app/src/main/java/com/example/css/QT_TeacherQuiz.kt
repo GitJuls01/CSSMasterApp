@@ -15,6 +15,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.Query
 
 class QT_TeacherQuiz : AppCompatActivity() {
 
@@ -78,6 +79,8 @@ class QT_TeacherQuiz : AppCompatActivity() {
         val userEmail = sharedPreferences.getString("email", "Default Email")
 
         firestore.collection("quizzes")
+            .whereEqualTo("isPosted", true)
+            .orderBy("created_date", Query.Direction.DESCENDING)
             .get()
             .addOnSuccessListener { snapshot ->
                 if (!snapshot.isEmpty) {

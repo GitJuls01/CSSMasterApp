@@ -68,11 +68,12 @@
             android:exported="false"
             android:screenOrientation="landscape" />
         <activity
-            android:name=".StudentAccountSettings"
+            android:name=".TeacherAccountSettings"
             android:exported="false" />
         <activity
             android:name=".StudentDashboardFragment"
-            android:exported="false" />
+            android:exported="false"
+            tools:ignore="Instantiatable" />
         <activity
             android:name=".TutorialsVideoPreview"
             android:exported="false" />
