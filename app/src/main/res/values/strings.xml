@@ -19,6 +19,7 @@
     <string name="no_answer_feedback">You did not select an answer</string>
 
     <string name="quiz_info_text">Participants: %1$d, Average Score: %2$d%%</string>
+    <string name="posted_text">Posted</string>
 
 
 

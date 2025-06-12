@@ -3,6 +3,7 @@ package com.example.css
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
+import android.widget.ImageButton
 import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.activity.enableEdgeToEdge
@@ -27,6 +28,7 @@ class TeacherDashboard : AppCompatActivity() {
         // Set OnClickListener to navigate to TeacherDashboard
         val viewQuizButton = findViewById<Button>(R.id.btn_view_quiz)
         val createQuizButton = findViewById<Button>(R.id.btn_create_quiz)
+        val settingsButton = findViewById<ImageButton>(R.id.setting_button)
 
         //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
         // Register the back press callback to handle back button presses
@@ -57,6 +59,11 @@ class TeacherDashboard : AppCompatActivity() {
 
         createQuizButton.setOnClickListener {
             val intent = Intent(this, CreateQuiz::class.java)
+            startActivity(intent)
+        }
+
+        settingsButton.setOnClickListener {
+            val intent = Intent(this, TeacherAccountSettings::class.java)
             startActivity(intent)
         }
     }

@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/background_1"
-    tools:context=".StudentAccountSettings">
+    tools:context=".TeacherAccountSettings">
 
     <!-- Vertical Guidelines -->
     <androidx.constraintlayout.widget.Guideline
@@ -50,6 +50,19 @@
         android:src="@drawable/setting_button"
         app:layout_constraintEnd_toStartOf="@id/guideline_vertical_2"
         app:layout_constraintTop_toBottomOf="@id/guideline_horizontal"
+        tools:ignore="SpeakableTextPresentCheck" />
+
+    <!-- Back button -->
+    <ImageButton
+        android:id="@+id/back_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="14dp"
+        android:background="@null"
+        android:scaleType="fitCenter"
+        android:src="@drawable/back_button"
+        app:layout_constraintStart_toStartOf="@id/guideline_vertical"
+        app:layout_constraintTop_toTopOf="parent"
         tools:ignore="SpeakableTextPresentCheck" />
 
     <!-- Logo -->
