@@ -81,22 +81,22 @@ class TeacherViewQuiz : AppCompatActivity() {
                     val infoView = quizView.findViewById<TextView>(R.id.quiz_info)
 
                     titleView.text = title
-                    infoView.text = getString(R.string.quiz_info_text, participantsCount, 0)
+                    infoView.text = getString(R.string.quiz_info_text, participantsCount)
 
                     // Optional: Set click listeners
                     val editButton = quizView.findViewById<TextView>(R.id.edit_text)
                     val deleteButton = quizView.findViewById<TextView>(R.id.delete_text)
-                    val postBtn = quizView.findViewById<TextView>(R.id.post)
+//                    val postBtn = quizView.findViewById<TextView>(R.id.post)
 
-                    val isPosted = document.getBoolean("isPosted") ?: false
-                    if (isPosted) {
-                        // Disable editing & posting functionality
-                        editButton.isEnabled = false
-                        postBtn.isEnabled = false
-                        postBtn.text = getString(R.string.posted_text)
-                        editButton.alpha = 0.5f
-                        postBtn.alpha = 0.5f
-                    }
+//                    val isPosted = document.getBoolean("isPosted") ?: false
+//                    if (isPosted) {
+//                        // Disable editing & posting functionality
+//                        editButton.isEnabled = false
+//                        postBtn.isEnabled = false
+//                        postBtn.text = getString(R.string.posted_text)
+//                        editButton.alpha = 0.5f
+//                        postBtn.alpha = 0.5f
+//                    }
                     editButton.setOnClickListener {
                         val intent = Intent(this, CreateQuiz::class.java)
                         intent.putExtra("quizId", document.id)
@@ -130,44 +130,44 @@ class TeacherViewQuiz : AppCompatActivity() {
                         dialog.show()
                     }
 
-                    postBtn.setOnClickListener {
-                        val builder = AlertDialog.Builder(this)
-                        builder.setTitle("Confirm Post")
-                            .setMessage("Are you sure you want to post this quiz?")
-                            .setCancelable(false)
-                            .setPositiveButton("Yes") { dialog, _ ->
-                                val quizRef = firestore.collection("quizzes").document(quizId)
-
-                                quizRef.update("isPosted", true)
-                                    .addOnSuccessListener {
-                                        editButton.isEnabled = false
-                                        postBtn.isEnabled = false
-                                        postBtn.text = getString(R.string.posted_text)
-                                        editButton.alpha = 0.5f
-                                        postBtn.alpha = 0.5f
-                                        Toast.makeText(this, "Quiz Posted Successfully!", Toast.LENGTH_SHORT).show()
-                                    }
-                                    .addOnFailureListener { e ->
-                                        Log.w("TeacherViewQuiz", "Error updating quiz $quizId: ${e.message}", e)
-                                    }
-                                dialog.dismiss()
-                            }
-                            .setNegativeButton("No") { dialog, _ ->
-                                dialog.dismiss()
-                            }
-
-                        val dialog = builder.create()
-                        dialog.setOnShowListener {
-                            val positiveButton = dialog.getButton(AlertDialog.BUTTON_POSITIVE)
-                            val negativeButton = dialog.getButton(AlertDialog.BUTTON_NEGATIVE)
-
-                            // Set custom text color for the buttons
-                            val darkGreen = getColor(R.color.dark_green)
-                            positiveButton.setTextColor(darkGreen)
-                            negativeButton.setTextColor(darkGreen)
-                        }
-                        dialog.show()
-                    }
+//                    postBtn.setOnClickListener {
+//                        val builder = AlertDialog.Builder(this)
+//                        builder.setTitle("Confirm Post")
+//                            .setMessage("Are you sure you want to post this quiz?")
+//                            .setCancelable(false)
+//                            .setPositiveButton("Yes") { dialog, _ ->
+//                                val quizRef = firestore.collection("quizzes").document(quizId)
+//
+//                                quizRef.update("isPosted", true)
+//                                    .addOnSuccessListener {
+//                                        editButton.isEnabled = false
+//                                        postBtn.isEnabled = false
+//                                        postBtn.text = getString(R.string.posted_text)
+//                                        editButton.alpha = 0.5f
+//                                        postBtn.alpha = 0.5f
+//                                        Toast.makeText(this, "Quiz Posted Successfully!", Toast.LENGTH_SHORT).show()
+//                                    }
+//                                    .addOnFailureListener { e ->
+//                                        Log.w("TeacherViewQuiz", "Error updating quiz $quizId: ${e.message}", e)
+//                                    }
+//                                dialog.dismiss()
+//                            }
+//                            .setNegativeButton("No") { dialog, _ ->
+//                                dialog.dismiss()
+//                            }
+//
+//                        val dialog = builder.create()
+//                        dialog.setOnShowListener {
+//                            val positiveButton = dialog.getButton(AlertDialog.BUTTON_POSITIVE)
+//                            val negativeButton = dialog.getButton(AlertDialog.BUTTON_NEGATIVE)
+//
+//                            // Set custom text color for the buttons
+//                            val darkGreen = getColor(R.color.dark_green)
+//                            positiveButton.setTextColor(darkGreen)
+//                            negativeButton.setTextColor(darkGreen)
+//                        }
+//                        dialog.show()
+//                    }
                     quizContainer.addView(quizView)
                 }
             }
