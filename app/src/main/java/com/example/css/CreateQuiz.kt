@@ -7,20 +7,20 @@ import android.widget.EditText
 import android.widget.ImageButton
 import android.widget.LinearLayout
 import androidx.appcompat.app.AppCompatActivity
-
 import com.google.firebase.firestore.FirebaseFirestore
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import com.google.firebase.firestore.SetOptions
 
 class CreateQuiz : AppCompatActivity() {
 
     private var questionCount = 1
     private lateinit var firestore: FirebaseFirestore
     private lateinit var sharedPreferences: SharedPreferences
-    private lateinit var participantsList: List<*>
+    private var participantsList: List<*>? = null
 
     // Track all question blocks
     private val questionBlocks = mutableListOf<List<EditText>>()
@@ -55,6 +55,12 @@ class CreateQuiz : AppCompatActivity() {
         saveBtn.setOnClickListener {
             saveQuizToFirestore()
         }
+
+        val backBtn = findViewById<ImageButton>(R.id.back_button)
+        backBtn.setOnClickListener {
+            finish() // Go back to the previous screen
+        }
+
 
         val quizId = intent.getStringExtra("quizId")
         if (quizId != null) {
@@ -168,7 +174,11 @@ class CreateQuiz : AppCompatActivity() {
             val wrong3 = inputs[4].text.toString().trim()
 
             if (questionText.isEmpty() || correct.isEmpty() || wrong1.isEmpty() || wrong2.isEmpty() || wrong3.isEmpty()) {
-                Toast.makeText(this, "Please fill in all fields in question ${index + 1}", Toast.LENGTH_SHORT).show()
+                Toast.makeText(
+                    this,
+                    "Please fill in all fields in question ${index + 1}",
+                    Toast.LENGTH_SHORT
+                ).show()
                 return
             }
 
@@ -182,40 +192,62 @@ class CreateQuiz : AppCompatActivity() {
             questionsList.add(questionMap)
         }
 
-        val quizData = mapOf(
+        val quizDataSaveUpdate = mutableMapOf(
             "created_by" to userName,
             "created_date" to com.google.firebase.Timestamp.now(),
             "title" to title,
             "description" to description,
             "questions" to questionsList,
-            "participants" to participantsList
+            "isPosted" to false
         )
 
         // Check if editing or creating new
         val quizId = intent.getStringExtra("quizId")
 
-        if (quizId != null) {
-            // Editing existing quiz
-            firestore.collection("quizzes")
-                .document(quizId)
-                .set(quizData)
-                .addOnSuccessListener {
-                    Toast.makeText(this, "Quiz updated successfully!", Toast.LENGTH_SHORT).show()
-                    finish()
+        // Retrieve existing quiz data if editing
+        quizId?.let { it ->
+            firestore.collection("quizzes").document(it).get()
+                .addOnSuccessListener { document ->
+                    if (document.exists()) {
+                        // Preserve existing 'created_date' & participants if editing
+                        val existingCreatedDate = document.getTimestamp("created_date")
+                        existingCreatedDate?.let {
+                            quizDataSaveUpdate["created_date"] = it
+                        }
+                    }
                 }
-                .addOnFailureListener { e ->
-                    Toast.makeText(this, "Failed to update quiz: ${e.message}", Toast.LENGTH_LONG).show()
+                .addOnCompleteListener {
+                    // Filter out null values from the map
+                    val filteredData = quizDataSaveUpdate.filterValues { it != null }
+
+                    // Proceed with saving the data
+                    firestore.collection("quizzes")
+                        .document(quizId)
+                        .set(filteredData, SetOptions.merge())
+                        .addOnSuccessListener {
+                            Toast.makeText(this, "Quiz updated successfully!", Toast.LENGTH_SHORT)
+                                .show()
+                            finish()
+                        }
+                        .addOnFailureListener { e ->
+                            Toast.makeText(
+                                this,
+                                "Failed to update quiz: ${e.message}",
+                                Toast.LENGTH_LONG
+                            ).show()
+                        }
                 }
-        } else {
+        } ?: run {
             // Creating new quiz
             firestore.collection("quizzes")
-                .add(quizData)
+                .add(quizDataSaveUpdate)
                 .addOnSuccessListener {
                     Toast.makeText(this, "Quiz saved successfully!", Toast.LENGTH_SHORT).show()
                     finish()
                 }
                 .addOnFailureListener { e ->
-                    Toast.makeText(this, "Failed to save quiz: ${e.message}", Toast.LENGTH_LONG).show()
+                    Toast.makeText(this, "Failed to save quiz: ${e.message}", Toast.LENGTH_LONG)
+                        .show()
                 }
         }
     }

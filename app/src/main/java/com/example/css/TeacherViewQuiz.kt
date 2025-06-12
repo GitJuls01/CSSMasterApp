@@ -2,6 +2,7 @@ package com.example.css
 
 import android.content.Intent
 import android.content.SharedPreferences
+import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
 import android.widget.ImageButton
@@ -35,11 +36,17 @@ class TeacherViewQuiz : AppCompatActivity() {
 
         // Set OnClickListener to navigate to TeacherDashboard
         val backButton = findViewById<ImageButton>(R.id.back_button)
+        val settingsButton = findViewById<ImageButton>(R.id.setting_button)
+
         backButton.setOnClickListener {
             val intent = Intent(this, TeacherDashboard::class.java)
             startActivity(intent)
         }
 
+        settingsButton.setOnClickListener {
+            val intent = Intent(this, TeacherAccountSettings::class.java)
+            startActivity(intent)
+        }
         sharedPreferences = getSharedPreferences("user_data", MODE_PRIVATE)
 
     }
@@ -49,6 +56,7 @@ class TeacherViewQuiz : AppCompatActivity() {
         val userName = sharedPreferences.getString("name", "Default Name")
         if (userName != null) {
             fetchQuizzesCreatedBy(userName)
+
         }
     }
 
@@ -62,6 +70,7 @@ class TeacherViewQuiz : AppCompatActivity() {
             .get()
             .addOnSuccessListener { result ->
                 for (document in result) {
+                    val quizId = document.id
                     val title = document.getString("title") ?: "Untitled Quiz"
                     val participantsList = document.get("participants") as? List<*> ?: emptyList<Any>()
                     val participantsCount = participantsList.size
@@ -77,7 +86,17 @@ class TeacherViewQuiz : AppCompatActivity() {
                     // Optional: Set click listeners
                     val editButton = quizView.findViewById<TextView>(R.id.edit_text)
                     val deleteButton = quizView.findViewById<TextView>(R.id.delete_text)
+                    val postBtn = quizView.findViewById<TextView>(R.id.post)
 
+                    val isPosted = document.getBoolean("isPosted") ?: false
+                    if (isPosted) {
+                        // Disable editing & posting functionality
+                        editButton.isEnabled = false
+                        postBtn.isEnabled = false
+                        postBtn.text = getString(R.string.posted_text)
+                        editButton.alpha = 0.5f
+                        postBtn.alpha = 0.5f
+                    }
                     editButton.setOnClickListener {
                         val intent = Intent(this, CreateQuiz::class.java)
                         intent.putExtra("quizId", document.id)
@@ -110,6 +129,45 @@ class TeacherViewQuiz : AppCompatActivity() {
 
                         dialog.show()
                     }
+
+                    postBtn.setOnClickListener {
+                        val builder = AlertDialog.Builder(this)
+                        builder.setTitle("Confirm Post")
+                            .setMessage("Are you sure you want to post this quiz?")
+                            .setCancelable(false)
+                            .setPositiveButton("Yes") { dialog, _ ->
+                                val quizRef = firestore.collection("quizzes").document(quizId)
+
+                                quizRef.update("isPosted", true)
+                                    .addOnSuccessListener {
+                                        editButton.isEnabled = false
+                                        postBtn.isEnabled = false
+                                        postBtn.text = getString(R.string.posted_text)
+                                        editButton.alpha = 0.5f
+                                        postBtn.alpha = 0.5f
+                                        Toast.makeText(this, "Quiz Posted Successfully!", Toast.LENGTH_SHORT).show()
+                                    }
+                                    .addOnFailureListener { e ->
+                                        Log.w("TeacherViewQuiz", "Error updating quiz $quizId: ${e.message}", e)
+                                    }
+                                dialog.dismiss()
+                            }
+                            .setNegativeButton("No") { dialog, _ ->
+                                dialog.dismiss()
+                            }
+
+                        val dialog = builder.create()
+                        dialog.setOnShowListener {
+                            val positiveButton = dialog.getButton(AlertDialog.BUTTON_POSITIVE)
+                            val negativeButton = dialog.getButton(AlertDialog.BUTTON_NEGATIVE)
+
+                            // Set custom text color for the buttons
+                            val darkGreen = getColor(R.color.dark_green)
+                            positiveButton.setTextColor(darkGreen)
+                            negativeButton.setTextColor(darkGreen)
+                        }
+                        dialog.show()
+                    }
                     quizContainer.addView(quizView)
                 }
             }
@@ -117,6 +175,4 @@ class TeacherViewQuiz : AppCompatActivity() {
                 Log.w("TeacherViewQuiz", "Error loading quizzes", e)
             }
     }
-
-
 }
