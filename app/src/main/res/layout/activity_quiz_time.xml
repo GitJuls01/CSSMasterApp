@@ -101,7 +101,7 @@
             android:id="@+id/qt_pic_holder"
             android:layout_width="60dp"
             android:layout_height="0dp"
-            android:src="@drawable/qt_pic_holder"
+            android:src="@drawable/profilecss"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"

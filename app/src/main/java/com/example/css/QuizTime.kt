@@ -130,7 +130,12 @@ class QuizTime : AppCompatActivity() {
                 userRank = sortedScores.indexOfFirst { it.key == userName } + 1
 
                 val userRankText = findViewById<TextView>(R.id.rank_text)
-                userRankText.text = getString(R.string.user_rank, userRank)
+                if (userRank != null && userRank!! > 0) {
+                    userRankText.text = getString(R.string.user_rank, userRank)
+                } else {
+                    userRankText.text = getString(R.string.user_not_ranked)
+                }
+
             }
             .addOnFailureListener { e ->
                 Toast.makeText(this@QuizTime, "Failed to fetch leaderboard", Toast.LENGTH_SHORT)
