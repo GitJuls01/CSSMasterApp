@@ -198,7 +198,8 @@ class CreateQuiz : AppCompatActivity() {
             "title" to title,
             "description" to description,
             "questions" to questionsList,
-            "isPosted" to false
+            "participants" to participantsList
+            //"isPosted" to false
         )
 
         // Check if editing or creating new
@@ -211,8 +212,12 @@ class CreateQuiz : AppCompatActivity() {
                     if (document.exists()) {
                         // Preserve existing 'created_date' & participants if editing
                         val existingCreatedDate = document.getTimestamp("created_date")
+                        val existingParticipants = document.get("participants") as? List<*>
                         existingCreatedDate?.let {
                             quizDataSaveUpdate["created_date"] = it
+                        }
+                        existingParticipants?.let {
+                            quizDataSaveUpdate["participants"] = it
                         }
                     }
                 }

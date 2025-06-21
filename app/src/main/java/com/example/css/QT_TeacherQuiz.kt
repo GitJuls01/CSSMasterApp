@@ -79,7 +79,7 @@ class QT_TeacherQuiz : AppCompatActivity() {
         val userEmail = sharedPreferences.getString("email", "Default Email")
 
         firestore.collection("quizzes")
-            .whereEqualTo("isPosted", true)
+            //.whereEqualTo("isPosted", true)
             .orderBy("created_date", Query.Direction.DESCENDING)
             .get()
             .addOnSuccessListener { snapshot ->
