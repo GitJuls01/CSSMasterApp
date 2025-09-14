@@ -1,8 +1,10 @@
 package com.example.css
 
+import android.app.AlertDialog
 import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
+import android.os.CountDownTimer
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.ImageButton
@@ -12,6 +14,7 @@ import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.google.firebase.firestore.FirebaseFirestore
@@ -121,21 +124,41 @@ class QT_TeacherQuiz : AppCompatActivity() {
                             takeButton.alpha = 0.5f
                         }
 
+                        titleView.setOnClickListener {
+                            showTitleAndDescription(title, description )
+                        }
+
+                        descView.setOnClickListener {
+                            showTitleAndDescription(title, description )
+                        }
+
                         takeButton.setOnClickListener {
                             // Check if user has already participated
                             if (alreadyTaken) {
                                 Toast.makeText(this, "You already took this quiz: $title", Toast.LENGTH_SHORT).show()
                             }  else {
-                                firestore.collection("quizzes").document(quizId)
-                                    .update("participants", com.google.firebase.firestore.FieldValue.arrayUnion(userEmail))
-                                    .addOnSuccessListener {
-                                        val intent =
-                                            Intent(this, QT_TeacherQuiz_MainGame::class.java)
-                                        intent.putExtra("quiz_id", quizId)
-                                        startActivity(intent)
-                                    }
-                                    .addOnFailureListener { e -> Toast.makeText(this, "Failed to join quiz: ${e.message}", Toast.LENGTH_SHORT).show()
-                                    }
+                                showCountdownDialog {
+                                    firestore.collection("quizzes").document(quizId)
+                                        .update(
+                                            "participants",
+                                            com.google.firebase.firestore.FieldValue.arrayUnion(
+                                                userEmail
+                                            )
+                                        )
+                                        .addOnSuccessListener {
+                                            val intent =
+                                                Intent(this, QT_TeacherQuiz_MainGame::class.java)
+                                            intent.putExtra("quiz_id", quizId)
+                                            startActivity(intent)
+                                        }
+                                        .addOnFailureListener { e ->
+                                            Toast.makeText(
+                                                this,
+                                                "Failed to join quiz: ${e.message}",
+                                                Toast.LENGTH_SHORT
+                                            ).show()
+                                        }
+                                }
                             }
                         }
                         quizListContainer.addView(quizView)
@@ -150,5 +173,44 @@ class QT_TeacherQuiz : AppCompatActivity() {
                 Toast.makeText(this, "Failed to load quizzes: ${e.message}", Toast.LENGTH_LONG).show()
             }
     }
+
+    private fun showCountdownDialog(onFinish: () -> Unit) {
+        val dialogView = LayoutInflater.from(this).inflate(R.layout.loading_quiz_countdown, null)
+        val countdownText = dialogView.findViewById<TextView>(R.id.countdown_text)
+
+        val dialog = AlertDialog.Builder(this)
+            .setTitle("Get Ready!")
+            .setView(dialogView)
+            .setCancelable(false)
+            .create()
+
+        dialog.show()
+
+        object : CountDownTimer(6000, 1000) {
+            override fun onTick(millisUntilFinished: Long) {
+                val secondsLeft = millisUntilFinished / 1000
+                countdownText.text = "The quiz will start in $secondsLeft..."
+            }
+
+            override fun onFinish() {
+                dialog.dismiss()
+                onFinish()
+            }
+        }.start()
+    }
+
+    private fun showTitleAndDescription(title: String, description: String) {
+        val dialog = AlertDialog.Builder(this) // use "requireContext()" if in Fragment
+            .setTitle(title)
+            .setMessage(description)
+            .setPositiveButton("Close") { d, _ ->
+                d.dismiss()
+            }
+            .create()
+
+        dialog.show()
+    }
+
+
 
 }

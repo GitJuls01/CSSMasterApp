@@ -34,33 +34,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
-    <!-- Back button -->
-<!--    <ImageButton-->
-<!--        android:id="@+id/back_button"-->
-<!--        android:layout_width="wrap_content"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:layout_marginTop="14dp"-->
-<!--        android:background="@null"-->
-<!--        android:scaleType="fitCenter"-->
-<!--        android:src="@drawable/back_button"-->
-<!--        app:layout_constraintStart_toStartOf="@id/guideline_vertical"-->
-<!--        app:layout_constraintTop_toTopOf="parent"-->
-<!--        tools:ignore="SpeakableTextPresentCheck" />-->
-
-    <!-- Centered Quiz title -->
-<!--    <TextView-->
-<!--        android:id="@+id/quiz_title"-->
-<!--        android:layout_width="wrap_content"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:text="Quiz"-->
-<!--        android:textStyle="bold"-->
-<!--        android:textSize="28sp"-->
-<!--        android:textColor="#000"-->
-<!--        app:layout_constraintTop_toTopOf="@+id/qt_dashboard_holder"-->
-<!--        app:layout_constraintBottom_toBottomOf="@+id/back_button"-->
-<!--        app:layout_constraintStart_toStartOf="parent"-->
-<!--        app:layout_constraintEnd_toEndOf="parent" />-->
-
     <!-- Name Holder -->
     <ImageView
         android:id="@+id/qt_name_holder"
@@ -272,5 +245,31 @@
 
         </LinearLayout>
     </ScrollView>
+
+<!--    <LinearLayout-->
+<!--        android:id="@+id/loading_layout"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="match_parent"-->
+<!--        android:gravity="center"-->
+<!--        android:orientation="vertical"-->
+<!--        android:background="#80000000"-->
+<!--        android:visibility="gone">-->
+
+<!--        <ProgressBar-->
+<!--            android:id="@+id/loading_progress"-->
+<!--            android:layout_width="60dp"-->
+<!--            android:layout_height="60dp"-->
+<!--            style="?android:attr/progressBarStyleLarge"-->
+<!--            android:indeterminate="true"-->
+<!--            android:layout_marginBottom="16dp"/>-->
+
+<!--        <TextView-->
+<!--            android:id="@+id/loading_text"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:text="The quiz will start in 3"-->
+<!--            android:textSize="18sp"-->
+<!--            android:textColor="@android:color/white"/>-->
+<!--    </LinearLayout>-->
 
 </androidx.constraintlayout.widget.ConstraintLayout>

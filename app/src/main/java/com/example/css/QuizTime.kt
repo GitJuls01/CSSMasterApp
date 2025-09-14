@@ -1,8 +1,10 @@
 package com.example.css
 
+import android.app.AlertDialog
 import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
+import android.os.CountDownTimer
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -55,22 +57,26 @@ class QuizTime : Fragment() {
         // Hardware quiz category
         val hardwareQuizCategory = view.findViewById<ImageButton>(R.id.qt_hardware_category)
         hardwareQuizCategory.setOnClickListener {
-            val intent = Intent(requireContext(), QT_ComputerHardware_MainGame::class.java)
-            startActivity(intent)
+            showCountdownDialog {
+                val intent = Intent(requireContext(), QT_ComputerHardware_MainGame::class.java)
+                startActivity(intent)
+            }
         }
-
         // Software quiz category
         val softwareQuizCategory = view.findViewById<ImageButton>(R.id.qt_software_category)
         softwareQuizCategory.setOnClickListener {
-            val intent = Intent(requireContext(), QT_ComputerSoftware_MainGame::class.java)
-            startActivity(intent)
+            showCountdownDialog {
+                val intent = Intent(requireContext(), QT_ComputerSoftware_MainGame::class.java)
+                startActivity(intent)
+            }
         }
-
         // Inventors quiz category
         val inventorsQuizCategory = view.findViewById<ImageButton>(R.id.qt_inventors_category)
         inventorsQuizCategory.setOnClickListener {
-            val intent = Intent(requireContext(), QT_Inventors_MainGame::class.java)
-            startActivity(intent)
+            showCountdownDialog {
+                val intent = Intent(requireContext(), QT_Inventors_MainGame::class.java)
+                startActivity(intent)
+            }
         }
 
         // Access SharedPreferences
@@ -121,4 +127,30 @@ class QuizTime : Fragment() {
                 Log.e("QuizTimeFragment", "Error fetching leaderboard", e)
             }
     }
+
+    private fun showCountdownDialog(onFinish: () -> Unit) {
+        val dialogView = LayoutInflater.from(requireContext()).inflate(R.layout.loading_quiz_countdown, null)
+        val countdownText = dialogView.findViewById<TextView>(R.id.countdown_text)
+
+        val dialog = AlertDialog.Builder(requireContext())
+            .setTitle("Get Ready!")
+            .setView(dialogView)
+            .setCancelable(false)
+            .create()
+
+        dialog.show()
+
+        object : CountDownTimer(6000, 1000) {
+            override fun onTick(millisUntilFinished: Long) {
+                val secondsLeft = millisUntilFinished / 1000
+                countdownText.text = "The quiz will start in $secondsLeft..."
+            }
+
+            override fun onFinish() {
+                dialog.dismiss()
+                onFinish()
+            }
+        }.start()
+    }
+
 }
