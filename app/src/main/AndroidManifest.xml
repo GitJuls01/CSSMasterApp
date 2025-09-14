@@ -18,6 +18,9 @@
         android:theme="@style/Theme.CSS"
         tools:targetApi="31">
         <activity
+            android:name=".GuessCSS"
+            android:exported="false" />
+        <activity
             android:name=".ReviewAnswers"
             android:exported="false" />
         <activity

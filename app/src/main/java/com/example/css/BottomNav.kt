@@ -35,6 +35,13 @@ abstract class BottomNav : AppCompatActivity() {
                     }
                     true
                 }
+                R.id.nav_quizzes -> {
+                    if (currentActivity != QuizTime::class.java) {
+                        startActivity(Intent(this, QuizTime::class.java))
+                        finish()
+                    }
+                    true
+                }
 //                R.id.nav_tutorials -> {
 //                    if (currentActivity != TutorialsFragment::class.java) {
 //                        startActivity(Intent(this, TutorialsFragment::class.java))

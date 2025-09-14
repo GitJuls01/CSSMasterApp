@@ -1,5 +1,6 @@
 package com.example.css
 
+import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
@@ -48,6 +49,7 @@ class MainActivity : AppCompatActivity() {
             when (openFragment) {
                 "studentDashboard" -> replaceFragment(StudentDashboardFragment())
                 "games" -> replaceFragment(GamesFragment())
+                "quizzes" -> replaceFragment(QuizTime())
 //                "tutorials" -> replaceFragment(TutorialsFragment())
                 "account" -> replaceFragment(StudentAccountSettings())
                 else -> replaceFragment(StudentDashboardFragment())
@@ -58,6 +60,7 @@ class MainActivity : AppCompatActivity() {
             when (item.itemId) {
                 R.id.nav_modules -> replaceFragment(StudentDashboardFragment())
                 R.id.nav_games -> replaceFragment(GamesFragment())
+                R.id.nav_quizzes -> replaceFragment(QuizTime())
 //                R.id.nav_tutorials -> replaceFragment(TutorialsFragment())
                 R.id.nav_account -> replaceFragment(StudentAccountSettings())
             }

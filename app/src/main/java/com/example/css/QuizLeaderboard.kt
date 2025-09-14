@@ -53,9 +53,18 @@ class QuizLeaderboard : AppCompatActivity() {
         //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
 
+//        val backButton = findViewById<ImageButton>(R.id.back_button)
+//        backButton.setOnClickListener {
+//            val intent = Intent(this, QuizTime::class.java)
+//            startActivity(intent)
+//            finish()
+//        }
+
         val backButton = findViewById<ImageButton>(R.id.back_button)
         backButton.setOnClickListener {
-            val intent = Intent(this, QuizTime::class.java)
+            val intent = Intent(this, MainActivity::class.java)
+            intent.putExtra("openFragment", "quizzes")
+            intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP
             startActivity(intent)
             finish()
         }

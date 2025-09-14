@@ -25,15 +25,15 @@ class GamesFragment : Fragment() {
 
         val btnQuizTime = view.findViewById<ImageButton>(R.id.btn_quiz_time)
         btnQuizTime.setOnClickListener {
-            val intent = Intent(requireContext(), QuizTime::class.java)
-            startActivity(intent)
-        }
-
-        val btnGuessCss = view.findViewById<ImageButton>(R.id.btn_guess_css)
-        btnGuessCss.setOnClickListener {
             val intent = Intent(requireContext(), GuessCSSMainGame::class.java)
             startActivity(intent)
         }
+
+//        val btnGuessCss = view.findViewById<ImageButton>(R.id.btn_guess_css)
+//        btnGuessCss.setOnClickListener {
+//            val intent = Intent(requireContext(), GuessCSSMainGame::class.java)
+//            startActivity(intent)
+//        }
         return view
     }
 }
