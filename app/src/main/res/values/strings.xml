@@ -20,9 +20,20 @@
     <string name="no_answer_feedback">You did not select an answer</string>
 
     <string name="quiz_info_text">Participants: %1$d</string>
-<!--    //, Average Score: %2$d%%-->
+    <!--    //, Average Score: %2$d%%-->
     <string name="posted_text">Posted</string>
 
+    <string name="welcome_message">Welcome to Computer Repair! In this fun\n
+    drag-and-drop game, you will learn how to\n
+    build a computer step by step. Just pick the\n
+    right parts—like the CPU, RAM, and\n
+    motherboard—and place them where they\n
+    belong. As you go, you will discover what\n
+    each part does and how they all work\n
+    together. No tech skills needed—just play,\n
+    learn, and become a computer pro!\n\n
+
+    Select the power button to start!</string>
 
 
 </resources>

@@ -116,21 +116,21 @@
                 android:id="@+id/btn_quiz_time"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/logo_quiz_time"
+                android:src="@drawable/logo_guess_css"
                 android:scaleType="fitXY"
                 android:background="@null"
                 android:contentDescription="Quiz Time"/>
         </LinearLayout>
 
         <!-- Row 2: Guess CSS (Below the Two Buttons) -->
-        <ImageButton
-            android:id="@+id/btn_guess_css"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/logo_guess_css"
-            android:background="@null"
-            android:contentDescription="Guess CSS"
-            android:layout_marginTop="16dp"/>
+<!--        <ImageButton-->
+<!--            android:id="@+id/btn_guess_css"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:src="@drawable/logo_guess_css"-->
+<!--            android:background="@null"-->
+<!--            android:contentDescription="Guess CSS"-->
+<!--            android:layout_marginTop="16dp"/>-->
     </LinearLayout>
 
 

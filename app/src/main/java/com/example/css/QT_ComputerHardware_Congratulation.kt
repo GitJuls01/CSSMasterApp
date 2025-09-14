@@ -20,10 +20,19 @@ class QT_ComputerHardware_Congratulation : AppCompatActivity() {
             insets
         }
 
+//        val backButton = findViewById<ImageButton>(R.id.back_button)
+//        backButton.setOnClickListener {
+//            val intent = Intent(this, QuizTime::class.java)
+//            startActivity(intent)
+//        }
+
         val backButton = findViewById<ImageButton>(R.id.back_button)
         backButton.setOnClickListener {
-            val intent = Intent(this, QuizTime::class.java)
+            val intent = Intent(this, MainActivity::class.java)
+            intent.putExtra("openFragment", "quizzes")
+            intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP
             startActivity(intent)
+            finish()
         }
 
         val leaderboard = findViewById<ImageButton>(R.id.leaderboard_button)
@@ -32,10 +41,19 @@ class QT_ComputerHardware_Congratulation : AppCompatActivity() {
             startActivity(intent)
         }
 
+//        val playAgainButton = findViewById<ImageButton>(R.id.play_again_button)
+//        playAgainButton.setOnClickListener {
+//            val intent = Intent(this, QuizTime::class.java)
+//            startActivity(intent)
+//        }
+
         val playAgainButton = findViewById<ImageButton>(R.id.play_again_button)
         playAgainButton.setOnClickListener {
-            val intent = Intent(this, QuizTime::class.java)
+            val intent = Intent(this, MainActivity::class.java)
+            intent.putExtra("openFragment", "quizzes")
+            intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP
             startActivity(intent)
+            finish()
         }
 
         val correctCount = intent.getIntExtra("correct_count", 0)
