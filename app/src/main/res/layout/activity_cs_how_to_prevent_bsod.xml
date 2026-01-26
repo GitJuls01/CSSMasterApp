@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+xmlns:app="http://schemas.android.com/apk/res-auto"
+xmlns:tools="http://schemas.android.com/tools"
+android:id="@+id/main"
+android:layout_width="match_parent"
+android:layout_height="match_parent"
+android:background="@drawable/background_1"
+tools:context=".CSHowToPreventBsod">
+
+<androidx.constraintlayout.widget.Guideline
+    android:id="@+id/guideline_vertical"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    app:layout_constraintGuide_percent="0.05" />
+
+<androidx.constraintlayout.widget.Guideline
+    android:id="@+id/guideline_vertical_2"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    app:layout_constraintGuide_percent="0.95" />
+
+<androidx.constraintlayout.widget.Guideline
+    android:id="@+id/guideline_vertical_3"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    app:layout_constraintGuide_percent="0.10" />
+
+<androidx.constraintlayout.widget.Guideline
+    android:id="@+id/guideline_vertical_4"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    app:layout_constraintGuide_percent="0.90" />
+
+<androidx.constraintlayout.widget.Guideline
+    android:id="@+id/guideline_horizontal"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    app:layout_constraintGuide_percent="0.05" />
+
+<!-- Back Button -->
+<ImageButton
+    android:id="@+id/back_button"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="14dp"
+    android:background="@null"
+    android:scaleType="fitCenter"
+    android:src="@drawable/back_button"
+    app:layout_constraintStart_toStartOf="@id/guideline_vertical"
+    app:layout_constraintTop_toTopOf="parent"
+    tools:ignore="SpeakableTextPresentCheck" />
+
+<!-- CSS Master Image -->
+<ImageView
+    android:id="@+id/css_master"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:contentDescription="CSS Master"
+    android:src="@drawable/css_master"
+    app:layout_constraintTop_toBottomOf="@id/guideline_horizontal"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintEnd_toEndOf="parent"
+    android:layout_marginTop="10dp"/>
+
+    <!-- Title -->
+    <TextView
+        android:id="@+id/prevent_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Learn how to prevent BSOD"
+        android:textStyle="bold"
+        android:textSize="18sp"
+        android:textColor="#2E7D32"
+        app:layout_constraintTop_toBottomOf="@id/css_master"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="16dp"/>
+
+    <!-- BSOD Image -->
+    <ImageView
+        android:id="@+id/bsod_image"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/cs_bsod_image"
+        app:layout_constraintTop_toBottomOf="@id/prevent_title"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="10dp"/>
+
+    <!-- Card 1 -->
+    <androidx.cardview.widget.CardView
+        android:id="@+id/card_system"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:cardCornerRadius="16dp"
+        app:cardElevation="6dp"
+        app:cardBackgroundColor="#E0E0E0"
+        app:layout_constraintTop_toBottomOf="@id/bsod_image"
+        app:layout_constraintStart_toStartOf="@id/guideline_vertical"
+        app:layout_constraintEnd_toEndOf="@id/guideline_vertical_2"
+        android:layout_marginTop="20dp">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="11dp"
+            android:textColor="@android:color/black"
+            android:textStyle="bold"
+            android:textSize="10sp"
+            android:text="System &amp; Software\n• Keep Windows updated - Install the latest security patches and system updates.\n• Update drivers regularly - Especially graphics, chipset, and network drivers.\n• Uninstall incompatible software - Remove programs that cause frequent crashes.\n• Run antivirus scans - Prevent malware that can corrupt system files."/>
+    </androidx.cardview.widget.CardView>
+
+    <!-- Card 2 -->
+    <androidx.cardview.widget.CardView
+        android:id="@+id/card_hardware"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:cardCornerRadius="16dp"
+        app:cardElevation="6dp"
+        app:cardBackgroundColor="#E0E0E0"
+        app:layout_constraintTop_toBottomOf="@id/card_system"
+        app:layout_constraintStart_toStartOf="@id/guideline_vertical"
+        app:layout_constraintEnd_toEndOf="@id/guideline_vertical_2"
+        android:layout_marginTop="10dp">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="11dp"
+            android:textColor="@android:color/black"
+            android:textSize="10sp"
+            android:textStyle="bold"
+            android:text="Hardware Care\n• Check RAM health - Use Windows Memory Diagnostic to detect faulty memory. \n• Monitor hard drive health - Run chkdsk or manufacturer tools to catch disk errors. \n• Ensure proper cooling - Prevent overheating with clean fans and good airflow. \n• Replace failing hardware - Swap out components showing repeated errors."/>
+    </androidx.cardview.widget.CardView>
+
+    <!-- Card 3 -->
+    <androidx.cardview.widget.CardView
+        android:id="@+id/card_maintenance"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:cardCornerRadius="16dp"
+        app:cardElevation="6dp"
+        app:cardBackgroundColor="#E0E0E0"
+        app:layout_constraintTop_toBottomOf="@id/card_hardware"
+        app:layout_constraintStart_toStartOf="@id/guideline_vertical"
+        app:layout_constraintEnd_toEndOf="@id/guideline_vertical_2"
+        android:layout_marginTop="10dp">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="11dp"
+            android:textColor="@android:color/black"
+            android:textSize="10sp"
+            android:textStyle="bold"
+            android:text="Preventive Maintenance \n• Run System File Checker (sfc/scannow) - Repair corrupted system files. \n• Use Disk Cleanup - Remove junk files that may interfere with processes. \n• Backup data regularly - Protect against sudden crashes and data loss. \n• Monitor event logs - Identify recurring errors before they escalate."/>
+        </androidx.cardview.widget.CardView>
+
+    <!-- Back Home Button -->
+    <ImageButton
+        android:id="@+id/cs_backhome_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:background="@null"
+        android:src="@drawable/cs_backhome_button"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/card_maintenance"
+        tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+

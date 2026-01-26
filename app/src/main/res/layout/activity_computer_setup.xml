@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/background_1"
+    tools:context=".ComputerSetup">
+
+    <!-- Vertical Guidelines -->
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline_vertical"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.05" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline_vertical_2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.95" />
+
+    <!-- Vertical Guidelines -->
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline_horizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.05" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline_horizontal_2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.40" />
+
+    <ImageView
+        android:id="@+id/cs_background"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:scaleType="fitXY"
+        android:src="@drawable/cs_background"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/css_master"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <!-- Back Button -->
+    <ImageButton
+        android:id="@+id/back_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="14dp"
+        android:background="@null"
+        android:scaleType="fitCenter"
+        android:src="@drawable/back_button"
+        app:layout_constraintStart_toStartOf="@id/guideline_vertical"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="SpeakableTextPresentCheck" />
+
+    <!-- CSS Master Image -->
+    <ImageView
+        android:id="@+id/css_master"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:contentDescription="CSS Master"
+        android:src="@drawable/text_css_master_2"
+        app:layout_constraintTop_toBottomOf="@id/guideline_horizontal"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="5dp"/>
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/green_text_card"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:clipChildren="true"
+        android:clipToPadding="true"
+        app:cardCornerRadius="16dp"
+        app:cardElevation="6dp"
+        app:layout_constraintTop_toBottomOf="@id/css_master"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintWidth_percent="0.65"
+        android:layout_marginTop="15dp"
+        app:cardBackgroundColor="@color/dark_green">
+
+        <TextView
+            android:id="@+id/description_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="16dp"
+            android:text="
+Ready to roll up your sleeves\n
+and dive into the world of\n
+cables, components, and\n
+configurations? Whether\n
+you're building your dream rig\n
+or just figuring out which plug\n
+goes where—this quiz is your launchpad"
+        android:textColor="@android:color/white"
+        android:textSize="14sp"
+        android:textStyle="bold"
+        android:lineSpacingExtra="4dp"
+        android:gravity="center" />
+
+</com.google.android.material.card.MaterialCardView>
+
+    <!-- PLAY Button -->
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/play_button"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="PLAY"
+        android:textStyle="bold"
+        android:textSize="16sp"
+        android:textColor="@android:color/white"
+        android:layout_marginTop="16dp"
+
+        app:backgroundTint="@color/dark_green"
+        app:cornerRadius="24dp"
+        android:paddingHorizontal="32dp"
+        android:paddingVertical="12dp"
+        app:layout_constraintTop_toBottomOf="@id/guideline_horizontal_2"
+        app:layout_constraintStart_toStartOf="@id/green_text_card"
+        app:layout_constraintEnd_toEndOf="@id/green_text_card"
+        app:layout_constraintHorizontal_bias="0.5"
+         />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/how_to_play_button"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="HOW TO PLAY"
+        android:textStyle="bold"
+        android:textSize="16sp"
+        android:textColor="@color/dark_green"
+        android:layout_marginTop="8dp"
+
+        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+        app:strokeColor="@color/dark_green"
+        app:strokeWidth="2dp"
+        app:cornerRadius="24dp"
+
+        android:paddingHorizontal="32dp"
+        android:paddingVertical="12dp"
+        app:layout_constraintTop_toBottomOf="@id/play_button"
+        app:layout_constraintStart_toStartOf="@id/green_text_card"
+        app:layout_constraintEnd_toEndOf="@id/green_text_card"/>
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

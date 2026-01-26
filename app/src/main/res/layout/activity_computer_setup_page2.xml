@@ -1,0 +1,420 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/background_1"
+    tools:context=".ComputerSetupPage2">
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline_vertical"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.05" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline_horizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.05" />
+
+    <!-- Vertical Guidelines -->
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guide_start"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.1"/>
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guide_center"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.5"/>
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guide_end"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.9"/>
+
+    <!-- Horizontal Guidelines -->
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guide_top_zone"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.35"/>
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guide_bottom_zone"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.63"/>
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guide_bottom_zone_2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.75"/>
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guide_bottom_zone_3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.75"/>
+    <!-- Back Button -->
+    <ImageButton
+        android:id="@+id/back_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="14dp"
+        android:background="@null"
+        android:scaleType="fitCenter"
+        android:src="@drawable/back_button"
+        app:layout_constraintStart_toStartOf="@id/guideline_vertical"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="SpeakableTextPresentCheck" />
+
+    <!-- CSS Master Image -->
+    <ImageView
+        android:id="@+id/css_master"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:contentDescription="CSS Master"
+        android:src="@drawable/text_css_master_2"
+        app:layout_constraintTop_toBottomOf="@id/guideline_horizontal"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="20dp"/>
+
+    <!-- Very Good badge -->
+    <ImageView
+        android:id="@+id/cs_very_good"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:src="@drawable/cs_very_good"
+        android:visibility="gone"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_margin="16dp"/>
+
+    <!-- CENTER COMPUTER CASE (BIG, NOT CLICKABLE) -->
+    <ImageView
+        android:id="@+id/part_case"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:src="@drawable/cs_comp_case_2_1"
+        android:adjustViewBounds="true"
+        android:clickable="false"
+        app:layout_constraintTop_toBottomOf="@id/css_master"
+        app:layout_constraintStart_toStartOf="@id/guide_start"
+        app:layout_constraintEnd_toEndOf="@id/guide_end"
+        android:layout_marginTop="30dp" />
+
+    <!-- PARTS BELOW THE CASE (2–3 rows manually) -->
+
+    <!-- Row 1 -->
+    <ImageView
+        android:id="@+id/part_motherboard"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/cs_motherboard_1_2"
+        app:layout_constraintTop_toBottomOf="@id/part_case"
+        app:layout_constraintStart_toStartOf="@id/guide_start"
+        app:layout_constraintEnd_toStartOf="@id/guide_center"
+        app:layout_constraintBottom_toTopOf="@id/guide_bottom_zone"
+        android:layout_marginTop="30dp"/>
+
+    <ImageView
+        android:id="@+id/part_cpu"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/cs_cpu_1_3"
+        app:layout_constraintTop_toBottomOf="@id/part_case"
+        app:layout_constraintStart_toStartOf="@id/guide_center"
+        app:layout_constraintEnd_toEndOf="@id/guide_end"
+        app:layout_constraintBottom_toTopOf="@id/guide_bottom_zone"
+        android:layout_marginTop="30dp"/>
+
+    <!-- Row 2 -->
+    <ImageView
+        android:id="@+id/part_cpu_fan"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/cs_cpu_fan_1_4"
+        app:layout_constraintTop_toBottomOf="@id/guide_bottom_zone"
+        app:layout_constraintStart_toStartOf="@id/guide_start"
+        app:layout_constraintEnd_toEndOf="@id/guide_center"
+        app:layout_constraintBottom_toTopOf="@id/guide_bottom_zone_2"
+        android:layout_marginTop="35dp"/>
+
+    <ImageView
+        android:id="@+id/part_ram"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/cs_ram_1_5"
+        app:layout_constraintTop_toBottomOf="@id/guide_bottom_zone"
+        app:layout_constraintStart_toStartOf="@id/guide_center"
+        app:layout_constraintEnd_toEndOf="@id/guide_end"
+        app:layout_constraintBottom_toTopOf="@id/guide_bottom_zone_2"
+        android:layout_marginTop="25dp"/>
+
+    <!-- Row 3 -->
+    <ImageView
+        android:id="@+id/part_hdd"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/cs_hdd_1_6"
+        app:layout_constraintTop_toBottomOf="@id/part_cpu_fan"
+        app:layout_constraintStart_toStartOf="@id/guide_start"
+        app:layout_constraintEnd_toEndOf="@id/guide_end"
+        android:layout_marginTop="25dp"/>
+
+    <TextView
+        android:id="@+id/try_boot_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="TRY TO BOOT UP!"
+        android:textAllCaps="true"
+        android:textStyle="bold"
+        android:textSize="18sp"
+        android:textColor="@android:color/black"
+        android:visibility="gone"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="10dp"
+        app:layout_constraintTop_toBottomOf="@id/part_case"
+        app:layout_constraintStart_toStartOf="@id/guide_start"
+        app:layout_constraintEnd_toEndOf="@id/guide_end"
+        app:layout_constraintHorizontal_bias="0.5"/>
+
+    <ImageView
+        android:id="@+id/check_icon"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:src="@drawable/baseline_check_circle_24"
+    android:visibility="gone"
+    app:layout_constraintTop_toBottomOf="@id/try_boot_text"
+    app:layout_constraintStart_toStartOf="@id/guide_start"
+    app:layout_constraintEnd_toEndOf="@id/guide_end"
+    android:layout_marginTop="12dp"/>
+
+
+    <!-- BOOT BUTTON (INITIALLY HIDDEN) -->
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/boot_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="BOOT UP!"
+        android:textStyle="bold"
+        android:textSize="16sp"
+        android:visibility="gone"
+        android:textColor="@android:color/white"
+        android:layout_marginTop="16dp"
+        app:backgroundTint="@color/dark_green"
+        app:cornerRadius="24dp"
+        android:paddingHorizontal="32dp"
+        android:paddingVertical="12dp"
+        app:layout_constraintTop_toBottomOf="@id/try_boot_text"
+        app:layout_constraintStart_toStartOf="@id/guide_start"
+        app:layout_constraintEnd_toEndOf="@id/guide_end"
+        app:layout_constraintHorizontal_bias="0.5" />
+
+    <!-- NEXT BUTTON (Initially hidden) -->
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/next_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="NEXT"
+        android:textStyle="bold"
+        android:textSize="16sp"
+        android:visibility="gone"
+        android:textColor="@android:color/white"
+        android:layout_marginTop="16dp"
+        app:backgroundTint="@color/dark_green"
+        app:cornerRadius="24dp"
+        android:paddingHorizontal="32dp"
+        android:paddingVertical="12dp"
+        app:layout_constraintTop_toBottomOf="@id/try_boot_text"
+        app:layout_constraintStart_toStartOf="@id/guide_start"
+        app:layout_constraintEnd_toEndOf="@id/guide_end"
+        app:layout_constraintHorizontal_bias="0.5"/>
+
+<!--    PERIPHERALS -->
+
+    <ImageView
+        android:id="@+id/peri_cpu"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/cs_peri_cpu_1_2"
+        android:visibility="gone"
+        app:layout_constraintTop_toBottomOf="@id/part_case"
+        app:layout_constraintStart_toStartOf="@id/guide_start"
+        app:layout_constraintEnd_toStartOf="@id/guide_center"
+        app:layout_constraintBottom_toTopOf="@id/guide_bottom_zone"
+        android:layout_marginTop="20dp"/>
+
+    <ImageView
+        android:id="@+id/peri_monitor"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/cs_peri_monitor_1_3"
+        android:visibility="gone"
+        app:layout_constraintTop_toBottomOf="@id/part_case"
+        app:layout_constraintStart_toStartOf="@id/guide_center"
+        app:layout_constraintEnd_toEndOf="@id/guide_end"
+        app:layout_constraintBottom_toTopOf="@id/guide_bottom_zone"
+        android:layout_marginTop="20dp"/>
+
+    <!-- Row 2 -->
+    <ImageView
+        android:id="@+id/peri_keyboard"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/cs_peri_keyboard_1_4"
+        android:visibility="gone"
+        app:layout_constraintTop_toBottomOf="@id/guide_bottom_zone"
+        app:layout_constraintStart_toStartOf="@id/guide_start"
+        app:layout_constraintEnd_toEndOf="@id/guide_center"
+        app:layout_constraintBottom_toTopOf="@id/guide_bottom_zone_2"
+        android:layout_marginTop="25dp"/>
+
+    <ImageView
+        android:id="@+id/peri_mouse"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/cs_peri_mouse_1_5"
+        android:visibility="gone"
+        app:layout_constraintTop_toBottomOf="@id/guide_bottom_zone"
+        app:layout_constraintStart_toStartOf="@id/guide_center"
+        app:layout_constraintEnd_toEndOf="@id/guide_end"
+        app:layout_constraintBottom_toTopOf="@id/guide_bottom_zone_2"
+        android:layout_marginTop="20dp"/>
+
+    <TextView
+        android:id="@+id/final_text_1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="NICE SET UP!"
+        android:textAllCaps="true"
+        android:textStyle="bold"
+        android:textSize="15sp"
+        android:textAlignment="center"
+        android:visibility="gone"
+        android:layout_marginBottom="20dp"
+        android:textColor="@android:color/black"
+        app:layout_constraintTop_toBottomOf="@id/guide_bottom_zone_3"
+        app:layout_constraintStart_toStartOf="@id/guideline_vertical"/>
+
+    <TextView
+        android:id="@+id/final_text_2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="LET'S TRY TO BOOT IT UP!"
+        android:textAllCaps="true"
+        android:textStyle="bold"
+        android:textSize="15sp"
+        android:textAlignment="center"
+        android:visibility="gone"
+        android:textColor="@android:color/black"
+        android:layout_marginBottom="10dp"
+        app:layout_constraintTop_toBottomOf="@id/final_text_1"
+        app:layout_constraintStart_toStartOf="@id/guideline_vertical"/>
+
+    <ImageView
+        android:id="@+id/cs_try_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/cs_try_text"
+        android:visibility="gone"
+        android:layout_marginTop="10dp"
+        app:layout_constraintTop_toBottomOf="@id/guide_bottom_zone_3"
+        app:layout_constraintStart_toStartOf="@id/guideline_vertical" />
+
+    <ImageButton
+        android:id="@+id/cs_try_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/cs_try_button"
+        android:background="@null"
+        android:visibility="gone"
+        android:layout_marginTop="20dp"
+        app:layout_constraintTop_toBottomOf="@id/cs_try_text"
+        app:layout_constraintStart_toStartOf="@id/guideline_vertical"/>
+
+    <ImageView
+        android:id="@+id/cs_broke_pc"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/cs_broke_pc"
+        android:visibility="gone"
+        app:layout_constraintStart_toEndOf="@id/cs_try_text"
+        app:layout_constraintBottom_toBottomOf="@id/cs_try_button"
+        app:layout_constraintTop_toTopOf="@id/cs_try_text"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <ImageView
+        android:id="@+id/text_with_man"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/cs_peri_man"
+        android:visibility="gone"
+        android:layout_marginTop="55dp"
+        app:layout_constraintStart_toEndOf="@id/final_text_2"
+        app:layout_constraintBottom_toBottomOf="@id/final_text_2"
+        app:layout_constraintTop_toBottomOf="@id/final_text_2"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <ImageButton
+        android:id="@+id/try_again_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/cs_try_again_button"
+        android:background="@null"
+        android:visibility="gone"
+        android:layout_marginTop="20dp"
+        app:layout_constraintTop_toBottomOf="@id/final_text_2"
+        app:layout_constraintStart_toStartOf="@id/guide_start"/>
+
+    <ImageButton
+        android:id="@+id/peri_failed_explain_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/cs_explain_button"
+        android:background="@null"
+        android:visibility="gone"
+        android:layout_marginTop="15dp"
+        app:layout_constraintTop_toBottomOf="@id/part_case"
+        app:layout_constraintStart_toStartOf="@id/guide_start"
+        app:layout_constraintEnd_toEndOf="@id/guide_end"/>
+
+    <ImageButton
+        android:id="@+id/explanation_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/cs_explain_button"
+        android:background="@null"
+        android:visibility="gone"
+        android:layout_marginTop="15dp"
+        app:layout_constraintTop_toBottomOf="@id/part_case"
+        app:layout_constraintStart_toStartOf="@id/guide_start"/>
+
+    <ImageButton
+        android:id="@+id/home_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/cs_home__button"
+        android:background="@null"
+        android:visibility="gone"
+        android:layout_marginTop="15dp"
+        app:layout_constraintTop_toBottomOf="@id/try_again_button"
+        app:layout_constraintStart_toStartOf="@id/guide_start"/>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

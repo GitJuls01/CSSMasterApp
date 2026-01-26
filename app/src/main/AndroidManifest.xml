@@ -18,6 +18,21 @@
         android:theme="@style/Theme.CSS"
         tools:targetApi="31">
         <activity
+            android:name=".CSHowToPreventBsod"
+            android:exported="false" />
+        <activity
+            android:name=".CSExplanation"
+            android:exported="false" />
+        <activity
+            android:name=".HowToPlayActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ComputerSetupPage2"
+            android:exported="false" />
+        <activity
+            android:name=".ComputerSetup"
+            android:exported="false" />
+        <activity
             android:name=".GuessCSS"
             android:exported="false" />
         <activity
