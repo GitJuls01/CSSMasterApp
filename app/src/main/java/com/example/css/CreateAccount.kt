@@ -92,7 +92,8 @@ class CreateAccount : AppCompatActivity() {
                             )
 
                             firestore.collection("users")
-                                .add(userMap)
+                                .document(name)
+                                .set(userMap)
                                 .addOnSuccessListener {
                                     Toast.makeText(this, "Account Created Successfully!", Toast.LENGTH_SHORT).show()
                                     val intent = Intent(this, LoginPage::class.java)

@@ -1,6 +1,7 @@
 package com.example.css
 
 import android.content.ContentValues
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.os.Environment
 import android.provider.MediaStore
@@ -9,10 +10,16 @@ import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import com.google.firebase.Timestamp
+import com.google.firebase.firestore.FirebaseFirestore
 import java.io.File
 import java.io.FileOutputStream
 
 class ModuleHardware : BottomNav() {
+
+    private lateinit var sharedPreferences: SharedPreferences
+    private lateinit var firestore: FirebaseFirestore
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -24,6 +31,10 @@ class ModuleHardware : BottomNav() {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
+
+        firestore = FirebaseFirestore.getInstance()
+
+
 
         if (android.os.Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.Q) {
             if (checkSelfPermission(android.Manifest.permission.WRITE_EXTERNAL_STORAGE) != android.content.pm.PackageManager.PERMISSION_GRANTED) {
@@ -37,24 +48,31 @@ class ModuleHardware : BottomNav() {
         val thirdQuarterButton = findViewById<ImageButton>(R.id.download_thirdqtr)
         val fourthQuarterButton = findViewById<ImageButton>(R.id.download_fourthqtr)
 
+        // Access SharedPreferences
+        sharedPreferences = this.getSharedPreferences("user_data", MODE_PRIVATE)
+
         backButton.setOnClickListener {
             finish() // Go back to the previous screen
         }
 
         firstQuarterButton.setOnClickListener {
             showDownloadConfirmationDialog("Hardware_Quarter_1.pdf")
+            saveUserProgress("Q1")
         }
 
         secondQuarterButton.setOnClickListener {
             showDownloadConfirmationDialog("Hardware_Quarter_2.pdf")
+            saveUserProgress("Q2")
         }
 
         thirdQuarterButton.setOnClickListener {
             showDownloadConfirmationDialog("Hardware_Quarter_3.pdf")
+            saveUserProgress("Q3")
         }
 
         fourthQuarterButton.setOnClickListener {
             showDownloadConfirmationDialog("Hardware_Quarter_4.pdf")
+            saveUserProgress("Q4")
         }
     }
 
@@ -129,4 +147,25 @@ class ModuleHardware : BottomNav() {
     }
 
     override fun getLayoutResourceId(): Int = R.layout.activity_module_hardware
+
+    private fun saveUserProgress(quarter: String) {
+        val userName = sharedPreferences.getString("name", "Default Name") ?: "Default Name"
+        val createdDate = Timestamp.now()
+
+        val updates = hashMapOf<String, Any>(
+            quarter to 25,
+            "name" to userName,
+            "lastUpdated" to createdDate
+        )
+
+        firestore.collection("user_progress_hw")
+            .document(userName)
+            .set(updates, com.google.firebase.firestore.SetOptions.merge()) // merge = only update given fields
+            .addOnSuccessListener {
+                //Toast.makeText(this, "Updated $quarter = 25", Toast.LENGTH_SHORT).show()
+            }
+            .addOnFailureListener { e ->
+                Toast.makeText(this, "Failed: ${e.message}", Toast.LENGTH_SHORT).show()
+            }
+    }
 }
