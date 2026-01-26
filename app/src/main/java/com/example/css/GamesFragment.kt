@@ -26,6 +26,13 @@ class GamesFragment : Fragment() {
             startActivity(intent)
         }
 
+        val btnCompSetup = view.findViewById<ImageButton>(R.id.btn_comp_setup)
+        btnCompSetup.setOnClickListener {
+            // Create an Intent to start ComputerSetup activity
+            val intent = Intent(requireContext(), ComputerSetup::class.java)
+            startActivity(intent)
+        }
+
         val btnQuizTime = view.findViewById<ImageButton>(R.id.btn_quiz_time)
         btnQuizTime.setOnClickListener {
             showCountdownDialog{
