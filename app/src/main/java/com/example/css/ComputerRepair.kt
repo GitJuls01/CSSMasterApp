@@ -15,6 +15,9 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.text.HtmlCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import android.view.MotionEvent
+import android.view.View
+
 
 class ComputerRepair : AppCompatActivity() {
 
@@ -30,6 +33,8 @@ class ComputerRepair : AppCompatActivity() {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
+
+        MusicManager.play(this, R.raw.powerupgamesbgm)
 
         //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
         // Register the back press callback to handle back button presses
@@ -55,35 +60,74 @@ class ComputerRepair : AppCompatActivity() {
 
 
         val backButton = findViewById<ImageButton>(R.id.back_button)
-        backButton.setOnClickListener {
+        applyTapEffect(backButton) {
             showExitDialog()
         }
 
+
         val playButton = findViewById<ImageButton>(R.id.play_button)
-        playButton.setOnClickListener {
+        applyTapEffect(playButton) {
             val intent = Intent(this, ComputerRepairMainGame::class.java)
             startActivity(intent)
         }
 
-        val welcomeText = findViewById<TextView>(R.id.welcome_text)
 
-        val showCompletion = intent.getBooleanExtra("showCompletion", false)
+//        val welcomeText = findViewById<TextView>(R.id.welcome_text)
+//
+//        val showCompletion = intent.getBooleanExtra("showCompletion", false)
+//
+//        if (showCompletion) {
+//            // Change text to final congratulations message (with bold style)
+//            welcomeText.text = HtmlCompat.fromHtml(
+//                "Congratulations - you've officially built<br>" +
+//                        "your own PC! Every part you connected,<br>" +
+//                        "every cable you managed, and every<br>" +
+//                        "choice you made has come together to<br>" +
+//                        "create a machine that's 100% yours.",
+//                HtmlCompat.FROM_HTML_MODE_LEGACY
+//            )
+//
+//            // Change play button image
+//            playButton.setImageResource(R.drawable.cp_play_again_button)
+//        }
+    }
 
-        if (showCompletion) {
-            // Change text to final congratulations message (with bold style)
-            welcomeText.text = HtmlCompat.fromHtml(
-                "Congratulations - you've officially built<br>" +
-                        "your own PC! Every part you connected,<br>" +
-                        "every cable you managed, and every<br>" +
-                        "choice you made has come together to<br>" +
-                        "create a machine that's 100% yours.",
-                HtmlCompat.FROM_HTML_MODE_LEGACY
-            )
+    private fun applyTapEffect(view: View, onClick: () -> Unit) {
+        view.setOnTouchListener { v, event ->
+            when (event.action) {
+                MotionEvent.ACTION_DOWN -> {
+                    v.animate()
+                        .scaleX(0.9f)
+                        .scaleY(0.9f)
+                        .setDuration(80)
+                        .start()
+                    false
+                }
 
-            // Change play button image
-            playButton.setImageResource(R.drawable.cp_play_again_button)
+                MotionEvent.ACTION_UP -> {
+                    v.animate()
+                        .scaleX(1f)
+                        .scaleY(1f)
+                        .setDuration(80)
+                        .withEndAction { onClick() }
+                        .start()
+                    true
+                }
+
+                MotionEvent.ACTION_CANCEL -> {
+                    v.animate()
+                        .scaleX(1f)
+                        .scaleY(1f)
+                        .setDuration(80)
+                        .start()
+                    true
+                }
+
+                else -> false
+            }
         }
     }
+
 
     private fun showExitDialog() {
         val dialog = Dialog(this)
@@ -100,8 +144,10 @@ class ComputerRepair : AppCompatActivity() {
                 intent.putExtra("openFragment", "games")
                 intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP
                 startActivity(intent)
+                MusicManager.stop()
                 finish()
             } else {
+                MusicManager.stop()
                 finish()
             }
 

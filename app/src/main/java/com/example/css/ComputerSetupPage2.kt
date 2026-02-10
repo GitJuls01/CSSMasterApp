@@ -166,6 +166,7 @@ class ComputerSetupPage2 : AppCompatActivity() {
             intent.putExtra("openFragment", "games")
             intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP
             startActivity(intent)
+            MusicManager.stop()
             finish()
         }
     }
@@ -394,32 +395,6 @@ class ComputerSetupPage2 : AppCompatActivity() {
             bootButton.visibility = View.VISIBLE
         }
     }
-
-
-//    private fun handlePeripheralClick(part: ImageView) {
-//        if (periStep >= periImages.size - 1) return
-//        periUserOrder.add(part.id)
-//
-//        animatePartToCase(part, periImages[periStep + 1])
-//        periStep++
-//
-//        if (periUserOrder.size == periCorrectOrder.size) {
-//
-//            finalText1.text = "NICE SET UP!"
-//            finalText2.text = "LET'S TRY TO BOOT IT UP!"
-//
-//            finalText1.visibility = View.VISIBLE
-//            finalText2.visibility = View.VISIBLE
-//
-//            // Show the man
-//            val manImage = findViewById<ImageView>(R.id.text_with_man)
-//            manImage.setImageResource(R.drawable.cs_peri_man)
-//            manImage.visibility = View.VISIBLE
-//
-//            bootButton.visibility = View.VISIBLE
-//        }
-//
-//    }
 
     private fun handleBootButton() {
         bootButton.visibility = View.GONE

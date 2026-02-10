@@ -61,6 +61,8 @@ class QT_ComputerSoftware_MainGame : AppCompatActivity() {
             insets
         }
 
+        MusicManager.play(this, R.raw.quizbgm)
+
         //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
         // Register the back press callback to handle back button presses
         val backPressedCallback = object : OnBackPressedCallback(true) {
@@ -70,6 +72,7 @@ class QT_ComputerSoftware_MainGame : AppCompatActivity() {
                     questionTimer?.cancel()
                     questionList = emptyList()
                     correctAnswers = 0
+                    MusicManager.stop()
                     finishAffinity() // Properly exits the app from this point
                 } else {
                     backPressedOnce = true
@@ -87,7 +90,10 @@ class QT_ComputerSoftware_MainGame : AppCompatActivity() {
         //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
 
-        findViewById<ImageButton>(R.id.back_button).setOnClickListener { finish() }
+        findViewById<ImageButton>(R.id.back_button).setOnClickListener {
+            MusicManager.stop()
+            finish()
+        }
 
         correctAnswerPopup = findViewById(R.id.CorrectAnswerPopup)
         wrongAnswerPopup = findViewById(R.id.WrongAnswerPopup)

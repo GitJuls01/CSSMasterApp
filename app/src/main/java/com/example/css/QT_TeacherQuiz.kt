@@ -38,6 +38,8 @@ class QT_TeacherQuiz : AppCompatActivity() {
             insets
         }
 
+        MusicManager.play(this, R.raw.quizbgm)
+
         firestore = FirebaseFirestore.getInstance()
         quizListContainer = findViewById(R.id.quiz_list_container)
         quizListContainer.visibility = View.GONE // initially invisible
@@ -60,6 +62,7 @@ class QT_TeacherQuiz : AppCompatActivity() {
             intent.putExtra("openFragment", "quizzes")
             intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP
             startActivity(intent)
+            MusicManager.stop()
             finish()
         }
 
@@ -69,6 +72,7 @@ class QT_TeacherQuiz : AppCompatActivity() {
             override fun handleOnBackPressed() {
                 if (backPressedOnce) {
                     // Exit the app
+                    MusicManager.stop()
                     finishAffinity() // Properly exits the app from this point
                 } else {
                     backPressedOnce = true

@@ -31,6 +31,7 @@ class QT_TeacherQuiz_Congratulation : AppCompatActivity() {
             override fun handleOnBackPressed() {
                 if (backPressedOnce) {
                     // Exit the app
+                    MusicManager.stop()
                     finishAffinity() // Properly exits the app from this point
                 } else {
                     backPressedOnce = true

@@ -32,6 +32,7 @@ class GuessCSSAnswerPage : AppCompatActivity() {
             override fun handleOnBackPressed() {
                 if (backPressedOnce) {
                     // Exit the app
+                    MusicManager.stop()
                     finishAffinity() // Properly exits the app from this point
                 } else {
                     backPressedOnce = true
@@ -92,6 +93,7 @@ class GuessCSSAnswerPage : AppCompatActivity() {
             intent.putExtra("openFragment", "games")
             intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP
             startActivity(intent)
+            MusicManager.stop()
             finish()
 
         }

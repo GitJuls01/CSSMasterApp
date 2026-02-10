@@ -2,61 +2,70 @@ package com.example.css
 
 import android.app.Dialog
 import android.content.ClipData
-import android.content.Intent
-import android.graphics.Color
-import android.graphics.Point
+import android.graphics.Rect
 import android.os.Bundle
-import android.util.Log
+import android.os.Handler
+import android.os.Looper
+import android.text.SpannableString
+import android.text.Spanned
+import android.text.style.ImageSpan
 import android.view.DragEvent
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.View
-import android.view.ViewGroup
 import android.view.ViewGroup.LayoutParams
-import android.widget.*
+import android.widget.ImageButton
+import android.widget.ImageView
+import android.widget.LinearLayout
+import android.widget.TextView
+import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
-import android.os.Handler
-import android.os.Looper
+import com.google.android.material.button.MaterialButton
 
 class ComputerRepairMainGame : AppCompatActivity() {
 
-    data class ToolStep(
-        val name: String,
+    data class Step(
         val question: String,
-        val imageResId: Int,
         val correctTag: String,
-        val placeXPercent: Float, // 0.0f to 1.0f
-        val placeYPercent: Float,  // 0.0f to 1.0f
-        val width: Int,
-        val height: Int
+        val centerImage: Int
     )
-
-    private var backPressedOnce = false
 
     private val steps = listOf(
-        ToolStep("Motherboard", "Step 1: It is known for an alternative name as MOBO", R.drawable.cp_motherboard_3, "motherboard", 0.5f, 0.5f, 500, 450),
-        ToolStep("CPU", "Step 2: It is known as the Central Processing Unit", R.drawable.cp_cpu, "cpu", 0.4407f, 0.5338f, 95, 95),
-        ToolStep("RAM", "Step 3: It is known as RAM", R.drawable.cp_ram, "ram", 0.3365f, 0.4182f, 200, 200),
-        ToolStep("GPU", "Step 4: It is known as GPU", R.drawable.cp_gpu, "gpu", 0.5605f, 0.3512f, 200, 140),
-        ToolStep("HDD", "Step 5: It is known as HDD", R.drawable.cp_hdd, "hdd", 0.6145f, 0.3096f, 220, 150)
+        Step("Step 1: It is known for an alternative name as MOBO", "motherboard", R.drawable.cr_center_1),
+        Step("Step 2: It is known as the Central Processing Unit", "cpu", R.drawable.cr_center_2),
+        Step("Step 3: It is known as RAM", "ram", R.drawable.cr_center_3),
+        Step("Step 4: It is known as GPU", "gpu", R.drawable.cr_center_4),
+        Step("Step 5: It is known as HDD", "hdd", R.drawable.cr_center_5)
     )
+
+    private val hideHandler = Handler(Looper.getMainLooper())
+    private val hideRunnable = Runnable {
+        correctWrongText.visibility = View.GONE
+    }
 
     private var currentStepIndex = 0
+    private var dragEnabled = true
+    private var lastToastTime = 0L
 
+    private lateinit var questionText: TextView
+    private lateinit var centeredImage: ImageView
+    private lateinit var correctWrongText: TextView
+    private lateinit var nextButton: MaterialButton
+    private lateinit var toolRow: LinearLayout
+    private lateinit var dropArea: View
+    private lateinit var dropHint: View
+    private lateinit var infoButton: ImageButton
 
+    private var currentStepCorrect: Boolean = false
+    private val currentStep: Int
+        get() = currentStepIndex + 1 // step numbers are 1-based
 
-    private val meaningImages = mapOf(
-        "motherboard" to R.drawable.cp_mobo_meaning,
-        "cpu" to R.drawable.cp_cpu_meaning,
-        "ram" to R.drawable.cp_ram_meaning,
-        "gpu" to R.drawable.cp_gpu_meaning,
-        "hdd" to R.drawable.cp_hdd_meaning
-    )
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -64,221 +73,254 @@ class ComputerRepairMainGame : AppCompatActivity() {
         setContentView(R.layout.activity_computer_repair_main_game)
 
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.assembly_main)) { v, insets ->
-            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
+            val bars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
+            v.setPadding(bars.left, bars.top, bars.right, bars.bottom)
             insets
         }
+        
+        questionText = findViewById(R.id.question_text)
+        centeredImage = findViewById(R.id.centered_image)
+        correctWrongText = findViewById(R.id.correct_wrong_text)
+        nextButton = findViewById(R.id.next_button)
+        toolRow = findViewById(R.id.tool_row)
+        dropArea = findViewById(R.id.drop_area)
+        dropHint = findViewById(R.id.drop_hint)
 
-        val questionImage = findViewById<ImageView>(R.id.question_image)
-        val infoPopupImage = findViewById<ImageView>(R.id.info_popup_image)
 
-        //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-        // Register the back press callback to handle back button presses
-        val backPressedCallback = object : OnBackPressedCallback(true) {
-            override fun handleOnBackPressed() {
-                if (backPressedOnce) {
-                    // Exit the app
-                    finishAffinity() // Properly exits the app from this point
-                } else {
-                    backPressedOnce = true
-                    // Show a Toast message
-                    Toast.makeText(applicationContext, "Double click to exit the app", Toast.LENGTH_SHORT).show()
+        correctWrongText.visibility = View.GONE
+        nextButton.visibility = View.GONE
 
-                    // Reset backPressedOnce flag after 2 seconds
-                    android.os.Handler().postDelayed({
-                        backPressedOnce = false
-                    }, 2000) // Reset after 2 seconds
+        loadStep()
+
+        setupTools()
+        setupDropArea()
+        setupNextButton()
+        setupBackButton()
+
+        infoButton = findViewById(R.id.info_button)
+
+        infoButton.setOnClickListener {
+            // Only show info if the user already dropped the correct component
+            if (currentStepCorrect) {
+                showInfoDialog(currentStep)
+            } else {
+                Toast.makeText(this, "Drop the correct component first!", Toast.LENGTH_SHORT).show()
+            }
+        }
+
+
+    }
+
+    private fun loadStep() {
+        val step = steps[currentStepIndex]
+        questionText.text = step.question
+
+        correctWrongText.visibility = View.GONE
+        nextButton.visibility = View.GONE
+    }
+
+    // ---------------- DRAG & DROP (SetupPage2 style) ----------------
+
+    private fun setupTools() {
+        val tools = listOf(
+            Pair(R.drawable.cr_motherboard, "motherboard"),
+            Pair(R.drawable.cr_cpu, "cpu"),
+            Pair(R.drawable.cr_ram, "ram"),
+            Pair(R.drawable.cr_gpu, "gpu"),
+            Pair(R.drawable.cr_hdd, "hdd")
+        )
+
+        tools.forEach { (img, tag) ->
+            val iv = ImageView(this)
+            iv.setImageResource(img)
+            iv.tag = tag
+            iv.layoutParams = LinearLayout.LayoutParams(170, 170)
+
+            iv.setOnTouchListener { v, event ->
+                if (!dragEnabled) {
+                    val now = System.currentTimeMillis()
+                    if (now - lastToastTime > 800) { // 👈 0.8 sec gap
+                        Toast.makeText(
+                            this@ComputerRepairMainGame,
+                            "Click NEXT to continue",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                        lastToastTime = now
+                    }
+                    return@setOnTouchListener true
+                }
+
+                when (event.action) {
+                    MotionEvent.ACTION_DOWN -> {
+                        val data = ClipData.newPlainText("", "")
+                        val shadow = View.DragShadowBuilder(v)
+
+                        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
+                            v.startDragAndDrop(data, shadow, v, 0)
+                        } else {
+                            @Suppress("DEPRECATION")
+                            v.startDrag(data, shadow, v, 0)
+                        }
+                        true
+                    }
+                    else -> false
                 }
             }
+
+            toolRow.addView(iv)
         }
-        onBackPressedDispatcher.addCallback(this, backPressedCallback)
-        //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+    }
 
-
-        val backButton = findViewById<ImageButton>(R.id.back_button)
-        backButton.setOnClickListener {
-            showExitDialog()
-        }
-
-        val questionText = findViewById<TextView>(R.id.question_text)
-        val dropArea = findViewById<FrameLayout>(R.id.drop_area)
-        val toolRow = findViewById<LinearLayout>(R.id.tool_row)
-
-        fun loadCurrentStep() {
-            if (currentStepIndex < steps.size) {
-                questionText.text = steps[currentStepIndex].question
-            } else {
-                questionText.text = "All steps complete!"
-            }
-        }
-
-        loadCurrentStep()
-
+    private fun setupDropArea() {
         dropArea.setOnDragListener { _, event ->
             when (event.action) {
+
+                DragEvent.ACTION_DRAG_STARTED -> true
+
                 DragEvent.ACTION_DROP -> {
+//                    Toast.makeText(this, "DROP DETECTED", Toast.LENGTH_SHORT).show()
+
                     val draggedView = event.localState as ImageView
-                    val tag = draggedView.tag.toString()
-                    val currentStep = steps[currentStepIndex]
-
-//                    if (tag == currentStep.correctTag) {
-//                        (draggedView.parent as? ViewGroup)?.removeView(draggedView)
-//
-//                        val dropWidth = dropArea.width
-//                        val dropHeight = dropArea.height
-//
-//                        val params = FrameLayout.LayoutParams(currentStep.width, currentStep.height)
-//
-//                        if (currentStep.correctTag == "motherboard") {
-//                            // Fixed centered placement for motherboard
-//                            params.leftMargin = (currentStep.placeXPercent * dropWidth - currentStep.width / 2).toInt()
-//                            params.topMargin = (currentStep.placeYPercent * dropHeight - currentStep.height / 2).toInt()
-//                        } else {
-//                            // Drop exactly where the finger was
-//                            val dropXPercent = event.x / dropWidth
-//                            val dropYPercent = event.y / dropHeight
-//
-//                            val percentText = "Dropped at: X=${"%.4f".format(dropXPercent)}, Y=${"%.4f".format(dropYPercent)}"
-//                            Log.d("DEBUG_PERCENT", percentText)
-//                            Toast.makeText(this, percentText, Toast.LENGTH_SHORT).show()
-//
-//                            params.leftMargin = (event.x - currentStep.width / 2).toInt()
-//                            params.topMargin = (event.y - currentStep.height / 2).toInt()
-//                        }
-//
-//                        draggedView.layoutParams = params
-//                        dropArea.addView(draggedView)
-//                        draggedView.visibility = View.VISIBLE
-//                        draggedView.setOnTouchListener(null)
-//
-//                        Toast.makeText(this, "Correct!", Toast.LENGTH_SHORT).show()
-//                        currentStepIndex++
-//                        loadCurrentStep()
-//                    }
-
-//                    if (tag == currentStep.correctTag) {
-//                        (draggedView.parent as? ViewGroup)?.removeView(draggedView)
-//
-//                        // Use predefined placement from ToolStep
-//                        val dropWidth = dropArea.width
-//                        val dropHeight = dropArea.height
-//
-//                        val params = FrameLayout.LayoutParams(currentStep.width, currentStep.height)
-//                        params.leftMargin = (currentStep.placeXPercent * dropWidth - currentStep.width / 2).toInt()
-//                        params.topMargin = (currentStep.placeYPercent * dropHeight - currentStep.height / 2).toInt()
-//
-//                        draggedView.layoutParams = params
-//                        dropArea.addView(draggedView)
-//                        draggedView.visibility = View.VISIBLE
-//
-//                        draggedView.setOnTouchListener(null)
-//
-//                        Toast.makeText(this, "Correct!", Toast.LENGTH_SHORT).show()
-//                        currentStepIndex++
-//                        loadCurrentStep()
-//                    }
-
-                    if (tag == currentStep.correctTag) {
-                        (draggedView.parent as? ViewGroup)?.removeView(draggedView)
-
-                        val dropWidth = dropArea.width
-                        val dropHeight = dropArea.height
-
-                        val params = FrameLayout.LayoutParams(currentStep.width, currentStep.height)
-                        params.leftMargin = (currentStep.placeXPercent * dropWidth - currentStep.width / 2).toInt()
-                        params.topMargin = (currentStep.placeYPercent * dropHeight - currentStep.height / 2).toInt()
-
-                        draggedView.layoutParams = params
-                        dropArea.addView(draggedView)
-                        draggedView.visibility = View.VISIBLE
-                        draggedView.setOnTouchListener(null)
-
-                        // Swap text with correct image
-                        questionText.visibility = View.GONE
-                        questionImage.setImageResource(R.drawable.cp_correct)
-                        questionImage.visibility = View.VISIBLE
-
-                        // Tap to show meaning
-                        draggedView.setOnClickListener {
-                            val meaningRes = meaningImages[tag]
-                            meaningRes?.let {
-                                infoPopupImage.setImageResource(it)
-                                infoPopupImage.visibility = View.VISIBLE
-                                infoPopupImage.translationY = dropArea.height.toFloat()
-                                infoPopupImage.animate().translationY(0f).setDuration(300).start()
-                            }
-                        }
-
-                        // Tap the info image to dismiss and load next step
-                        infoPopupImage.setOnClickListener {
-                            infoPopupImage.visibility = View.GONE
-                            questionImage.visibility = View.GONE
-                            questionText.visibility = View.VISIBLE
-
-                            if (currentStepIndex == steps.size - 1) {
-                                // LAST STEP: Go back to ComputerRepair.kt with "showCompletion"
-                                val intent = Intent(this, ComputerRepair::class.java)
-                                intent.putExtra("showCompletion", true)
-                                startActivity(intent)
-                                finish() // Optional: remove from back stack
-                            } else {
-                                // NEXT STEP: continue
-                                currentStepIndex++
-                                loadCurrentStep()
-                            }
-                        }
-
-
-                    } else {
-                        questionText.visibility = View.GONE
-                        questionImage.setImageResource(R.drawable.cp_wrong)
-                        questionImage.visibility = View.VISIBLE
-
-                        // Optional: Restore question text after 2 seconds
-                        Handler(Looper.getMainLooper()).postDelayed({
-                            questionImage.visibility = View.GONE
-                            questionText.visibility = View.VISIBLE
-                        }, 2000)
-
-                    }
-
-
+                    handleDrop(draggedView)
                     true
                 }
+
                 else -> true
             }
         }
+    }
 
+    private fun updateToolState(enabled: Boolean) {
+        for (i in 0 until toolRow.childCount) {
+            val tool = toolRow.getChildAt(i)
 
+            tool.alpha = if (enabled) 1.0f else 0.4f  // gray-out
+            tool.isClickable = true                  // keep receiving touches
+            tool.isFocusable = true
+        }
+    }
 
+    private fun handleDrop(draggedView: ImageView) {
+        val step = steps[currentStepIndex]
+        val tag = draggedView.tag.toString()
 
+        hideHandler.removeCallbacks(hideRunnable)
 
-        steps.forEach { step ->
-            val toolImage = ImageView(this)
-            toolImage.setImageResource(step.imageResId)
-            toolImage.layoutParams = LinearLayout.LayoutParams(170, 170)
-            toolImage.tag = step.correctTag
+        if (tag == step.correctTag) {
+            currentStepCorrect = true
+            dragEnabled = false
+            updateToolState(false)
+            toolRow.removeView(draggedView)
 
-            toolImage.setOnTouchListener { view, event ->
-                if (event.action == MotionEvent.ACTION_DOWN) {
-                    val data = ClipData.newPlainText("", "")
+            dropHint.visibility = View.GONE
+            dropArea.background = null
 
-                    val shadowBuilder = View.DragShadowBuilder(view)
+            centeredImage.setImageResource(step.centerImage)
+            centeredImage.visibility = View.VISIBLE
 
-                    if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
-                        view.startDragAndDrop(data, shadowBuilder, view, 0)
-                    } else {
-                        @Suppress("DEPRECATION")
-                        view.startDrag(data, shadowBuilder, view, 0)
-                    }
+            // ---------------- Correct text with inline icon ----------------
+            val drawable = ContextCompat.getDrawable(this, R.drawable.baseline_info_24)
+            val sizeInDp = (16 * resources.displayMetrics.density).toInt()
+            drawable?.setBounds(0, 0, sizeInDp, sizeInDp)
 
-                    view.performClick()
-                    true
-                } else false
+            val text = "Correct!\n(Click icon for more information)"
+            val spannable = SpannableString(text)
+
+            // Make "Correct!" bigger
+            spannable.setSpan(
+                android.text.style.RelativeSizeSpan(1.6f),
+                0,
+                "Correct!".length,
+                Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
+            )
+
+            // Make the rest of the text smaller and gray
+            val restStart = text.indexOf("\n") + 1
+            spannable.setSpan(
+                android.text.style.ForegroundColorSpan(ContextCompat.getColor(this, android.R.color.darker_gray)),
+                restStart,
+                text.length,
+                Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
+            )
+
+            // Replace "icon" with drawable
+            val start = text.indexOf("icon")
+            val end = start + "icon".length
+            drawable?.let {
+                val imageSpan = ImageSpan(it, ImageSpan.ALIGN_BOTTOM)
+                spannable.setSpan(imageSpan, start, end, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
             }
 
+            correctWrongText.text = spannable
+            correctWrongText.visibility = View.VISIBLE
 
-            toolRow.addView(toolImage)
+            nextButton.visibility = View.VISIBLE
+
+            // Change NEXT to DONE if this is the last step
+            if (currentStepIndex == steps.size - 1) {
+                nextButton.text = "DONE"
+            } else {
+                nextButton.text = "NEXT"
+            }
+
+        } else {
+            // ---------------- Wrong text with bigger first word ----------------
+            val text = "Wrong!\n(Please select the right component)"
+            val spannable = SpannableString(text)
+
+            // Make "Wrong!" bigger
+            spannable.setSpan(
+                android.text.style.RelativeSizeSpan(1.6f),
+                0,
+                "Wrong!".length,
+                Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
+            )
+
+            spannable.setSpan(
+                android.text.style.ForegroundColorSpan(ContextCompat.getColor(this, android.R.color.holo_red_dark)),
+                0,
+                "Wrong!".length,
+                Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
+            )
+
+            // Make the rest of the text smaller and gray
+            val restStart = text.indexOf("\n") + 1
+            spannable.setSpan(
+                android.text.style.ForegroundColorSpan(ContextCompat.getColor(this, android.R.color.darker_gray)),
+                restStart,
+                text.length,
+                Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
+            )
+
+            correctWrongText.text = spannable
+            correctWrongText.visibility = View.VISIBLE
+
+            hideHandler.postDelayed(hideRunnable, 2000)
+        }
+    }
+
+    private fun setupNextButton() {
+        nextButton.setOnClickListener {
+            dragEnabled = true
+            currentStepCorrect = false
+            updateToolState(true)
+
+            currentStepIndex++
+
+            if (currentStepIndex < steps.size) {
+                loadStep()
+            } else {
+                Toast.makeText(this, "All steps completed!", Toast.LENGTH_SHORT).show()
+                finish()
+            }
+        }
+    }
+
+    // ---------------- BACK BUTTON ----------------
+
+    private fun setupBackButton() {
+        findViewById<ImageButton>(R.id.back_button).setOnClickListener {
+            showExitDialog()
         }
     }
 
@@ -286,28 +328,74 @@ class ComputerRepairMainGame : AppCompatActivity() {
         val dialog = Dialog(this)
         val view = LayoutInflater.from(this).inflate(R.layout.dialog_exit_game, null)
 
-        val btnYes = view.findViewById<ImageButton>(R.id.btn_yes)
-        val btnNo = view.findViewById<ImageButton>(R.id.btn_no)
-
-        btnYes.setOnClickListener {
+        view.findViewById<ImageButton>(R.id.btn_yes).setOnClickListener {
             dialog.dismiss()
-            finish() // Exit the activity
+            finish()
         }
 
-        btnNo.setOnClickListener {
+        view.findViewById<ImageButton>(R.id.btn_no).setOnClickListener {
             dialog.dismiss()
         }
 
         dialog.setContentView(view)
-
-        // Optional: make the dialog background transparent
         dialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
-
-        // Optional: center dialog and apply layout settings
         dialog.window?.setLayout(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT)
         dialog.window?.setGravity(Gravity.CENTER)
+        dialog.show()
+    }
 
-        dialog.setCancelable(true) // back button can cancel it
+    private fun showInfoDialog(step: Int) {
+        val dialog = Dialog(this)
+        dialog.requestWindowFeature(android.view.Window.FEATURE_NO_TITLE)
+        dialog.setContentView(R.layout.dialog_info)
+        dialog.setCancelable(true)
+
+        dialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
+
+        // Set dialog width to 85% of screen width
+        dialog.window?.setLayout(
+            (resources.displayMetrics.widthPixels * 0.85).toInt(),
+            LayoutParams.WRAP_CONTENT
+        )
+        dialog.window?.setGravity(Gravity.CENTER)
+
+        val titleTextView = dialog.findViewById<TextView>(R.id.info_title)
+        val meaningTextView = dialog.findViewById<TextView>(R.id.info_meaning)
+        val closeButton = dialog.findViewById<ImageButton>(R.id.info_close)
+
+        // Set content based on step
+        when (step) {
+            1 -> {
+                titleTextView.text = "MOTHERBOARD (MAIN BOARD)"
+                meaningTextView.text =
+                    "Alternatively called the mb, mainboard, mboard, mobo, mobd, backplane board, base board, main circuit board, planar board, system board, or a logic board on Apple computers. The motherboard is a printed circuit board and foundation of a computer that is the biggest board in a computer chassis."
+            }
+            2 -> {
+                titleTextView.text = "CENTRAL PROCESSING UNIT (CPU)"
+                meaningTextView.text =
+                    "A central processing unit (CPU) is the most important processor in a computer system. It executes instructions of a computer program, including arithmetic, logic, controlling, and input/output operations. The CPU is essentially the active brain of the computer."
+            }
+            3 -> {
+                titleTextView.text = "RANDOM ACCESS MEMORY (RAM)"
+                meaningTextView.text =
+                    "Random access memory (RAM) is the hardware in a computing device that provides temporary storage for the operating system (OS), software programs and any other data in current use so they're quickly available to the device's processor."
+            }
+            4 -> {
+                titleTextView.text = "GRAPHICS PROCESSING UNIT (GPU)"
+                meaningTextView.text =
+                    "Graphics processing technology has evolved to deliver unique benefits in the world of computing. The latest graphics processing units (GPUs) unlock new possibilities in gaming, content creation, machine learning, and more."
+            }
+            5 -> {
+                titleTextView.text = "HARD DRIVE DISK (HDD)"
+                meaningTextView.text =
+                    "A Hard Disk Drive (sometimes abbreviated as a hard drive, HD, or HDD) is a non-volatile data storage device. It is usually installed internally in a computer, attached directly to the disk controller of the computer's motherboard."
+            }
+        }
+
+        // Close button
+        closeButton.setOnClickListener { dialog.dismiss() }
+
+        // Show dialog last
         dialog.show()
     }
 }

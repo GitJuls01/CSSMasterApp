@@ -48,6 +48,8 @@ class GuessCSSMainGame : AppCompatActivity() {
             insets
         }
 
+        MusicManager.play(this, R.raw.powerupgamesbgm)
+
         //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
         // Register the back press callback to handle back button presses
         val backPressedCallback = object : OnBackPressedCallback(true) {
@@ -55,6 +57,7 @@ class GuessCSSMainGame : AppCompatActivity() {
                 if (backPressedOnce) {
                     // Exit the app
                     questionTimer?.cancel()
+                    MusicManager.stop()
                     finishAffinity() // Properly exits the app from this point
                 } else {
                     backPressedOnce = true
@@ -82,6 +85,7 @@ class GuessCSSMainGame : AppCompatActivity() {
             intent.putExtra("openFragment", "games")
             intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP
             startActivity(intent)
+            MusicManager.stop()
             finish()
         }
 
