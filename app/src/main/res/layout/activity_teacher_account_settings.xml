@@ -1,158 +1,93 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/background_1"
+    android:fillViewport="true"
     tools:context=".TeacherAccountSettings">
 
-    <!-- Vertical Guidelines -->
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline_vertical"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.05" />
+        android:gravity="center_horizontal"
+        android:padding="24dp">
 
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline_vertical_2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.95" />
+        <!-- Back Button -->
+        <ImageButton
+            android:id="@+id/back_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@null"
+            android:src="@drawable/back_button"
+            android:contentDescription="Back"
+            android:layout_gravity="start"
+            android:layout_marginBottom="8dp"
+            tools:ignore="SpeakableTextPresentCheck"/>
 
-    <!-- Vertical Guidelines -->
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline_horizontal"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.05" />
+        <!-- Logo -->
+        <ImageView
+            android:id="@+id/logo"
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:contentDescription="Logo"
+            android:src="@drawable/logo2"
+            android:layout_marginTop="16dp"/>
 
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline_horizontal_2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.60" />
+        <!-- CSS Master Text -->
+        <ImageView
+            android:id="@+id/css_master"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:contentDescription="CSS Master"
+            android:src="@drawable/text_css_master_2"
+            android:layout_marginTop="12dp"/>
 
+        <!-- Account Information Title -->
+        <TextView
+            android:id="@+id/account_information"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Account Information"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:textColor="@color/dark_green"
+            android:layout_marginTop="24dp"/>
 
-    <!-- Setting Button -->
-    <ImageButton
-        android:id="@+id/setting_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@null"
-        android:scaleType="fitCenter"
-        android:visibility="gone"
-        android:src="@drawable/setting_button"
-        app:layout_constraintEnd_toStartOf="@id/guideline_vertical_2"
-        app:layout_constraintTop_toBottomOf="@id/guideline_horizontal"
-        tools:ignore="SpeakableTextPresentCheck" />
+        <!-- Name -->
+        <TextView
+            android:id="@+id/text_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Name: "
+            android:textSize="18sp"
+            android:textColor="@color/black"
+            android:layout_marginTop="16dp"/>
 
-    <!-- Back button -->
-    <ImageButton
-        android:id="@+id/back_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="14dp"
-        android:background="@null"
-        android:scaleType="fitCenter"
-        android:src="@drawable/back_button"
-        app:layout_constraintStart_toStartOf="@id/guideline_vertical"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:ignore="SpeakableTextPresentCheck" />
+        <!-- Email -->
+        <TextView
+            android:id="@+id/text_email"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Email Address: "
+            android:textSize="18sp"
+            android:textColor="@color/black"
+            android:layout_marginTop="8dp"/>
 
-    <!-- Logo -->
-    <ImageView
-        android:id="@+id/logo"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:contentDescription="Logo"
-        android:src="@drawable/logo2"
-        app:layout_constraintTop_toBottomOf="@id/setting_button"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="26dp"/>
+        <!-- Logout Button -->
+        <ImageButton
+            android:id="@+id/button_logout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/button_logout"
+            android:background="@null"
+            android:contentDescription="Logout"
+            android:layout_marginTop="24dp"/>
 
-    <!-- CSS Master -->
-    <ImageView
-        android:id="@+id/css_master"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:contentDescription="CSS Master"
-        android:src="@drawable/text_css_master_2"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/logo" />
+    </LinearLayout>
 
-    <!-- Computer Hardware & Components -->
-    <TextView
-        android:id="@+id/account_information"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Account Information"
-        android:textSize="16sp"
-        android:textStyle="normal"
-        android:textColor="@color/dark_green"
-        app:layout_constraintTop_toBottomOf="@id/css_master"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="20dp"/>
-
-    <!-- Name Text -->
-    <TextView
-        android:id="@+id/text_name"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Name: "
-        android:textSize="14sp"
-        android:textColor="@color/black"
-        app:layout_constraintTop_toBottomOf="@id/account_information"
-        app:layout_constraintStart_toEndOf="@id/guideline_vertical"
-        android:layout_marginTop="25dp" />
-
-    <!-- Email Text -->
-    <TextView
-        android:id="@+id/text_email"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Email Address: "
-        android:textSize="14sp"
-        android:textColor="@color/black"
-        app:layout_constraintTop_toBottomOf="@id/text_name"
-        app:layout_constraintStart_toEndOf="@id/guideline_vertical"
-        android:layout_marginTop="8dp" />
-
-    <!-- Switch Account Button -->
-<!--    <ImageButton-->
-<!--        android:id="@+id/button_switch_account"-->
-<!--        android:layout_width="wrap_content"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:src="@drawable/button_switch_account"-->
-<!--        android:background="@null"-->
-<!--        android:contentDescription="Switch Account"-->
-<!--        app:layout_constraintTop_toBottomOf="@id/guideline_horizontal_2"-->
-<!--        app:layout_constraintStart_toStartOf="parent"-->
-<!--        app:layout_constraintEnd_toEndOf="parent"-->
-<!--        android:layout_marginTop="20dp" />-->
-
-    <!-- Logout Button -->
-    <ImageButton
-        android:id="@+id/button_logout"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/button_logout"
-        android:background="@null"
-        android:contentDescription="Logout"
-        app:layout_constraintTop_toBottomOf="@id/text_email"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="16dp" />
-
-
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>

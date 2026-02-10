@@ -33,9 +33,9 @@ class GamesFragment : Fragment() {
             startActivity(intent)
         }
 
-        val btnQuizTime = view.findViewById<ImageButton>(R.id.btn_quiz_time)
-        btnQuizTime.setOnClickListener {
-            showCountdownDialog{
+        val btnGuessCss = view.findViewById<ImageButton>(R.id.btn_guess_css)
+        btnGuessCss.setOnClickListener {
+            showCountdownDialogForGames{
                 val intent = Intent(requireContext(), GuessCSSMainGame::class.java)
                 startActivity(intent)
             }
@@ -49,8 +49,8 @@ class GamesFragment : Fragment() {
         return view
     }
 
-    private fun showCountdownDialog(onFinish: () -> Unit) {
-        val dialogView = LayoutInflater.from(requireContext()).inflate(R.layout.loading_quiz_countdown, null)
+    private fun showCountdownDialogForGames(onFinish: () -> Unit) {
+        val dialogView = LayoutInflater.from(requireContext()).inflate(R.layout.loading_games_countdown, null)
         val countdownText = dialogView.findViewById<TextView>(R.id.countdown_text)
 
         val dialog = AlertDialog.Builder(requireContext())
@@ -64,7 +64,7 @@ class GamesFragment : Fragment() {
         object : CountDownTimer(6000, 1000) {
             override fun onTick(millisUntilFinished: Long) {
                 val secondsLeft = millisUntilFinished / 1000
-                countdownText.text = "The quiz will start in $secondsLeft..."
+                countdownText.text = "Guess CSS will start in $secondsLeft..."
             }
 
             override fun onFinish() {

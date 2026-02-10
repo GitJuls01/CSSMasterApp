@@ -79,12 +79,10 @@
             android:exported="false" />
         <activity
             android:name=".ComputerRepairMainGame"
-            android:exported="false"
-            android:screenOrientation="landscape" />
+            android:exported="false" />
         <activity
             android:name=".ComputerRepair"
-            android:exported="false"
-            android:screenOrientation="landscape" />
+            android:exported="false"/>
         <activity
             android:name=".TeacherAccountSettings"
             android:exported="false" />

@@ -56,6 +56,7 @@ class QT_TeacherQuiz_MainGame : AppCompatActivity() {
                     countDownTimer?.cancel()
                     currentIndex = 0
                     correctAnswers = 0
+                    MusicManager.stop()
                     finishAffinity() // Properly exits the app from this point
                 } else {
                     backPressedOnce = true

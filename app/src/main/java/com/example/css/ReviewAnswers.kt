@@ -44,10 +44,14 @@ class ReviewAnswers : AppCompatActivity() {
 
         findViewById<ImageButton>(R.id.back_button).setOnClickListener {
             startActivity(Intent(this, QuizTime::class.java))
+            MusicManager.stop()
+            finish()
         }
 
         findViewById<ImageButton>(R.id.finish_button).setOnClickListener {
             startActivity(Intent(this, QuizTime::class.java))
+            MusicManager.stop()
+            finish()
         }
     }
 }

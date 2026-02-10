@@ -26,12 +26,15 @@ class ComputerSetup : AppCompatActivity() {
             insets
         }
 
+        MusicManager.play(this, R.raw.powerupgamesbgm)
+
         val backButton = findViewById<ImageButton>(R.id.back_button)
         backButton.setOnClickListener {
             val intent = Intent(this, MainActivity::class.java)
             intent.putExtra("openFragment", "games")
             intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP
             startActivity(intent)
+            MusicManager.stop()
             finish()
         }
 

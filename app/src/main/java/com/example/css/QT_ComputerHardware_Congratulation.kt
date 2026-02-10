@@ -32,6 +32,7 @@ class QT_ComputerHardware_Congratulation : AppCompatActivity() {
             intent.putExtra("openFragment", "quizzes")
             intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP
             startActivity(intent)
+            MusicManager.stop()
             finish()
         }
 
@@ -39,6 +40,7 @@ class QT_ComputerHardware_Congratulation : AppCompatActivity() {
         leaderboard.setOnClickListener {
             val intent = Intent(this, QuizLeaderboard::class.java)
             startActivity(intent)
+            MusicManager.stop()
         }
 
 //        val playAgainButton = findViewById<ImageButton>(R.id.play_again_button)
@@ -53,6 +55,7 @@ class QT_ComputerHardware_Congratulation : AppCompatActivity() {
             intent.putExtra("openFragment", "quizzes")
             intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP
             startActivity(intent)
+            MusicManager.stop()
             finish()
         }
 

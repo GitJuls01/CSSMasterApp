@@ -209,7 +209,7 @@
                     android:id="@+id/progress_percentage"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="55% Progress"
+                    android:text="0% Progress"
                     android:textSize="14sp"
                     android:textColor="@android:color/darker_gray"
                     app:layout_constraintStart_toStartOf="@id/progress_title"
