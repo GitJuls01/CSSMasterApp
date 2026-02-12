@@ -107,165 +107,268 @@
         app:layout_constraintEnd_toEndOf="@id/guideline_vertical_2"
         android:layout_marginTop="16dp"/>
 
-    <!-- First Quarter Module Button -->
-    <LinearLayout
-        android:id="@+id/mod_firstqtr"
+    <ScrollView
+        android:id="@+id/scroll_view"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="11dp"
-        android:background="@drawable/mod_qtrbar"
-        android:gravity="center_vertical"
-        android:orientation="horizontal"
-        android:padding="10dp"
-        app:layout_constraintEnd_toEndOf="@id/guideline_vertical_2"
-        app:layout_constraintStart_toStartOf="@id/guideline_vertical"
-        app:layout_constraintTop_toBottomOf="@id/mod_hardware">
+        android:layout_height="0dp"
+        android:fillViewport="true"
+        app:layout_constraintTop_toBottomOf="@id/mod_hardware"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginTop="10dp">
 
-        <ImageView
-            android:layout_width="24dp"
-            android:layout_height="24dp"
-            android:src="@drawable/baseline_picture_as_pdf_24"
-            android:layout_marginEnd="8dp" />
-
-        <TextView
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="First Quarter"
-            android:layout_weight="1"
-            android:textSize="16sp"
-            android:textColor="#044605"
-            android:textStyle="bold" />
+            android:orientation="vertical">
+            <!-- First Module Button -->
+            <LinearLayout
+                android:id="@+id/mod_first"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="11dp"
+                android:background="@drawable/mod_qtrbar"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:padding="10dp"
+                app:layout_constraintEnd_toEndOf="@id/guideline_vertical_2"
+                app:layout_constraintStart_toStartOf="@id/guideline_vertical"
+                app:layout_constraintTop_toBottomOf="@id/mod_hardware">
 
-        <ImageButton
-            android:id="@+id/download_firstqtr"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
-            android:layout_marginStart="8dp"
-            android:background="@null"
-            android:contentDescription="Download First Quarter Module"
-            android:src="@drawable/baseline_download_24"
-            tools:ignore="TouchTargetSizeCheck" />
-    </LinearLayout>
+                <ImageView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:src="@drawable/baseline_picture_as_pdf_24"
+                    android:layout_marginEnd="8dp" />
 
-    <!-- Second Quarter Module Button -->
-    <LinearLayout
-        android:id="@+id/mod_secondqtr"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="11dp"
-        android:background="@drawable/mod_qtrbar"
-        android:gravity="center_vertical"
-        android:orientation="horizontal"
-        android:padding="10dp"
-        app:layout_constraintEnd_toEndOf="@id/guideline_vertical_2"
-        app:layout_constraintStart_toStartOf="@id/guideline_vertical"
-        app:layout_constraintTop_toBottomOf="@id/mod_firstqtr">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="COMPUTER NETWORK CONCEPTS"
+                    android:layout_weight="1"
+                    android:textSize="16sp"
+                    android:ellipsize="end"
+                    android:textColor="#044605"
+                    android:textStyle="bold" />
 
-        <ImageView
-            android:layout_width="24dp"
-            android:layout_height="24dp"
-            android:src="@drawable/baseline_picture_as_pdf_24"
-            android:layout_marginEnd="8dp" />
+                <ImageButton
+                    android:id="@+id/download_first"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_marginStart="8dp"
+                    android:background="@null"
+                    android:contentDescription="Download First Quarter Module"
+                    android:src="@drawable/baseline_download_24"
+                    tools:ignore="TouchTargetSizeCheck" />
+            </LinearLayout>
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Second Quarter"
-            android:layout_weight="1"
-            android:textSize="16sp"
-            android:textColor="#044605"
-            android:textStyle="bold" />
+            <!-- Second Module Button -->
+            <LinearLayout
+                android:id="@+id/mod_second"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="11dp"
+                android:background="@drawable/mod_qtrbar"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:padding="10dp"
+                app:layout_constraintEnd_toEndOf="@id/guideline_vertical_2"
+                app:layout_constraintStart_toStartOf="@id/guideline_vertical"
+                app:layout_constraintTop_toBottomOf="@id/mod_first">
 
-        <ImageButton
-            android:id="@+id/download_secondqtr"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
-            android:layout_marginStart="8dp"
-            android:background="@null"
-            android:contentDescription="Download Second Quarter Module"
-            android:src="@drawable/baseline_download_24"
-            tools:ignore="TouchTargetSizeCheck" />
-    </LinearLayout>
+                <ImageView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:src="@drawable/baseline_picture_as_pdf_24"
+                    android:layout_marginEnd="8dp" />
 
-    <!-- Third Quarter Module Button -->
-    <LinearLayout
-        android:id="@+id/mod_thirdqtr"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="11dp"
-        android:background="@drawable/mod_qtrbar"
-        android:gravity="center_vertical"
-        android:orientation="horizontal"
-        android:padding="10dp"
-        app:layout_constraintEnd_toEndOf="@id/guideline_vertical_2"
-        app:layout_constraintStart_toStartOf="@id/guideline_vertical"
-        app:layout_constraintTop_toBottomOf="@id/mod_secondqtr">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="CONFIGURE CLIENT DEVICE SETTING"
+                    android:layout_weight="1"
+                    android:textSize="16sp"
+                    android:ellipsize="end"
+                    android:textColor="#044605"
+                    android:textStyle="bold" />
 
-        <ImageView
-            android:layout_width="24dp"
-            android:layout_height="24dp"
-            android:src="@drawable/baseline_picture_as_pdf_24"
-            android:layout_marginEnd="8dp" />
+                <ImageButton
+                    android:id="@+id/download_second"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_marginStart="8dp"
+                    android:background="@null"
+                    android:contentDescription="Download Second Quarter Module"
+                    android:src="@drawable/baseline_download_24"
+                    tools:ignore="TouchTargetSizeCheck" />
+            </LinearLayout>
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Third Quarter"
-            android:layout_weight="1"
-            android:textSize="16sp"
-            android:textColor="#044605"
-            android:textStyle="bold" />
+            <!-- Third Module Button -->
+            <LinearLayout
+                android:id="@+id/mod_third"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="11dp"
+                android:background="@drawable/mod_qtrbar"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:padding="10dp"
+                app:layout_constraintEnd_toEndOf="@id/guideline_vertical_2"
+                app:layout_constraintStart_toStartOf="@id/guideline_vertical"
+                app:layout_constraintTop_toBottomOf="@id/mod_second">
 
-        <ImageButton
-            android:id="@+id/download_thirdqtr"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
-            android:layout_marginStart="8dp"
-            android:background="@null"
-            android:contentDescription="Download Third Quarter Module"
-            android:src="@drawable/baseline_download_24"
-            tools:ignore="TouchTargetSizeCheck" />
-    </LinearLayout>
+                <ImageView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:src="@drawable/baseline_picture_as_pdf_24"
+                    android:layout_marginEnd="8dp" />
 
-    <!-- Fourth Quarter Module Button -->
-    <LinearLayout
-        android:id="@+id/mod_fourthqtr"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="11dp"
-        android:background="@drawable/mod_qtrbar"
-        android:gravity="center_vertical"
-        android:orientation="horizontal"
-        android:padding="10dp"
-        app:layout_constraintEnd_toEndOf="@id/guideline_vertical_2"
-        app:layout_constraintStart_toStartOf="@id/guideline_vertical"
-        app:layout_constraintTop_toBottomOf="@id/mod_thirdqtr">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="POWER CABLE AND POWER SUPPLY"
+                    android:layout_weight="1"
+                    android:textSize="16sp"
+                    android:ellipsize="end"
+                    android:textColor="#044605"
+                    android:textStyle="bold" />
 
-        <ImageView
-            android:layout_width="24dp"
-            android:layout_height="24dp"
-            android:src="@drawable/baseline_picture_as_pdf_24"
-            android:layout_marginEnd="8dp" />
+                <ImageButton
+                    android:id="@+id/download_third"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_marginStart="8dp"
+                    android:background="@null"
+                    android:contentDescription="Download Third Quarter Module"
+                    android:src="@drawable/baseline_download_24"
+                    tools:ignore="TouchTargetSizeCheck" />
+            </LinearLayout>
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Fourth Quarter"
-            android:layout_weight="1"
-            android:textSize="16sp"
-            android:textColor="#044605"
-            android:textStyle="bold" />
+            <!-- Fourth Module Button -->
+            <LinearLayout
+                android:id="@+id/mod_fourth"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="11dp"
+                android:background="@drawable/mod_qtrbar"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:padding="10dp"
+                app:layout_constraintEnd_toEndOf="@id/guideline_vertical_2"
+                app:layout_constraintStart_toStartOf="@id/guideline_vertical"
+                app:layout_constraintTop_toBottomOf="@id/mod_third">
 
-        <ImageButton
-            android:id="@+id/download_fourthqtr"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
-            android:layout_marginStart="8dp"
-            android:background="@null"
-            android:contentDescription="Download Fourth Quarter Module"
-            android:src="@drawable/baseline_download_24"
-            tools:ignore="TouchTargetSizeCheck" />
-    </LinearLayout>
+                <ImageView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:src="@drawable/baseline_picture_as_pdf_24"
+                    android:layout_marginEnd="8dp" />
 
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="TESTING ELECTRONIC COMPONENTS"
+                    android:layout_weight="1"
+                    android:textSize="16sp"
+                    android:ellipsize="end"
+                    android:textColor="#044605"
+                    android:textStyle="bold" />
+
+                <ImageButton
+                    android:id="@+id/download_fourth"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_marginStart="8dp"
+                    android:background="@null"
+                    android:contentDescription="Download Fourth Quarter Module"
+                    android:src="@drawable/baseline_download_24"
+                    tools:ignore="TouchTargetSizeCheck" />
+            </LinearLayout>
+
+            <!-- Fifth Module Button -->
+            <LinearLayout
+                android:id="@+id/mod_fifth"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="11dp"
+                android:background="@drawable/mod_qtrbar"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:padding="10dp"
+                app:layout_constraintEnd_toEndOf="@id/guideline_vertical_2"
+                app:layout_constraintStart_toStartOf="@id/guideline_vertical"
+                app:layout_constraintTop_toBottomOf="@id/mod_fourth">
+
+                <ImageView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:src="@drawable/baseline_picture_as_pdf_24"
+                    android:layout_marginEnd="8dp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="TYPES OF COMPUTER AND COMPUTER PARTS"
+                    android:layout_weight="1"
+                    android:textSize="16sp"
+                    android:ellipsize="end"
+                    android:textColor="#044605"
+                    android:textStyle="bold" />
+
+                <ImageButton
+                    android:id="@+id/download_fifth"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_marginStart="8dp"
+                    android:background="@null"
+                    android:contentDescription="Download Fourth Quarter Module"
+                    android:src="@drawable/baseline_download_24"
+                    tools:ignore="TouchTargetSizeCheck" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/mod_sixth"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="11dp"
+                android:background="@drawable/mod_qtrbar"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:padding="10dp"
+                app:layout_constraintEnd_toEndOf="@id/guideline_vertical_2"
+                app:layout_constraintStart_toStartOf="@id/guideline_vertical"
+                app:layout_constraintTop_toBottomOf="@id/mod_fifth">
+
+                <ImageView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:src="@drawable/baseline_picture_as_pdf_24"
+                    android:layout_marginEnd="8dp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="USING HAND TOOLS"
+                    android:layout_weight="1"
+                    android:textSize="16sp"
+                    android:ellipsize="end"
+                    android:textColor="#044605"
+                    android:textStyle="bold" />
+
+                <ImageButton
+                    android:id="@+id/download_sixth"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_marginStart="8dp"
+                    android:background="@null"
+                    android:contentDescription="Download Fourth Quarter Module"
+                    android:src="@drawable/baseline_download_24"
+                    tools:ignore="TouchTargetSizeCheck" />
+            </LinearLayout>
+
+        </LinearLayout>
+    </ScrollView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
