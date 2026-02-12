@@ -43,10 +43,13 @@ class ModuleHardware : BottomNav() {
         }
 
         val backButton = findViewById<ImageButton>(R.id.back_button)
-        val firstQuarterButton = findViewById<ImageButton>(R.id.download_firstqtr)
-        val secondQuarterButton = findViewById<ImageButton>(R.id.download_secondqtr)
-        val thirdQuarterButton = findViewById<ImageButton>(R.id.download_thirdqtr)
-        val fourthQuarterButton = findViewById<ImageButton>(R.id.download_fourthqtr)
+        val firstQuarterButton = findViewById<ImageButton>(R.id.download_first)
+        val secondQuarterButton = findViewById<ImageButton>(R.id.download_second)
+        val thirdQuarterButton = findViewById<ImageButton>(R.id.download_third)
+        val fourthQuarterButton = findViewById<ImageButton>(R.id.download_fourth)
+        val fifthQuarterButton = findViewById<ImageButton>(R.id.download_fifth)
+        val sixthQuarterButton = findViewById<ImageButton>(R.id.download_sixth)
+
 
         // Access SharedPreferences
         sharedPreferences = this.getSharedPreferences("user_data", MODE_PRIVATE)
@@ -56,23 +59,33 @@ class ModuleHardware : BottomNav() {
         }
 
         firstQuarterButton.setOnClickListener {
-            showDownloadConfirmationDialog("Hardware_Quarter_1.pdf")
-            saveUserProgress("Q1")
+            showDownloadConfirmationDialog("COMPUTER NETWORK CONCEPTS.pdf")
+            saveUserProgress("1")
         }
 
         secondQuarterButton.setOnClickListener {
-            showDownloadConfirmationDialog("Hardware_Quarter_2.pdf")
-            saveUserProgress("Q2")
+            showDownloadConfirmationDialog("CONFIGURE CLIENT DEVICE SETTING.pdf")
+            saveUserProgress("2")
         }
 
         thirdQuarterButton.setOnClickListener {
-            showDownloadConfirmationDialog("Hardware_Quarter_3.pdf")
-            saveUserProgress("Q3")
+            showDownloadConfirmationDialog("POWER CABLE AND POWER SUPPLY.pdf")
+            saveUserProgress("3")
         }
 
         fourthQuarterButton.setOnClickListener {
-            showDownloadConfirmationDialog("Hardware_Quarter_4.pdf")
-            saveUserProgress("Q4")
+            showDownloadConfirmationDialog("TESTING ELECTRONIC COMPONENTS.pdf")
+            saveUserProgress("4")
+        }
+
+        fifthQuarterButton.setOnClickListener {
+            showDownloadConfirmationDialog("TYPES OF COMPUTER AND COMPUTER PARTS.pdf")
+            saveUserProgress("5")
+        }
+
+        sixthQuarterButton.setOnClickListener {
+            showDownloadConfirmationDialog("USING HAND TOOLS.pdf")
+            saveUserProgress("6")
         }
     }
 
@@ -153,7 +166,7 @@ class ModuleHardware : BottomNav() {
         val createdDate = Timestamp.now()
 
         val updates = hashMapOf<String, Any>(
-            quarter to 25,
+            quarter to 1,
             "name" to userName,
             "lastUpdated" to createdDate
         )

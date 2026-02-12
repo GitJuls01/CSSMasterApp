@@ -107,166 +107,269 @@
         app:layout_constraintEnd_toEndOf="@id/guideline_vertical_2"
         android:layout_marginTop="16dp"/>
 
-    <!-- First Quarter Module Button -->
-    <LinearLayout
-        android:id="@+id/mod_software_first_qtr"
+    <ScrollView
+        android:id="@+id/scroll_view"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="11dp"
-        android:background="@drawable/mod_qtrbar"
-        android:gravity="center_vertical"
-        android:orientation="horizontal"
-        android:padding="10dp"
-        app:layout_constraintEnd_toEndOf="@id/guideline_vertical_2"
-        app:layout_constraintStart_toStartOf="@id/guideline_vertical"
-        app:layout_constraintTop_toBottomOf="@id/mod_software">
+        android:layout_height="0dp"
+        android:fillViewport="true"
+        app:layout_constraintTop_toBottomOf="@id/mod_software"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginTop="10dp">
 
-        <ImageView
-            android:layout_width="24dp"
-            android:layout_height="24dp"
-            android:src="@drawable/baseline_picture_as_pdf_24"
-            android:layout_marginEnd="8dp" />
-
-        <TextView
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="First Quarter"
-            android:layout_weight="1"
-            android:textSize="16sp"
-            android:textColor="#044605"
-            android:textStyle="bold" />
+            android:orientation="vertical">
 
-        <ImageButton
-            android:id="@+id/download_firstqtr"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
-            android:layout_marginStart="8dp"
-            android:background="@null"
-            android:contentDescription="Download First Quarter Module"
-            android:src="@drawable/baseline_download_24"
-            tools:ignore="TouchTargetSizeCheck" />
-    </LinearLayout>
+            <!-- First Module Button -->
+            <LinearLayout
+                android:id="@+id/mod_software_first"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="11dp"
+                android:background="@drawable/mod_qtrbar"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:padding="10dp"
+                app:layout_constraintEnd_toEndOf="@id/guideline_vertical_2"
+                app:layout_constraintStart_toStartOf="@id/guideline_vertical"
+                app:layout_constraintTop_toBottomOf="@id/mod_software">
 
-    <!-- Second Quarter Module Button -->
-    <LinearLayout
-        android:id="@+id/mod_software_sec_qtr"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="11dp"
-        android:background="@drawable/mod_qtrbar"
-        android:gravity="center_vertical"
-        android:orientation="horizontal"
-        android:padding="10dp"
-        app:layout_constraintEnd_toEndOf="@id/guideline_vertical_2"
-        app:layout_constraintStart_toStartOf="@id/guideline_vertical"
-        app:layout_constraintTop_toBottomOf="@id/mod_software_first_qtr">
+                <ImageView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:src="@drawable/baseline_picture_as_pdf_24"
+                    android:layout_marginEnd="8dp" />
 
-        <ImageView
-            android:layout_width="24dp"
-            android:layout_height="24dp"
-            android:src="@drawable/baseline_picture_as_pdf_24"
-            android:layout_marginEnd="8dp" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="SETTING UP COMPUTER SERVERS"
+                    android:layout_weight="1"
+                    android:textSize="16sp"
+                    android:ellipsize="end"
+                    android:textColor="#044605"
+                    android:textStyle="bold" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Second Quarter"
-            android:layout_weight="1"
-            android:textSize="16sp"
-            android:textColor="#044605"
-            android:textStyle="bold" />
+                <ImageButton
+                    android:id="@+id/download_first"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_marginStart="8dp"
+                    android:background="@null"
+                    android:contentDescription="Download First Quarter Module"
+                    android:src="@drawable/baseline_download_24"
+                    tools:ignore="TouchTargetSizeCheck" />
+            </LinearLayout>
 
-        <ImageButton
-            android:id="@+id/download_secondqtr"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
-            android:layout_marginStart="8dp"
-            android:background="@null"
-            android:contentDescription="Download Second Quarter Module"
-            android:src="@drawable/baseline_download_24"
-            tools:ignore="TouchTargetSizeCheck" />
-    </LinearLayout>
+            <!-- Second Module Button -->
+            <LinearLayout
+                android:id="@+id/mod_software_sec"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="11dp"
+                android:background="@drawable/mod_qtrbar"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:padding="10dp"
+                app:layout_constraintEnd_toEndOf="@id/guideline_vertical_2"
+                app:layout_constraintStart_toStartOf="@id/guideline_vertical"
+                app:layout_constraintTop_toBottomOf="@id/download_first">
 
-    <!-- Third Quarter Module Button -->
-    <LinearLayout
-        android:id="@+id/mod_software_third_qtr"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="11dp"
-        android:background="@drawable/mod_qtrbar"
-        android:gravity="center_vertical"
-        android:orientation="horizontal"
-        android:padding="10dp"
-        app:layout_constraintEnd_toEndOf="@id/guideline_vertical_2"
-        app:layout_constraintStart_toStartOf="@id/guideline_vertical"
-        app:layout_constraintTop_toBottomOf="@id/mod_software_sec_qtr">
+                <ImageView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:src="@drawable/baseline_picture_as_pdf_24"
+                    android:layout_marginEnd="8dp" />
 
-        <ImageView
-            android:layout_width="24dp"
-            android:layout_height="24dp"
-            android:src="@drawable/baseline_picture_as_pdf_24"
-            android:layout_marginEnd="8dp" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Configuring Wide Area Network"
+                    android:layout_weight="1"
+                    android:textSize="16sp"
+                    android:ellipsize="end"
+                    android:textColor="#044605"
+                    android:textStyle="bold" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Third Quarter"
-            android:layout_weight="1"
-            android:textSize="16sp"
-            android:textColor="#044605"
-            android:textStyle="bold" />
+                <ImageButton
+                    android:id="@+id/download_second"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_marginStart="8dp"
+                    android:background="@null"
+                    android:contentDescription="Download Second Quarter Module"
+                    android:src="@drawable/baseline_download_24"
+                    tools:ignore="TouchTargetSizeCheck" />
+            </LinearLayout>
 
-        <ImageButton
-            android:id="@+id/download_thirdqtr"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
-            android:layout_marginStart="8dp"
-            android:background="@null"
-            android:contentDescription="Download Third Quarter Module"
-            android:src="@drawable/baseline_download_24"
-            tools:ignore="TouchTargetSizeCheck" />
-    </LinearLayout>
+            <!-- Third Module Button -->
+            <LinearLayout
+                android:id="@+id/mod_software_third"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="11dp"
+                android:background="@drawable/mod_qtrbar"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:padding="10dp"
+                app:layout_constraintEnd_toEndOf="@id/guideline_vertical_2"
+                app:layout_constraintStart_toStartOf="@id/guideline_vertical"
+                app:layout_constraintTop_toBottomOf="@id/mod_software_sec">
 
-    <!-- Fourth Quarter Module Button -->
-    <LinearLayout
-        android:id="@+id/mod_software_fourth_qtr"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="11dp"
-        android:background="@drawable/mod_qtrbar"
-        android:gravity="center_vertical"
-        android:orientation="horizontal"
-        android:padding="10dp"
-        app:layout_constraintEnd_toEndOf="@id/guideline_vertical_2"
-        app:layout_constraintStart_toStartOf="@id/guideline_vertical"
-        app:layout_constraintTop_toBottomOf="@id/mod_software_third_qtr">
+                <ImageView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:src="@drawable/baseline_picture_as_pdf_24"
+                    android:layout_marginEnd="8dp" />
 
-        <ImageView
-            android:layout_width="24dp"
-            android:layout_height="24dp"
-            android:src="@drawable/baseline_picture_as_pdf_24"
-            android:layout_marginEnd="8dp" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="INSTALL OPERATING SYSTEM AND DRIVERSFORPERIPHERALS DEVICES"
+                    android:layout_weight="1"
+                    android:textSize="16sp"
+                    android:ellipsize="end"
+                    android:textColor="#044605"
+                    android:textStyle="bold" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Fourth Quarter"
-            android:layout_weight="1"
-            android:textSize="16sp"
-            android:textColor="#044605"
-            android:textStyle="bold" />
+                <ImageButton
+                    android:id="@+id/download_third"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_marginStart="8dp"
+                    android:background="@null"
+                    android:contentDescription="Download Third Quarter Module"
+                    android:src="@drawable/baseline_download_24"
+                    tools:ignore="TouchTargetSizeCheck" />
+            </LinearLayout>
 
-        <ImageButton
-            android:id="@+id/download_fourthqtr"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
-            android:layout_marginStart="8dp"
-            android:background="@null"
-            android:contentDescription="Download Fourth Quarter Module"
-            android:src="@drawable/baseline_download_24"
-            tools:ignore="TouchTargetSizeCheck" />
-    </LinearLayout>
+            <!-- Fourth Module Button -->
+            <LinearLayout
+                android:id="@+id/mod_software_fourth"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="11dp"
+                android:background="@drawable/mod_qtrbar"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:padding="10dp"
+                app:layout_constraintEnd_toEndOf="@id/guideline_vertical_2"
+                app:layout_constraintStart_toStartOf="@id/guideline_vertical"
+                app:layout_constraintTop_toBottomOf="@id/mod_software_third">
+
+                <ImageView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:src="@drawable/baseline_picture_as_pdf_24"
+                    android:layout_marginEnd="8dp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Installers Preparations and OS Installation Procedures"
+                    android:layout_weight="1"
+                    android:textSize="16sp"
+                    android:ellipsize="end"
+                    android:textColor="#044605"
+                    android:textStyle="bold" />
+
+                <ImageButton
+                    android:id="@+id/download_fourth"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_marginStart="8dp"
+                    android:background="@null"
+                    android:contentDescription="Download Fourth Quarter Module"
+                    android:src="@drawable/baseline_download_24"
+                    tools:ignore="TouchTargetSizeCheck" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/mod_software_fifth"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="11dp"
+                android:background="@drawable/mod_qtrbar"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:padding="10dp"
+                app:layout_constraintEnd_toEndOf="@id/guideline_vertical_2"
+                app:layout_constraintStart_toStartOf="@id/guideline_vertical"
+                app:layout_constraintTop_toBottomOf="@id/mod_software_fourth">
+
+                <ImageView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:src="@drawable/baseline_picture_as_pdf_24"
+                    android:layout_marginEnd="8dp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Set router Wi-fi wireless access point repeater"
+                    android:layout_weight="1"
+                    android:textSize="16sp"
+                    android:ellipsize="end"
+                    android:textColor="#044605"
+                    android:textStyle="bold" />
+
+                <ImageButton
+                    android:id="@+id/download_fifth"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_marginStart="8dp"
+                    android:background="@null"
+                    android:contentDescription="Download Fourth Quarter Module"
+                    android:src="@drawable/baseline_download_24"
+                    tools:ignore="TouchTargetSizeCheck" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/mod_software_sixth"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="11dp"
+                android:background="@drawable/mod_qtrbar"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:padding="10dp"
+                app:layout_constraintEnd_toEndOf="@id/guideline_vertical_2"
+                app:layout_constraintStart_toStartOf="@id/guideline_vertical"
+                app:layout_constraintTop_toBottomOf="@id/mod_software_fifth">
+
+                <ImageView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:src="@drawable/baseline_picture_as_pdf_24"
+                    android:layout_marginEnd="8dp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Setting Up Firewall with Advanced Setting"
+                    android:layout_weight="1"
+                    android:textSize="16sp"
+                    android:ellipsize="end"
+                    android:textColor="#044605"
+                    android:textStyle="bold" />
+
+                <ImageButton
+                    android:id="@+id/download_sixth"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_marginStart="8dp"
+                    android:background="@null"
+                    android:contentDescription="Download Fourth Quarter Module"
+                    android:src="@drawable/baseline_download_24"
+                    tools:ignore="TouchTargetSizeCheck" />
+            </LinearLayout>
 
 
+        </LinearLayout>
+    </ScrollView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

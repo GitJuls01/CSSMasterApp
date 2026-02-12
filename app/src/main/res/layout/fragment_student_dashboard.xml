@@ -209,11 +209,33 @@
                     android:id="@+id/progress_percentage"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="0% Progress"
+                    android:text="Progress:"
                     android:textSize="14sp"
                     android:textColor="@android:color/darker_gray"
                     app:layout_constraintStart_toStartOf="@id/progress_title"
                     app:layout_constraintTop_toBottomOf="@id/progress_title" />
+
+                <TextView
+                    android:id="@+id/progress_hardware"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Hardware: 0/6"
+                    android:textSize="14sp"
+                    android:textColor="@android:color/darker_gray"
+                    app:layout_constraintStart_toStartOf="@id/progress_percentage"
+                    app:layout_constraintTop_toBottomOf="@id/progress_percentage" />
+
+                <TextView
+                    android:id="@+id/progress_software"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Software: 0/6"
+                    android:textSize="14sp"
+                    android:textColor="@android:color/darker_gray"
+                    app:layout_constraintStart_toStartOf="@id/progress_hardware"
+                    app:layout_constraintTop_toBottomOf="@id/progress_hardware" />
+
+
             </androidx.constraintlayout.widget.ConstraintLayout>
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>

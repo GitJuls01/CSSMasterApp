@@ -13,7 +13,9 @@ import com.google.firebase.firestore.FirebaseFirestore
 class StudentDashboardFragment : Fragment() {
 
     private lateinit var firestore: FirebaseFirestore
-    private lateinit var progressText: TextView
+    private lateinit var progressHardware: TextView
+    private lateinit var progressSoftware: TextView
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
@@ -26,7 +28,9 @@ class StudentDashboardFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         firestore = FirebaseFirestore.getInstance()
-        progressText = view.findViewById(R.id.progress_percentage)
+        progressHardware = view.findViewById(R.id.progress_hardware)
+        progressSoftware = view.findViewById(R.id.progress_software)
+
 
         // Load and display progress
         fetchUserProgress()
@@ -50,19 +54,38 @@ class StudentDashboardFragment : Fragment() {
             .get()
             .addOnSuccessListener { document ->
                 if (document.exists()) {
-                    val q1 = document.getLong("Q1") ?: 0
-                    val q2 = document.getLong("Q2") ?: 0
-                    val q3 = document.getLong("Q3") ?: 0
-                    val q4 = document.getLong("Q4") ?: 0
+                    val q1 = document.getLong("1") ?: 0
+                    val q2 = document.getLong("2") ?: 0
+                    val q3 = document.getLong("3") ?: 0
+                    val q4 = document.getLong("4") ?: 0
+                    val q5 = document.getLong("5") ?: 0
+                    val q6 = document.getLong("6") ?: 0
 
-                    val total = q1 + q2 + q3 + q4
-                    progressText.text = "Progress: $total%"
-                } else {
-                    progressText.text = "Progress: 0%"
+                    val total = q1 + q2 + q3 + q4 + q5 + q6
+                    progressHardware.text = "Hardware: $total/6"
                 }
             }
             .addOnFailureListener {
-                progressText.text = "Error loading progress"
+            }
+
+        firestore.collection("user_progress_sw")
+            .document(userName)
+            .get()
+            .addOnSuccessListener { document ->
+                if (document.exists()) {
+                    val q1 = document.getLong("1") ?: 0
+                    val q2 = document.getLong("2") ?: 0
+                    val q3 = document.getLong("3") ?: 0
+                    val q4 = document.getLong("4") ?: 0
+                    val q5 = document.getLong("5") ?: 0
+                    val q6 = document.getLong("6") ?: 0
+
+                    val total = q1 + q2 + q3 + q4 + q5 + q6
+                    progressSoftware.text = "Software: $total/6"
+
+                }
+            }
+            .addOnFailureListener {
             }
     }
 }

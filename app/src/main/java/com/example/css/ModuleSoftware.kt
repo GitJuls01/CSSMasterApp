@@ -39,10 +39,12 @@ class ModuleSoftware : BottomNav() {
         }
 
         val backButton = findViewById<ImageButton>(R.id.back_button)
-        val firstQuarterButton = findViewById<ImageButton>(R.id.download_firstqtr)
-        val secondQuarterButton = findViewById<ImageButton>(R.id.download_secondqtr)
-        val thirdQuarterButton = findViewById<ImageButton>(R.id.download_thirdqtr)
-        val fourthQuarterButton = findViewById<ImageButton>(R.id.download_fourthqtr)
+        val firstQuarterButton = findViewById<ImageButton>(R.id.download_first)
+        val secondQuarterButton = findViewById<ImageButton>(R.id.download_second)
+        val thirdQuarterButton = findViewById<ImageButton>(R.id.download_third)
+        val fourthQuarterButton = findViewById<ImageButton>(R.id.download_fourth)
+        val fifthQuarterButton = findViewById<ImageButton>(R.id.download_fifth)
+        val sixthQuarterButton = findViewById<ImageButton>(R.id.download_sixth)
 
         sharedPreferences = this.getSharedPreferences("user_data", MODE_PRIVATE)
 
@@ -52,25 +54,34 @@ class ModuleSoftware : BottomNav() {
         }
 
         firstQuarterButton.setOnClickListener {
-            showDownloadConfirmationDialog("Software_Quarter_1.pdf")
-            saveUserProgress("Q1")
+            showDownloadConfirmationDialog("SETTING UP COMPUTER SERVERS.pdf")
+            saveUserProgress("1")
         }
 
         secondQuarterButton.setOnClickListener {
-            showDownloadConfirmationDialog("Software_Quarter_2.pdf")
-            saveUserProgress("Q2")
+            showDownloadConfirmationDialog("Configuring Wide Area Network.pdf")
+            saveUserProgress("2")
 
         }
 
         thirdQuarterButton.setOnClickListener {
-            showDownloadConfirmationDialog("Software_Quarter_3.pdf")
-            saveUserProgress("Q3")
+            showDownloadConfirmationDialog("INSTALL OPERATING SYSTEM AND DRIVERSFORPERIPHERALS DEVICES.pdf")
+            saveUserProgress("3")
         }
 
         fourthQuarterButton.setOnClickListener {
-            showDownloadConfirmationDialog("Software_Quarter_4.pdf")
-            saveUserProgress("Q4")
+            showDownloadConfirmationDialog("Installers Preparations and OS Installation Procedures.pdf")
+            saveUserProgress("4")
+        }
 
+        fifthQuarterButton.setOnClickListener {
+            showDownloadConfirmationDialog("Set router Wi-fi wireless access point repeater.pdf")
+            saveUserProgress("5")
+        }
+
+        sixthQuarterButton.setOnClickListener {
+            showDownloadConfirmationDialog("Setting Up Firewall with Advanced Setting.pdf")
+            saveUserProgress("6")
         }
     }
 
@@ -151,7 +162,7 @@ class ModuleSoftware : BottomNav() {
         val createdDate = Timestamp.now()
 
         val updates = hashMapOf<String, Any>(
-            quarter to 25,
+            quarter to 1,
             "name" to userName,
             "lastUpdated" to createdDate
         )
