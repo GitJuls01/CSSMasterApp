@@ -371,28 +371,56 @@ class ComputerSetupPage2 : AppCompatActivity() {
     }
 
     private fun handlePeripheralDrop(part: ImageView) {
-        if (periStep >= periImages.size - 1) return
 
-        periUserOrder.add(part.id)
+        if (periStep >= periCorrectOrder.size) return
 
-        // animate to table center
-        partCase.setImageResource(periImages[periStep + 1])
-        part.visibility = View.GONE
-        periStep++
+        val expectedPart = periCorrectOrder[periStep]
 
-        if (periUserOrder.size == periCorrectOrder.size) {
+        // 👉 Check if correct order
+        if (part.id == expectedPart) {
 
-            finalText1.text = "NICE SET UP!"
-            finalText2.text = "LET'S TRY TO BOOT IT UP!"
+            // ✅ Correct drop
+            periUserOrder.add(part.id)
 
-            finalText1.visibility = View.VISIBLE
-            finalText2.visibility = View.VISIBLE
+            partCase.setImageResource(periImages[periStep + 1])
+            part.visibility = View.GONE
 
-            val manImage = findViewById<ImageView>(R.id.text_with_man)
-            manImage.setImageResource(R.drawable.cs_peri_man)
-            manImage.visibility = View.VISIBLE
+            periStep++
 
-            bootButton.visibility = View.VISIBLE
+            // 👉 Finished all peripherals
+            if (periStep == periCorrectOrder.size) {
+
+                finalText1.text = "NICE SET UP!"
+                finalText2.text = "LET'S TRY TO BOOT IT UP!"
+
+                finalText1.visibility = View.VISIBLE
+                finalText2.visibility = View.VISIBLE
+
+                val manImage = findViewById<ImageView>(R.id.text_with_man)
+                manImage.setImageResource(R.drawable.cs_peri_man)
+                manImage.visibility = View.VISIBLE
+
+                bootButton.visibility = View.VISIBLE
+            }
+
+        } else {
+
+            // ❌ Wrong order
+            Toast.makeText(
+                this,
+                "Wrong order! Follow the correct setup sequence.",
+                Toast.LENGTH_SHORT
+            ).show()
+
+            // 👉 Return to original position
+            val (_, _, origPos) =
+                part.tag as Triple<Float, Float, Pair<Float, Float>>
+
+            part.animate()
+                .x(origPos.first)
+                .y(origPos.second)
+                .setDuration(300)
+                .start()
         }
     }
 
