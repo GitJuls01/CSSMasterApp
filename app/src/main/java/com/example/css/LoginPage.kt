@@ -63,6 +63,8 @@ class LoginPage : AppCompatActivity() {
             logo.setImageResource(R.drawable.teacher_logo) // Set teacher logo
         } else if (userType == "student") {
             logo.setImageResource(R.drawable.student_logo) // Set student logo
+        } else {
+            logo.setImageResource(R.drawable.admin_logo) // Set admin logo
         }
 
         // Set OnClickListener to navigate to LoginPage

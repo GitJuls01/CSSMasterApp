@@ -18,6 +18,12 @@
         android:theme="@style/Theme.CSS"
         tools:targetApi="31">
         <activity
+            android:name=".AdminViewDetails"
+            android:exported="false" />
+        <activity
+            android:name=".AdminPage"
+            android:exported="false" />
+        <activity
             android:name=".CSHowToPreventBsod"
             android:exported="false" />
         <activity
@@ -82,7 +88,7 @@
             android:exported="false" />
         <activity
             android:name=".ComputerRepair"
-            android:exported="false"/>
+            android:exported="false" />
         <activity
             android:name=".TeacherAccountSettings"
             android:exported="false" />

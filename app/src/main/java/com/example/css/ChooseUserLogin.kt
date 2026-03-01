@@ -48,6 +48,13 @@ class ChooseUserLogin : AppCompatActivity() {
         //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
 
+        val adminButton = findViewById<ImageButton>(R.id.admin_button)
+        adminButton.setOnClickListener {
+            val intent = Intent(this, LoginPage::class.java)
+            intent.putExtra("userType", "admin") // Pass "admin"
+            startActivity(intent)
+        }
+
         val teacherButton = findViewById<ImageButton>(R.id.teacher_button)
         teacherButton.setOnClickListener {
             val intent = Intent(this, LoginPage::class.java)
