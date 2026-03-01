@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/background_2"
+    tools:context=".AdminPage">
+
+    <!-- Vertical Guidelines -->
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline_vertical"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.05" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline_vertical_2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.95" />
+
+    <!-- Horizontal Guidelines -->
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline_horizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.10" />
+
+    <!-- Back Button -->
+    <ImageButton
+        android:id="@+id/back_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="14dp"
+        android:background="@null"
+        android:scaleType="fitCenter"
+        android:src="@drawable/back_button"
+        app:layout_constraintStart_toStartOf="@id/guideline_vertical"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="SpeakableTextPresentCheck" />
+
+    <ImageView
+        android:id="@+id/head_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:contentDescription="CSS Master"
+        android:src="@drawable/admin_head_text"
+        app:layout_constraintTop_toBottomOf="@id/guideline_horizontal"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="15dp"/>
+
+<!--    <TextView-->
+<!--        android:id="@+id/head_text"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:text="HEAD TEACHER PORTAL"-->
+<!--        android:textSize="30sp"-->
+<!--        android:textStyle="bold"-->
+<!--        android:textColor="@color/dark_green"-->
+<!--        app:layout_constraintTop_toBottomOf="@id/guideline_horizontal"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        android:layout_marginTop="15dp"/>-->
+
+    <TextView
+        android:id="@+id/teacher_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Teacher"
+        android:textSize="15sp"
+        android:textStyle="bold"
+        android:textColor="@color/dark_green"
+        app:layout_constraintTop_toBottomOf="@id/head_text"
+        app:layout_constraintStart_toStartOf="@id/guideline_vertical"
+        android:layout_marginTop="15dp"/>
+
+    <ScrollView
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintTop_toBottomOf="@id/teacher_text"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="@id/guideline_vertical"
+        app:layout_constraintEnd_toEndOf="@id/guideline_vertical_2"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="16dp">
+
+<!--    Uncomment mo na lang to pag naremove mo na yung liner layout sa baba -->
+<!--        <LinearLayout-->
+<!--            android:id="@+id/email_container"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:orientation="vertical"-->
+<!--            android:paddingBottom="16dp" />-->
+
+<!--    Nilagay ko lang para makita yung design,
+remove mo na lang tong buong liner layout,
+then uncomment mo yung linearlayout sa taas nito.
+ang gagamitin mo is yung admin_item_view.xml  -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="12dp"
+            android:background="@drawable/admin_white_container"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:padding="10dp">
+
+            <!-- Left Side: Text Group -->
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/quiz_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="email"
+                    android:textSize="15sp"
+                    android:textColor="@color/dark_green"
+                    android:textStyle="bold" />
+
+                <!-- Changed from TextView to ImageView -->
+                <ImageButton
+                    android:id="@+id/admin_view_details_button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp"
+                    android:background="@null"
+                    android:clickable="true"
+                    android:contentDescription="View Details"
+                    android:focusable="true"
+                    android:src="@drawable/admin_view_details_button"
+                    tools:ignore="TouchTargetSizeCheck" />
+            </LinearLayout>
+
+            <!-- Right Side: Buttons -->
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <ImageButton
+                    android:id="@+id/admin_approve_button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/admin_approve_button"
+                    android:background="@null"
+                    android:contentDescription="Approve"
+                    android:padding="4dp"
+                    android:clickable="true"
+                    android:focusable="true"
+                    tools:ignore="TouchTargetSizeCheck"/>
+
+                <ImageButton
+                    android:id="@+id/admin_reject_button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/admin_reject_button"
+                    android:background="@null"
+                    android:layout_marginStart="4dp"
+                    android:contentDescription="Reject"
+                    android:padding="4dp"
+                    android:clickable="true"
+                    android:focusable="true"
+                    tools:ignore="TouchTargetSizeCheck"/>
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

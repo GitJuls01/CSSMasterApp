@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/background_2"
+    tools:context=".AdminViewDetails">
+
+    <!-- Vertical Guidelines -->
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline_vertical"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.05" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline_vertical_2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.95" />
+
+    <!-- Horizontal Guidelines -->
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline_horizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.10" />
+
+    <!-- Back Button -->
+    <ImageButton
+        android:id="@+id/back_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="14dp"
+        android:background="@null"
+        android:scaleType="fitCenter"
+        android:src="@drawable/back_button"
+        app:layout_constraintStart_toStartOf="@id/guideline_vertical"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="SpeakableTextPresentCheck" />
+
+    <ImageView
+        android:id="@+id/head_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:contentDescription="CSS Master"
+        android:src="@drawable/admin_head_text"
+        app:layout_constraintTop_toBottomOf="@id/guideline_horizontal"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="15dp"/>
+
+    <!--    <TextView-->
+    <!--        android:id="@+id/head_text"-->
+    <!--        android:layout_width="wrap_content"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:text="HEAD TEACHER PORTAL"-->
+    <!--        android:textSize="30sp"-->
+    <!--        android:textStyle="bold"-->
+    <!--        android:textColor="@color/dark_green"-->
+    <!--        app:layout_constraintTop_toBottomOf="@id/guideline_horizontal"-->
+    <!--        app:layout_constraintStart_toStartOf="parent"-->
+    <!--        app:layout_constraintEnd_toEndOf="parent"-->
+    <!--        android:layout_marginTop="15dp"/>-->
+
+    <TextView
+        android:id="@+id/teacher_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Teacher"
+        android:textSize="15sp"
+        android:textStyle="bold"
+        android:textColor="@color/dark_green"
+        app:layout_constraintTop_toBottomOf="@id/head_text"
+        app:layout_constraintStart_toStartOf="@id/guideline_vertical"
+        android:layout_marginTop="15dp"/>
+
+    <ScrollView
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintTop_toBottomOf="@id/teacher_text"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="@id/guideline_vertical"
+        app:layout_constraintEnd_toEndOf="@id/guideline_vertical_2"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="16dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="12dp"
+            android:background="@drawable/admin_teacher_details_container"
+            android:gravity="center_vertical"
+            android:orientation="vertical"
+            android:padding="10dp">
+
+            <!-- Teacher Details Title -->
+            <TextView
+                android:id="@+id/teacher_details_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Teacher Details"
+                android:textSize="15sp"
+                android:textStyle="bold"
+                android:gravity="center"
+                android:layout_marginBottom="5dp"
+                android:textColor="#9CB29C"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <!-- Email -->
+                <TextView
+                    android:id="@+id/teacher_email"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Email: example@example.com"
+                    android:textSize="16sp"
+                    android:textColor="@color/dark_green" />
+
+                <!-- Name -->
+                <TextView
+                    android:id="@+id/teacher_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Name: Julius"
+                    android:textSize="16sp"
+                    android:layout_marginTop="2dp"
+                    android:textColor="@color/dark_green"/>
+
+                <!-- Section -->
+                <TextView
+                    android:id="@+id/teacher_section"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Section: A"
+                    android:textSize="16sp"
+                    android:layout_marginTop="2dp"
+                    android:textColor="@color/dark_green"/>
+            </LinearLayout>
+
+            <!-- Approve/Reject Buttons Row -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="end"
+                android:layout_marginTop="12dp">
+
+                <ImageButton
+                    android:id="@+id/admin_approve_button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/admin_approve_button"
+                    android:background="@null"
+                    android:contentDescription="Approve"
+                    android:padding="4dp"
+                    android:clickable="true"
+                    android:focusable="true"
+                    tools:ignore="TouchTargetSizeCheck"/>
+
+                <ImageButton
+                    android:id="@+id/admin_reject_button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/admin_reject_button"
+                    android:background="@null"
+                    android:layout_marginStart="4dp"
+                    android:contentDescription="Reject"
+                    android:padding="4dp"
+                    android:clickable="true"
+                    android:focusable="true"
+                    tools:ignore="TouchTargetSizeCheck"/>
+
+            </LinearLayout>
+
+        </LinearLayout>
+    </ScrollView>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
