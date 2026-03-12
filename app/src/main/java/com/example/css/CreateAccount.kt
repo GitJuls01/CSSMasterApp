@@ -88,7 +88,8 @@ class CreateAccount : AppCompatActivity() {
                                 "email" to email,
                                 "password" to password,
                                 "role" to role,
-                                "createdDate" to createdDate
+                                "createdDate" to createdDate,
+                                "isApproved" to ""
                             )
 
                             firestore.collection("users")

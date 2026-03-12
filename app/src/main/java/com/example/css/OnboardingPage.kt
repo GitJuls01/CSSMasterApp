@@ -48,8 +48,12 @@ class OnboardingPage : AppCompatActivity() {
         sharedPreferences = getSharedPreferences("user_data", MODE_PRIVATE)
         val isLoggedIn = sharedPreferences.getBoolean("is_logged_in", false)
         val role = sharedPreferences.getString("role", "")
+        val isApproved = sharedPreferences.getString("isApproved", "")
+
         with(sharedPreferences.edit()) {
             putString("role", role)
+            putString("isApproved", isApproved)
+
             apply()
         }
 
@@ -60,7 +64,13 @@ class OnboardingPage : AppCompatActivity() {
                 finish()
                 return
             }
-            else {
+            else if (role == "admin") {
+                val intent = Intent(this, AdminPage::class.java)
+                startActivity(intent)
+                finish()
+                return
+            }
+            else if (role == "teacher" && isApproved == "true") {
                 val intent = Intent(this, TeacherDashboard::class.java)
                 startActivity(intent)
                 finish()

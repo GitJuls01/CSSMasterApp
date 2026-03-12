@@ -99,23 +99,43 @@ class LoginPage : AppCompatActivity() {
                     val userDoc = documents.documents[0]
                     val storedPassword = userDoc.getString("password")
 
-                    if (storedPassword == password) {
+
+                        if (storedPassword == password) {
                         // Redirect to appropriate dashboard based on role
                         val role = userDoc.getString("role")
                         val name = userDoc.getString("name")
-                        if (role == "teacher") {
+                        val isApproved =  userDoc.getString("isApproved") ?: "false"
+
+                        if (role == "teacher" && isApproved == "true") {
                             val intent = Intent(this, TeacherDashboard::class.java)
                             intent.putExtra("userId", userDoc.id)
                             startActivity(intent)
                             finish()
-                        } else {
+                            Toast.makeText(this, "Login Successful", Toast.LENGTH_SHORT).show()
+                        }
+                        else if (role == "teacher" && isApproved == "") {
+                            Toast.makeText(this, "Your account is pending. Please wait for approval.", Toast.LENGTH_SHORT).show()
+
+                        }
+                        else if (role == "teacher" && isApproved == "false") {
+                            Toast.makeText(this, "Your account was rejected by Admin.", Toast.LENGTH_SHORT).show()
+
+                        }
+                        else if (role == "admin") {
+                            val intent = Intent(this, AdminPage::class.java)
+                            intent.putExtra("userId", userDoc.id)
+                            startActivity(intent)
+                            finish()
+                            Toast.makeText(this, "Login Successful", Toast.LENGTH_SHORT).show()
+                        }
+                        else {
                             val intent = Intent(this, MainActivity::class.java)
                             intent.putExtra("openFragment", "studentDashboard")
                             intent.putExtra("userId", userDoc.id)
                             startActivity(intent)
                             finish()
+                            Toast.makeText(this, "Login Successful", Toast.LENGTH_SHORT).show()
                         }
-                        Toast.makeText(this, "Login Successful", Toast.LENGTH_SHORT).show()
 
                         // Save session data using SharedPreferences
                         val sharedPref = getSharedPreferences("user_data", MODE_PRIVATE)
@@ -125,6 +145,9 @@ class LoginPage : AppCompatActivity() {
                             putString("name", name)
                             putString("email", email)
                             putString("userId", userDoc.id)
+                            putString("isApproved", isApproved)
+
+
 
                             apply()
                         }

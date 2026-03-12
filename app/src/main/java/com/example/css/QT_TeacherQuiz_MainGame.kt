@@ -30,6 +30,7 @@ class QT_TeacherQuiz_MainGame : AppCompatActivity() {
     private val totalTime = 15_000L
     private val interval = 100L
     private var correctAnswers = 0
+    private var quizId = ""
     private lateinit var sharedPreferences: SharedPreferences
 
     private val questionResults = mutableListOf<QuestionResult>()
@@ -82,7 +83,7 @@ class QT_TeacherQuiz_MainGame : AppCompatActivity() {
         timerProgressBar = findViewById(R.id.timer_progress)
         timerProgressBar.max = 100
 
-        val quizId = intent.getStringExtra("quiz_id") ?: return
+        quizId = intent.getStringExtra("quiz_id") ?: return
         val db = FirebaseFirestore.getInstance()
 
         db.collection("quizzes").document(quizId).get()
@@ -237,6 +238,8 @@ class QT_TeacherQuiz_MainGame : AppCompatActivity() {
 
             sharedPreferences = getSharedPreferences("user_data", MODE_PRIVATE)
             val userName = sharedPreferences.getString("name", "Default Name")
+            val userEmail = sharedPreferences.getString("email", "Default Email")
+
 
             val percentage = ((correctAnswers.toFloat() / questionList.size) * 100).toInt()
             val quizHistory = hashMapOf(
@@ -251,6 +254,9 @@ class QT_TeacherQuiz_MainGame : AppCompatActivity() {
                 .add(quizHistory)
                 .addOnSuccessListener {
                     val intent = Intent(this, QT_TeacherQuiz_Congratulation::class.java)
+
+                    intent.putExtra("quiz_id", quizId)
+                    intent.putExtra("email", userEmail)
                     intent.putExtra("correct_count", correctAnswers)
                     intent.putExtra("total_count", questionList.size)
                     intent.putExtra("percentage", percentage)

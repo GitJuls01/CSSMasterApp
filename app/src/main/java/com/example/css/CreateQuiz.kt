@@ -20,9 +20,9 @@ class CreateQuiz : AppCompatActivity() {
     private var questionCount = 1
     private lateinit var firestore: FirebaseFirestore
     private lateinit var sharedPreferences: SharedPreferences
-    private var participantsList: List<*>? = null
+    //private var participantsList: List<*>? = null
+    private var participantsList: MutableList<Map<String, Any>> = mutableListOf()    // Track all question blocks
 
-    // Track all question blocks
     private val questionBlocks = mutableListOf<List<EditText>>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -190,6 +190,7 @@ class CreateQuiz : AppCompatActivity() {
                 "wrong3" to wrong3
             )
             questionsList.add(questionMap)
+
         }
 
         val quizDataSaveUpdate = mutableMapOf(
@@ -197,8 +198,7 @@ class CreateQuiz : AppCompatActivity() {
             "created_date" to com.google.firebase.Timestamp.now(),
             "title" to title,
             "description" to description,
-            "questions" to questionsList,
-            "participants" to participantsList
+            "questions" to questionsList
             //"isPosted" to false
         )
 
@@ -230,16 +230,11 @@ class CreateQuiz : AppCompatActivity() {
                         .document(quizId)
                         .set(filteredData, SetOptions.merge())
                         .addOnSuccessListener {
-                            Toast.makeText(this, "Quiz updated successfully!", Toast.LENGTH_SHORT)
-                                .show()
+                            Toast.makeText(this, "Quiz updated successfully!", Toast.LENGTH_SHORT).show()
                             finish()
                         }
                         .addOnFailureListener { e ->
-                            Toast.makeText(
-                                this,
-                                "Failed to update quiz: ${e.message}",
-                                Toast.LENGTH_LONG
-                            ).show()
+                            Toast.makeText(this, "Failed to update quiz: ${e.message}", Toast.LENGTH_LONG).show()
                         }
                 }
         } ?: run {
@@ -266,8 +261,7 @@ class CreateQuiz : AppCompatActivity() {
                     val title = document.getString("title") ?: ""
                     val description = document.getString("description") ?: ""
                     val questions = document.get("questions") as? List<Map<String, Any>> ?: emptyList()
-                    participantsList = document.get("participants") as? List<*> ?: emptyList<Any>()
-
+                    participantsList = (document.get("participants") as? List<Map<String, Any>>) ?.toMutableList() ?: mutableListOf()
                     // Set title and description
                     findViewById<EditText>(R.id.editTextTitle).setText(title)
                     findViewById<EditText>(R.id.editTextDescription).setText(description)
