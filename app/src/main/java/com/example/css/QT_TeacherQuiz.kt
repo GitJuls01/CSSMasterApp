@@ -93,6 +93,7 @@ class QT_TeacherQuiz : AppCompatActivity() {
 
     private fun fetchAndDisplayQuizzes() {
         val userEmail = sharedPreferences.getString("email", "Default Email")
+        val userName = sharedPreferences.getString("name", "Default Name")
 
         firestore.collection("quizzes")
             //.whereEqualTo("isPosted", true)
@@ -108,7 +109,11 @@ class QT_TeacherQuiz : AppCompatActivity() {
                         val title = doc.getString("title") ?: "Untitled Quiz"
                         val description = doc.getString("description") ?: ""
                         val questionCount = (doc.get("questions") as? List<*>)?.size ?: 0
-                        val participants = doc.get("participants") as? List<*> ?: emptyList<Any>()
+                        val participants = (doc.get("participants") as? List<*>)
+                            ?.mapNotNull { it as? Map<String, Any> }
+                            ?.toMutableList()
+                            ?: mutableListOf()
+
 
                         val quizView = inflater.inflate(R.layout.quiz_item, quizListContainer, false)
 
@@ -121,7 +126,7 @@ class QT_TeacherQuiz : AppCompatActivity() {
                         descView.text = description
                         itemsView.text = getString(R.string.items_quiz, questionCount.toString())
 
-                        val alreadyTaken = participants.contains(userEmail)
+                        val alreadyTaken = participants.any { it["email"] == userEmail }
 
                         // Dim the button immediately if already participated
                         if (alreadyTaken) {
@@ -136,6 +141,11 @@ class QT_TeacherQuiz : AppCompatActivity() {
                             showTitleAndDescription(title, description )
                         }
 
+                        val participantData = mapOf(
+                            "name" to userName,
+                            "email" to userEmail,
+                            "score" to 0
+                        )
                         takeButton.setOnClickListener {
                             // Check if user has already participated
                             if (alreadyTaken) {
@@ -145,9 +155,7 @@ class QT_TeacherQuiz : AppCompatActivity() {
                                     firestore.collection("quizzes").document(quizId)
                                         .update(
                                             "participants",
-                                            com.google.firebase.firestore.FieldValue.arrayUnion(
-                                                userEmail
-                                            )
+                                            com.google.firebase.firestore.FieldValue.arrayUnion(participantData)
                                         )
                                         .addOnSuccessListener {
                                             val intent =
@@ -156,11 +164,7 @@ class QT_TeacherQuiz : AppCompatActivity() {
                                             startActivity(intent)
                                         }
                                         .addOnFailureListener { e ->
-                                            Toast.makeText(
-                                                this,
-                                                "Failed to join quiz: ${e.message}",
-                                                Toast.LENGTH_SHORT
-                                            ).show()
+                                            Toast.makeText(this, "Failed to join quiz: ${e.message}", Toast.LENGTH_SHORT).show()
                                         }
                                 }
                             }
