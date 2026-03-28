@@ -20,6 +20,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Quiz Title"
+            android:ellipsize="end"
             android:textSize="20sp"
             android:textColor="@color/dark_green"
             android:textStyle="bold" />
@@ -76,5 +77,6 @@
             android:layout_marginStart="4dp"
             android:clickable="true"
             android:focusable="true" />
+
     </LinearLayout>
 </LinearLayout>

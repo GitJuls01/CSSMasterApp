@@ -10,10 +10,12 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import com.google.firebase.firestore.FirebaseFirestore
 
 class QT_TeacherQuiz_Congratulation : AppCompatActivity() {
 
     private var backPressedOnce = false
+    private lateinit var firestore: FirebaseFirestore
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -48,6 +50,8 @@ class QT_TeacherQuiz_Congratulation : AppCompatActivity() {
         onBackPressedDispatcher.addCallback(this, backPressedCallback)
         //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
+        val quizId = intent.getStringExtra("quiz_id") ?: ""
+        val email = intent.getStringExtra("email") ?: "" // pass current user email from previous activity
         val correctCount = intent.getIntExtra("correct_count", 0)
         val totalCount = intent.getIntExtra("total_count", 0)
         val percentage = intent.getIntExtra("percentage", 0)
@@ -62,6 +66,57 @@ class QT_TeacherQuiz_Congratulation : AppCompatActivity() {
         val reviewAnswerBtn = findViewById<ImageButton>(R.id.btn_review)
 
         val results = intent.getSerializableExtra("question_results") as? ArrayList<QT_TeacherQuiz_MainGame.QuestionResult>
+
+//        Toast.makeText(this, ": ${quizId}", Toast.LENGTH_SHORT).show()
+//        Toast.makeText(this, ": ${email}", Toast.LENGTH_SHORT).show()
+
+        val db = FirebaseFirestore.getInstance()
+
+        db.collection("quizzes").document(quizId).get()
+            .addOnSuccessListener { document ->
+                if (document.exists()) {
+
+                    // Get participants as mutable list
+                    val participants = (document.get("participants") as? List<*>)
+                        ?.mapNotNull { it as? Map<String, Any> }
+                        ?.toMutableList()
+                        ?: mutableListOf()
+
+                    // Flag to track if participant exists
+                    var updated = false
+
+                    // Loop to find participant and update score
+                    for (i in participants.indices) {
+                        val participant = participants[i]
+                        if (participant["email"] == email) {
+                            val updatedParticipant = participant.toMutableMap()
+                            updatedParticipant["score"] = correctCount  // Replace with actual score variable
+                            participants[i] = updatedParticipant
+                            updated = true
+                            break
+                        }
+                    }
+
+                    // If participant not in list, add them
+                    if (!updated) {
+                        participants.add(mapOf("email" to email, "score" to correctCount))
+                    }
+
+                    // Write back updated participants list
+                    db.collection("quizzes").document(quizId)
+                        .update("participants", participants)
+                        .addOnSuccessListener {
+                            //Toast.makeText(this, "Score updated successfully", Toast.LENGTH_SHORT).show()
+                        }
+                        .addOnFailureListener { e ->
+                            Toast.makeText(this, "Failed to update score: ${e.message}", Toast.LENGTH_SHORT).show()
+                        }
+                }
+            }
+
+
+
+
 
         backButton.setOnClickListener {
             val intent = Intent(this, QT_TeacherQuiz::class.java)

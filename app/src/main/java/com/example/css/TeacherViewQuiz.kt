@@ -97,6 +97,13 @@ class TeacherViewQuiz : AppCompatActivity() {
 //                        editButton.alpha = 0.5f
 //                        postBtn.alpha = 0.5f
 //                    }
+                    titleView.setOnClickListener {
+                        //Toast.makeText(this, "Quiz deleted successfully", Toast.LENGTH_SHORT).show()
+                        val intent = Intent(this, StudentQuizGrades::class.java)
+                        intent.putExtra("quizId", quizId)
+                        startActivity(intent)
+
+                    }
                     editButton.setOnClickListener {
                         val intent = Intent(this, CreateQuiz::class.java)
                         intent.putExtra("quizId", document.id)

@@ -118,19 +118,17 @@
 
                 <!-- Email -->
                 <TextView
-                    android:id="@+id/teacher_email"
+                    android:id="@+id/text_email"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Email: example@example.com"
                     android:textSize="16sp"
                     android:textColor="@color/dark_green" />
 
                 <!-- Name -->
                 <TextView
-                    android:id="@+id/teacher_name"
+                    android:id="@+id/text_name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Name: Julius"
                     android:textSize="16sp"
                     android:layout_marginTop="2dp"
                     android:textColor="@color/dark_green"/>
@@ -140,7 +138,6 @@
                     android:id="@+id/teacher_section"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Section: A"
                     android:textSize="16sp"
                     android:layout_marginTop="2dp"
                     android:textColor="@color/dark_green"/>

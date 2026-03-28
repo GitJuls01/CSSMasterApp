@@ -37,5 +37,9 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 
+    <string name="email1_label">Email: %1$s</string>
+    <string name="name1_label">Name: %1$s</string>
+    <string name="section_label">Section: %1$s</string>
+
 
 </resources>

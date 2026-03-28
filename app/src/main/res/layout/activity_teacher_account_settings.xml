@@ -65,6 +65,7 @@
             android:layout_height="wrap_content"
             android:text="Name: "
             android:textSize="18sp"
+            android:textAlignment="center"
             android:textColor="@color/black"
             android:layout_marginTop="16dp"/>
 
@@ -75,6 +76,7 @@
             android:layout_height="wrap_content"
             android:text="Email Address: "
             android:textSize="18sp"
+            android:textAlignment="center"
             android:textColor="@color/black"
             android:layout_marginTop="8dp"/>
 
