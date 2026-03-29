@@ -65,7 +65,7 @@ class OnboardingPage : AppCompatActivity() {
                 return
             }
             else if (role == "admin") {
-                val intent = Intent(this, AdminPage::class.java)
+                val intent = Intent(this, AdminHomePage::class.java)
                 startActivity(intent)
                 finish()
                 return

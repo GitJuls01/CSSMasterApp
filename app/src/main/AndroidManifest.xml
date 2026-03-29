@@ -18,13 +18,31 @@
         android:theme="@style/Theme.CSS"
         tools:targetApi="31">
         <activity
+            android:name=".AdminStudentActivitiesDetails"
+            android:exported="false" />
+        <activity
+            android:name=".AdminStudentActivities"
+            android:exported="false" />
+        <activity
+            android:name=".AdminStudentLeaderboardDetails"
+            android:exported="false" />
+        <activity
+            android:name=".AdminStudentDashboard"
+            android:exported="false" />
+        <activity
+            android:name=".AdminStudentLeaderboard"
+            android:exported="false" />
+        <activity
+            android:name=".AdminHomePage"
+            android:exported="false" />
+        <activity
             android:name=".StudentQuizGrades"
             android:exported="false" />
         <activity
             android:name=".AdminViewDetails"
             android:exported="false" />
         <activity
-            android:name=".AdminPage"
+            android:name=".AdminApprovalPage"
             android:exported="false" />
         <activity
             android:name=".CSHowToPreventBsod"

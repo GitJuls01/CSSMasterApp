@@ -62,9 +62,9 @@ class LoginPage : AppCompatActivity() {
         if (userType == "teacher") {
             logo.setImageResource(R.drawable.teacher_logo) // Set teacher logo
         } else if (userType == "student") {
-            logo.setImageResource(R.drawable.student_logo) // Set student logo
+            logo.setImageResource(R.drawable.login_student_image2) // Set student logo
         } else {
-            logo.setImageResource(R.drawable.admin_logo) // Set admin logo
+            logo.setImageResource(R.drawable.login_admin_image2) // Set admin logo
         }
 
         // Set OnClickListener to navigate to LoginPage
@@ -122,7 +122,7 @@ class LoginPage : AppCompatActivity() {
 
                         }
                         else if (role == "admin") {
-                            val intent = Intent(this, AdminPage::class.java)
+                            val intent = Intent(this, AdminHomePage::class.java)
                             intent.putExtra("userId", userDoc.id)
                             startActivity(intent)
                             finish()

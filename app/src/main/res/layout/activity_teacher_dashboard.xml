@@ -5,7 +5,7 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/background_1"
+    android:background="@drawable/background_4_admin"
     tools:context=".TeacherDashboard">
 
     <androidx.constraintlayout.widget.Guideline
@@ -27,21 +27,34 @@
         android:layout_height="wrap_content"
         android:id="@+id/guideline_horizontal"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.18" />
+        app:layout_constraintGuide_percent="0.10" />
 
     <androidx.constraintlayout.widget.Guideline
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/guideline_horizontal_2"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.52" />
+        app:layout_constraintGuide_percent="0.44" />
 
     <androidx.constraintlayout.widget.Guideline
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/guideline_horizontal_3"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.84" />
+        app:layout_constraintGuide_percent="0.76" />
+
+    <!-- Back Button -->
+    <ImageButton
+        android:id="@+id/back_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="14dp"
+        android:background="@null"
+        android:scaleType="fitCenter"
+        android:src="@drawable/back_button"
+        app:layout_constraintStart_toStartOf="@id/guideline_vertical"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="SpeakableTextPresentCheck" />
 
     <!-- Setting Button -->
     <ImageButton
@@ -57,17 +70,30 @@
         app:layout_constraintTop_toTopOf="parent"
         tools:ignore="SpeakableTextPresentCheck" />
 
-    <!-- CSS Master -->
-    <ImageView
-        android:id="@+id/css_master"
+<!--    &lt;!&ndash; CSS Master &ndash;&gt;-->
+<!--    <ImageView-->
+<!--        android:id="@+id/css_master"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:contentDescription="CSS Master"-->
+<!--        android:src="@drawable/text_css_master_2"-->
+<!--        app:layout_constraintHorizontal_chainStyle="spread"-->
+<!--        app:layout_constraintTop_toTopOf="@id/guideline_horizontal"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"/>-->
+
+    <TextView
+        android:id="@+id/head_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:contentDescription="CSS Master"
-        android:src="@drawable/text_css_master_2"
-        app:layout_constraintHorizontal_chainStyle="spread"
-        app:layout_constraintTop_toTopOf="@id/guideline_horizontal"
+        android:text="Teacher Quiz"
+        android:textSize="25sp"
+        android:textStyle="bold"
+        android:textColor="@color/dark_green"
+        app:layout_constraintTop_toBottomOf="@id/guideline_horizontal"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"/>
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="15dp"/>
 
     <!-- Create Quiz Container -->
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -78,7 +104,7 @@
         app:layout_constraintBottom_toTopOf="@id/guideline_horizontal_2"
         app:layout_constraintEnd_toEndOf="@id/guideline_vertical_2"
         app:layout_constraintStart_toStartOf="@id/guideline_vertical"
-        app:layout_constraintTop_toBottomOf="@id/css_master">
+        app:layout_constraintTop_toBottomOf="@id/head_text">
 
         <!-- Background Image -->
         <ImageView
