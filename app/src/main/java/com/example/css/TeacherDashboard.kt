@@ -29,6 +29,7 @@ class TeacherDashboard : AppCompatActivity() {
         val viewQuizButton = findViewById<Button>(R.id.btn_view_quiz)
         val createQuizButton = findViewById<Button>(R.id.btn_create_quiz)
         val settingsButton = findViewById<ImageButton>(R.id.setting_button)
+        val backBtn = findViewById<ImageButton>(R.id.back_button)
 
         //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
         // Register the back press callback to handle back button presses
@@ -64,6 +65,11 @@ class TeacherDashboard : AppCompatActivity() {
 
         settingsButton.setOnClickListener {
             val intent = Intent(this, TeacherAccountSettings::class.java)
+            startActivity(intent)
+        }
+
+        backBtn.setOnClickListener {
+            val intent = Intent(this, AdminHomePage::class.java)
             startActivity(intent)
         }
     }

@@ -2,7 +2,6 @@ package com.example.css
 
 import android.content.Intent
 import android.os.Bundle
-import android.view.View
 import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
@@ -31,6 +30,7 @@ class AdminViewDetails : AppCompatActivity() {
         firestore = FirebaseFirestore.getInstance()
 
         val backButton = findViewById<ImageButton>(R.id.back_button)
+        val settingsButton = findViewById<ImageButton>(R.id.setting_button)
         val emailText = findViewById<TextView>(R.id.text_email)
         val nameText = findViewById<TextView>(R.id.text_name)
         val sectionText = findViewById<TextView>(R.id.teacher_section)
@@ -42,8 +42,6 @@ class AdminViewDetails : AppCompatActivity() {
         val section = intent.getStringExtra("Section")
         val isApproved = intent.getStringExtra("isApproved")
         val userId = intent.getStringExtra("userId")
-
-
 
         emailText.text = getString(R.string.email1_label, email)
         nameText.text = getString(R.string.name1_label, name)
@@ -61,7 +59,12 @@ class AdminViewDetails : AppCompatActivity() {
             rejectButton.isEnabled = false
         }
         backButton.setOnClickListener {
-            val intent = Intent(this, AdminPage::class.java)
+            val intent = Intent(this, AdminApprovalPage::class.java)
+            startActivity(intent)
+        }
+
+        settingsButton.setOnClickListener {
+            val intent = Intent(this, TeacherAccountSettings::class.java)
             startActivity(intent)
         }
 

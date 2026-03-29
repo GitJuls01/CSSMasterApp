@@ -70,7 +70,7 @@
         android:layout_marginTop="12dp"
         android:background="@drawable/text_field_container"
         android:gravity="center"
-        android:hint="Name"
+        android:hint="Full Name"
         android:minHeight="48dp"
         android:padding="10dp"
         android:singleLine="true"
@@ -102,7 +102,7 @@
         android:layout_marginTop="8dp"
         android:background="@drawable/text_field_container"
         android:gravity="center"
-        android:hint="Email Address"
+        android:hint="LRN"
         android:inputType="textEmailAddress"
         android:minHeight="48dp"
         android:padding="10dp"
@@ -174,7 +174,7 @@
         tools:ignore="VisualLintTextFieldSize" />
 
     <RadioGroup
-        android:id="@+id/user_type_group"
+        android:id="@+id/user_type_radio"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
@@ -212,7 +212,7 @@
         android:src="@drawable/button_submit"
         android:background="@null"
         android:contentDescription="Submit Button"
-        app:layout_constraintTop_toBottomOf="@id/user_type_group"
+        app:layout_constraintTop_toBottomOf="@id/user_type_radio"
         app:layout_constraintEnd_toEndOf="@id/guideline_vertical_1"
         app:layout_constraintStart_toStartOf="@id/guideline_vertical"
         android:layout_marginTop="16dp"/>
