@@ -2,6 +2,7 @@ package com.example.css
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.View
 import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
@@ -31,33 +32,33 @@ class AdminViewDetails : AppCompatActivity() {
 
         val backButton = findViewById<ImageButton>(R.id.back_button)
         val settingsButton = findViewById<ImageButton>(R.id.setting_button)
-        val emailText = findViewById<TextView>(R.id.text_email)
+        val lrnText = findViewById<TextView>(R.id.text_email)
         val nameText = findViewById<TextView>(R.id.text_name)
         val sectionText = findViewById<TextView>(R.id.teacher_section)
         val approvedButton = findViewById<ImageView>(R.id.admin_approve_button)
         val rejectButton = findViewById<ImageView>(R.id.admin_reject_button)
 
-        val email = intent.getStringExtra("Email") ?: "No Email"
+        val lrn = intent.getStringExtra("LRN") ?: "No LRN"
         val name = intent.getStringExtra("Name")
         val section = intent.getStringExtra("Section")
         val isApproved = intent.getStringExtra("isApproved")
         val userId = intent.getStringExtra("userId")
 
-        emailText.text = getString(R.string.email1_label, email)
+        lrnText.text = getString(R.string.email1_label, lrn)
         nameText.text = getString(R.string.name1_label, name)
         sectionText.text = getString(R.string.section_label, section)
 
-//        approvedButton.visibility =
-//            if (isApproved == "") View.VISIBLE else View.GONE
-//        rejectButton.visibility =
-//            if (isApproved == "") View.VISIBLE else View.GONE
+        approvedButton.visibility =
+            if (isApproved == "") View.VISIBLE else View.GONE
+        rejectButton.visibility =
+            if (isApproved == "") View.VISIBLE else View.GONE
 
-        if (isApproved !== "") {
-            approvedButton.alpha = 0.5f
-            approvedButton.isEnabled = false
-            rejectButton.alpha = 0.5f
-            rejectButton.isEnabled = false
-        }
+//        if (isApproved !== "") {
+//            approvedButton.alpha = 0.5f
+//            approvedButton.isEnabled = false
+//            rejectButton.alpha = 0.5f
+//            rejectButton.isEnabled = false
+//        }
         backButton.setOnClickListener {
             val intent = Intent(this, AdminApprovalPage::class.java)
             startActivity(intent)
@@ -71,7 +72,7 @@ class AdminViewDetails : AppCompatActivity() {
         approvedButton.setOnClickListener {
             val dialog = AlertDialog.Builder(this@AdminViewDetails)
                 .setTitle("Confirm Approval")
-                .setMessage("Are you sure you want to approve this teacher?")
+                .setMessage("Are you sure you want to approve this student?")
                 .setCancelable(false)
                 .setPositiveButton("Yes") { _, _ ->
                     if (userId != null) {
@@ -79,17 +80,17 @@ class AdminViewDetails : AppCompatActivity() {
                             .document(userId)
                             .update("isApproved", "true")
                             .addOnSuccessListener {
-//                                approvedButton.visibility = View.GONE
-//                                rejectButton.visibility = View.GONE
+                                approvedButton.visibility = View.GONE
+                                rejectButton.visibility = View.GONE
 
-                                approvedButton.alpha = 0.5f
-                                approvedButton.isEnabled = false
+//                                approvedButton.alpha = 0.5f
+//                                approvedButton.isEnabled = false
+//
+//                                rejectButton.alpha = 0.5f
+//                                rejectButton.isEnabled = false
 
-                                rejectButton.alpha = 0.5f
-                                rejectButton.isEnabled = false
-
-                                sendEmailApproved(email)
-                                Toast.makeText(this@AdminViewDetails, "Teacher approved", Toast.LENGTH_SHORT).show()
+                                //sendEmailApproved(email)
+                                Toast.makeText(this@AdminViewDetails, "Student approved", Toast.LENGTH_SHORT).show()
                             }
                     }
                 }
@@ -112,7 +113,7 @@ class AdminViewDetails : AppCompatActivity() {
         rejectButton.setOnClickListener {
             val dialog = AlertDialog.Builder(this@AdminViewDetails)
                 .setTitle("Confirm Rejection")
-                .setMessage("Are you sure you want to reject this teacher?")
+                .setMessage("Are you sure you want to reject this student?")
                 .setCancelable(false)
                 .setPositiveButton("Yes") { _, _ ->
                     if (userId != null) {
@@ -120,17 +121,17 @@ class AdminViewDetails : AppCompatActivity() {
                             .document(userId)
                             .update("isApproved", "false")
                             .addOnSuccessListener {
-//                                approvedButton.visibility = View.GONE
-//                                rejectButton.visibility = View.GONE
+                                approvedButton.visibility = View.GONE
+                                rejectButton.visibility = View.GONE
 
-                                approvedButton.alpha = 0.5f
-                                approvedButton.isEnabled = false
+//                                approvedButton.alpha = 0.5f
+//                                approvedButton.isEnabled = false
+//
+//                                rejectButton.alpha = 0.5f
+//                                rejectButton.isEnabled = false
 
-                                rejectButton.alpha = 0.5f
-                                rejectButton.isEnabled = false
-
-                                sendEmailReject(email)
-                                Toast.makeText(this@AdminViewDetails, "Teacher rejected", Toast.LENGTH_SHORT).show()
+                                //sendEmailReject(email)
+                                Toast.makeText(this@AdminViewDetails, "Student rejected", Toast.LENGTH_SHORT).show()
                             }
                     }
                 }

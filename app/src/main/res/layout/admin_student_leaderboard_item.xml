@@ -17,7 +17,7 @@
         android:orientation="vertical">
 
         <TextView
-            android:id="@+id/email_text"
+            android:id="@+id/quiz_text"
             android:layout_width="130dp"
             android:layout_height="wrap_content"
             android:ellipsize="end"

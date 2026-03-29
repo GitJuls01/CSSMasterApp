@@ -92,11 +92,13 @@ class QT_TeacherQuiz : AppCompatActivity() {
     }
 
     private fun fetchAndDisplayQuizzes() {
-        val userEmail = sharedPreferences.getString("email", "Default Email")
+        val userLrn = sharedPreferences.getString("LRN", "Default LRN")
         val userName = sharedPreferences.getString("name", "Default Name")
+        val userGrade = sharedPreferences.getString("grade", "Default Grade")
+
 
         firestore.collection("quizzes")
-            //.whereEqualTo("isPosted", true)
+            .whereEqualTo("grade", userGrade)
             .orderBy("created_date", Query.Direction.DESCENDING)
             .get()
             .addOnSuccessListener { snapshot ->
@@ -126,7 +128,7 @@ class QT_TeacherQuiz : AppCompatActivity() {
                         descView.text = description
                         itemsView.text = getString(R.string.items_quiz, questionCount.toString())
 
-                        val alreadyTaken = participants.any { it["email"] == userEmail }
+                            val alreadyTaken = participants.any { it["LRN"] == userLrn }
 
                         // Dim the button immediately if already participated
                         if (alreadyTaken) {
@@ -143,7 +145,7 @@ class QT_TeacherQuiz : AppCompatActivity() {
 
                         val participantData = mapOf(
                             "name" to userName,
-                            "email" to userEmail,
+                            "LRN" to userLrn,
                             "score" to 0
                         )
                         takeButton.setOnClickListener {

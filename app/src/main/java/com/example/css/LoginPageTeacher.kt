@@ -14,14 +14,14 @@ import androidx.core.view.WindowInsetsCompat
 import com.google.firebase.firestore.FirebaseFirestore
 
 
-class LoginPage : AppCompatActivity() {
+class LoginPageTeacher : AppCompatActivity() {
 
     private var backPressedOnce = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
-        setContentView(R.layout.activity_login_page)
+        setContentView(R.layout.activity_login_page_teacher)
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
@@ -59,12 +59,11 @@ class LoginPage : AppCompatActivity() {
         val userType = intent.getStringExtra("userType")
 
         // Set logo based on userType
-        if (userType == "teacher") {
-            logo.setImageResource(R.drawable.teacher_logo) // Set teacher logo
-        } else if (userType == "student") {
-            logo.setImageResource(R.drawable.login_student_image2) // Set student logo
-        } else {
-            logo.setImageResource(R.drawable.login_admin_image2) // Set admin logo
+        when (userType) {
+            "teacher" -> logo.setImageResource(R.drawable.teacher_logo)
+            "student" -> logo.setImageResource(R.drawable.login_student_image2)
+            "admin" -> logo.setImageResource(R.drawable.login_admin_image2)
+            else -> logo.setImageResource(R.drawable.login_admin_image2) // fallback
         }
 
         // Set OnClickListener to navigate to LoginPage
@@ -75,52 +74,35 @@ class LoginPage : AppCompatActivity() {
 
         loginButton.setOnClickListener {
             login()
-
         }
     }
     private fun login() {
-        val lrnInput = findViewById<EditText>(R.id.input_lrn)
+        val emailInput = findViewById<EditText>(R.id.input_email)
         val passwordInput = findViewById<EditText>(R.id.input_password)
-        val lrn = lrnInput.text.toString().trim()
+        val email = emailInput.text.toString().trim()
         val password = passwordInput.text.toString().trim()
 
-        if (lrn.isEmpty() || password.isEmpty()) {
-            Toast.makeText(this, "Please enter LRN and password", Toast.LENGTH_SHORT).show()
+        if (email.isEmpty() || password.isEmpty()) {
+            Toast.makeText(this, "Please enter email and password", Toast.LENGTH_SHORT).show()
             return
         }
 
         val firestore = FirebaseFirestore.getInstance()
 
         firestore.collection("users")
-            .whereEqualTo("LRN", lrn)
+            .whereEqualTo("email", email)
             .get()
             .addOnSuccessListener { documents ->
                 if (!documents.isEmpty) {
                     val userDoc = documents.documents[0]
                     val storedPassword = userDoc.getString("password")
-
-                    if (storedPassword == password) {
+                        if (storedPassword == password) {
                         // Redirect to appropriate dashboard based on role
-                        val role = userDoc.getString("role")
-                        val name = userDoc.getString("name")
-                        val isApproved =  userDoc.getString("isApproved") ?: "false"
+                            val role = userDoc.getString("role")
+                            val name = userDoc.getString("name")
+                            val grade = userDoc.getString("grade")
 
-                        if (role == "teacher" && isApproved == "true") {
-                            val intent = Intent(this, TeacherDashboard::class.java)
-                            intent.putExtra("userId", userDoc.id)
-                            startActivity(intent)
-                            finish()
-                            Toast.makeText(this, "Login Successful", Toast.LENGTH_SHORT).show()
-                        }
-                        else if (role == "teacher" && isApproved == "") {
-                            Toast.makeText(this, "Your account is pending. Please wait for approval.", Toast.LENGTH_SHORT).show()
-
-                        }
-                        else if (role == "teacher" && isApproved == "false") {
-                            Toast.makeText(this, "Your account was rejected by Admin.", Toast.LENGTH_SHORT).show()
-
-                        }
-                        else if (role == "admin") {
+                        if (role == "teacher") {
                             val intent = Intent(this, AdminHomePage::class.java)
                             intent.putExtra("userId", userDoc.id)
                             startActivity(intent)
@@ -142,11 +124,9 @@ class LoginPage : AppCompatActivity() {
                             putBoolean("is_logged_in", true)
                             putString("role", role)
                             putString("name", name)
-                            putString("LRN", lrn)
+                            putString("email", email )
                             putString("userId", userDoc.id)
-                            putString("isApproved", isApproved)
-
-
+                            putString("grade", grade)
 
                             apply()
                         }

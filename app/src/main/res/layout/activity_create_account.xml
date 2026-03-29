@@ -96,7 +96,7 @@
 
     <!-- Email Field -->
     <EditText
-        android:id="@+id/email_input"
+        android:id="@+id/LRN_input"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
@@ -126,7 +126,7 @@
         android:singleLine="true"
         app:layout_constraintEnd_toEndOf="@id/guideline_vertical_1"
         app:layout_constraintStart_toStartOf="@id/guideline_vertical"
-        app:layout_constraintTop_toBottomOf="@id/email_input" />
+        app:layout_constraintTop_toBottomOf="@id/LRN_input" />
 
     <!-- Password Warning -->
     <TextView
@@ -186,18 +186,28 @@
         android:gravity="center">
 
         <RadioButton
-            android:id="@+id/radio_teacher"
+            android:id="@+id/radio_g8"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Teacher"
+            android:text="Grade 8"
             android:buttonTint="@color/green_checked"
             android:textColor="#000000"/>
 
         <RadioButton
-            android:id="@+id/radio_student"
+            android:id="@+id/radio_g9"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Student"
+            android:text="Grade 9"
+            android:textColor="#000000"
+            android:layout_marginStart="16dp"
+            android:buttonTint="#000000"/>
+
+
+        <RadioButton
+            android:id="@+id/radio_g10"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Grade 10"
             android:textColor="#000000"
             android:layout_marginStart="16dp"
             android:buttonTint="#000000"/>

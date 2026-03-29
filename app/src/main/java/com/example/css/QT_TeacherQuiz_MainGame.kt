@@ -238,7 +238,7 @@ class QT_TeacherQuiz_MainGame : AppCompatActivity() {
 
             sharedPreferences = getSharedPreferences("user_data", MODE_PRIVATE)
             val userName = sharedPreferences.getString("name", "Default Name")
-            val userEmail = sharedPreferences.getString("email", "Default Email")
+            val userLRN = sharedPreferences.getString("LRN", "Default LRN")
 
 
             val percentage = ((correctAnswers.toFloat() / questionList.size) * 100).toInt()
@@ -256,7 +256,7 @@ class QT_TeacherQuiz_MainGame : AppCompatActivity() {
                     val intent = Intent(this, QT_TeacherQuiz_Congratulation::class.java)
 
                     intent.putExtra("quiz_id", quizId)
-                    intent.putExtra("email", userEmail)
+                    intent.putExtra("lrn", userLRN)
                     intent.putExtra("correct_count", correctAnswers)
                     intent.putExtra("total_count", questionList.size)
                     intent.putExtra("percentage", percentage)
