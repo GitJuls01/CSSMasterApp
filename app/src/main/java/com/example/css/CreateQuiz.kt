@@ -61,7 +61,6 @@ class CreateQuiz : AppCompatActivity() {
             finish() // Go back to the previous screen
         }
 
-
         val quizId = intent.getStringExtra("quizId")
         if (quizId != null) {
             loadQuizData(quizId)
@@ -156,6 +155,7 @@ class CreateQuiz : AppCompatActivity() {
     private fun saveQuizToFirestore() {
         sharedPreferences = getSharedPreferences("user_data", MODE_PRIVATE)
         val userName = sharedPreferences.getString("name", "Default Name")
+        val userGrade = sharedPreferences.getString("grade", "Default Grade")
 
         val title = findViewById<EditText>(R.id.editTextTitle).text.toString().trim()
         val description = findViewById<EditText>(R.id.editTextDescription).text.toString().trim()
@@ -198,7 +198,8 @@ class CreateQuiz : AppCompatActivity() {
             "created_date" to com.google.firebase.Timestamp.now(),
             "title" to title,
             "description" to description,
-            "questions" to questionsList
+            "questions" to questionsList,
+            "grade" to userGrade
             //"isPosted" to false
         )
 

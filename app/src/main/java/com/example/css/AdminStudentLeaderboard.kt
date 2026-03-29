@@ -1,15 +1,26 @@
 package com.example.css
 
 import android.content.Intent
+import android.content.SharedPreferences
 import android.os.Bundle
+import android.util.Log
 import android.widget.ImageButton
 import android.widget.LinearLayout
+import android.widget.TextView
+import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.Query
 
 class AdminStudentLeaderboard : AppCompatActivity() {
+
+    private lateinit var sharedPreferences: SharedPreferences
+    private lateinit var firestore: FirebaseFirestore
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -20,6 +31,10 @@ class AdminStudentLeaderboard : AppCompatActivity() {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
+
+        sharedPreferences = getSharedPreferences("user_data", MODE_PRIVATE)
+        val userName = sharedPreferences.getString("name", "") ?: ""
+        firestore = FirebaseFirestore.getInstance()
 
         val topStudentContainer = findViewById<LinearLayout>(R.id.top_student_container)
         val backBtn = findViewById<ImageButton>(R.id.back_button)
@@ -40,5 +55,44 @@ class AdminStudentLeaderboard : AppCompatActivity() {
             val intent = Intent(this, TeacherAccountSettings::class.java)
             startActivity(intent)
         }
+        fetchQuizzesCreatedBy(userName)
     }
+
+    private fun fetchQuizzesCreatedBy(username: String) {
+        val topStudentContainer = findViewById<LinearLayout>(R.id.top_student_container)
+        topStudentContainer.removeAllViews() // Clear old data
+
+        firestore.collection("quizzes")
+            .whereEqualTo("created_by", username)
+            .orderBy("created_date", Query.Direction.DESCENDING)
+            .get()
+            .addOnSuccessListener { result ->
+                for (document in result) {
+                    val quizId = document.id
+                    val title = document.getString("title") ?: "Untitled Quiz"
+//                    val participantsList = document.get("participants") as? List<*> ?: emptyList<Any>()
+//                    val participantsCount = participantsList.size
+
+                    val quizView = layoutInflater.inflate(R.layout.admin_student_leaderboard_item, topStudentContainer, false)
+
+                    val titleView = quizView.findViewById<TextView>(R.id.quiz_text)
+
+                    titleView.text = title
+
+                    titleView.setOnClickListener {
+                        //Toast.makeText(this, "Quiz deleted successfully", Toast.LENGTH_SHORT).show()
+                        val intent = Intent(this, AdminStudentLeaderboardDetails::class.java)
+                        intent.putExtra("quizId", quizId)
+                        startActivity(intent)
+
+                    }
+
+                    topStudentContainer.addView(quizView)
+                }
+            }
+            .addOnFailureListener { e ->
+                Log.w("TeacherViewQuiz", "Error loading quizzes", e)
+            }
+    }
+
 }

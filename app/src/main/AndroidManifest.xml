@@ -148,6 +148,9 @@
             android:name=".LoginPage"
             android:exported="false" />
         <activity
+            android:name=".LoginPageTeacher"
+            android:exported="false" />
+        <activity
             android:name=".ChooseUserLogin"
             android:exported="false" />
         <activity

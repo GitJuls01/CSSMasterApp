@@ -1,6 +1,7 @@
 package com.example.css
 
 import android.content.Intent
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.util.Log
 import android.widget.ImageButton
@@ -20,6 +21,7 @@ class AdminApprovalPage : AppCompatActivity() {
 
     private var backPressedOnce = false
     private lateinit var firestore: FirebaseFirestore
+    private lateinit var sharedPreferences: SharedPreferences
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -58,6 +60,9 @@ class AdminApprovalPage : AppCompatActivity() {
         val settingsButton = findViewById<ImageButton>(R.id.setting_button)
         val backButton = findViewById<ImageButton>(R.id.back_button)
 
+        // Access SharedPreferences
+        sharedPreferences = getSharedPreferences("user_data", MODE_PRIVATE)
+
         settingsButton.setOnClickListener {
             val intent = Intent(this, TeacherAccountSettings::class.java)
             startActivity(intent)
@@ -68,49 +73,44 @@ class AdminApprovalPage : AppCompatActivity() {
             startActivity(intent)
         }
 
-        fetchUserTeacherCreatedBy()
+        fetchStudentGrade()
 
     }
 
-    private fun fetchUserTeacherCreatedBy() {
+    private fun fetchStudentGrade() {
         val emailContainer = findViewById<LinearLayout>(R.id.email_container)
+        val userGrade = sharedPreferences.getString("grade", "") ?: ""
+        Toast.makeText(this@AdminApprovalPage, userGrade, Toast.LENGTH_SHORT).show()
+
         emailContainer.removeAllViews()
 
         firestore.collection("users")
-            .whereEqualTo("role", "teacher") // ✅ FIXED
+            .whereEqualTo("grade", userGrade)   // match Grade
+            .whereEqualTo("role", "student")    // match student
+            .whereEqualTo("isApproved", "")     // match not approved
             .get()
             .addOnSuccessListener { result ->
                 for (document in result) {
 
                     val userId = document.id
-                    val email = document.getString("email") ?: "No Email"
+                    val lrn = document.getString("LRN") ?: "No Email"
                     val name = document.getString("name") ?: "No Name"
                     val section = document.getString("section") ?: "No Section"
                     val isApproved = document.getString("isApproved") ?: ""
 
                     val teacherView = layoutInflater.inflate(R.layout.admin_item_view, emailContainer, false)
 
-                    val emailText = teacherView.findViewById<TextView>(R.id.email_text)
+                    val lrnText = teacherView.findViewById<TextView>(R.id.email_text)
                     val viewDetailsButton = teacherView.findViewById<ImageView>(R.id.admin_view_details)
                     val adminApprovedButton = teacherView.findViewById<ImageView>(R.id.admin_approve_button)
                     val adminRejectButton = teacherView.findViewById<ImageView>(R.id.admin_reject_button)
 
 
-                    emailText.text = email
-                    //adminApprovedButton.visibility = if (isApproved === "") View.VISIBLE else View.GONE
-                    //adminRejectButton.visibility = if (isApproved === "") View.VISIBLE else View.GONE
-
-                    if (isApproved !== "") {
-                        adminApprovedButton.alpha = 0.5f
-                        adminApprovedButton.isEnabled = false
-
-                        adminRejectButton.alpha = 0.5f
-                        adminRejectButton.isEnabled = false
-                    }
+                    lrnText.text = lrn
 
                     viewDetailsButton.setOnClickListener {
                         val intent = Intent(this, AdminViewDetails::class.java)
-                        intent.putExtra("Email", email)
+                        intent.putExtra("LRN", lrn)
                         intent.putExtra("Name", name)
                         intent.putExtra("Section", section)
                         intent.putExtra("isApproved", isApproved)
@@ -123,23 +123,17 @@ class AdminApprovalPage : AppCompatActivity() {
                     adminApprovedButton.setOnClickListener {
                         val dialog = AlertDialog.Builder(this@AdminApprovalPage)
                             .setTitle("Confirm Approval")
-                            .setMessage("Are you sure you want to approve this teacher? $email")
+                            .setMessage("Are you sure you want to approve this student? $lrn")
                             .setCancelable(false)
                             .setPositiveButton("Yes") { _, _ ->
                                 firestore.collection("users")
                                     .document(document.id)
                                     .update("isApproved", "true")
                                     .addOnSuccessListener {
-//                                        adminApprovedButton.visibility = View.GONE
-//                                        adminRejectButton.visibility = View.GONE
-                                        adminApprovedButton.alpha = 0.5f
-                                        adminApprovedButton.isEnabled = false
 
-                                        adminRejectButton.alpha = 0.5f
-                                        adminRejectButton.isEnabled = false
-
-                                        sendEmailApproved(email)
-                                        Toast.makeText(this@AdminApprovalPage, "Teacher approved", Toast.LENGTH_SHORT).show()
+                                        //sendEmailApproved(lrn)
+                                        emailContainer.removeAllViews()
+                                        Toast.makeText(this@AdminApprovalPage, "Student approved", Toast.LENGTH_SHORT).show()
                                     }
                             }
                             .setNegativeButton("No") { dialogInterface, _ ->
@@ -161,7 +155,7 @@ class AdminApprovalPage : AppCompatActivity() {
                     adminRejectButton.setOnClickListener {
                         val dialog = AlertDialog.Builder(this@AdminApprovalPage)
                             .setTitle("Confirm Rejection")
-                            .setMessage("Are you sure you want to reject this teacher?")
+                            .setMessage("Are you sure you want to reject this student?")
                             .setCancelable(false)
                             .setPositiveButton("Yes") { _, _ ->
                                 firestore.collection("users")
@@ -170,14 +164,15 @@ class AdminApprovalPage : AppCompatActivity() {
                                     .addOnSuccessListener {
 //                                        adminApprovedButton.visibility = View.GONE
 //                                        adminRejectButton.visibility = View.GONE
-                                        adminApprovedButton.alpha = 0.5f
-                                        adminApprovedButton.isEnabled = false
+//                                        adminApprovedButton.alpha = 0.5f
+//                                        adminApprovedButton.isEnabled = false
+//
+//                                        adminRejectButton.alpha = 0.5f
+//                                        adminRejectButton.isEnabled = false
 
-                                        adminRejectButton.alpha = 0.5f
-                                        adminRejectButton.isEnabled = false
-
-                                        sendEmailReject(email)
-                                        Toast.makeText(this@AdminApprovalPage, "Teacher rejected", Toast.LENGTH_SHORT).show()
+                                        //sendEmailReject(email)
+                                        emailContainer.removeAllViews()
+                                        Toast.makeText(this@AdminApprovalPage, "Student rejected", Toast.LENGTH_SHORT).show()
                                     }
                             }
                             .setNegativeButton("No") { dialogInterface, _ ->

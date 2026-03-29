@@ -64,14 +64,8 @@ class OnboardingPage : AppCompatActivity() {
                 finish()
                 return
             }
-            else if (role == "admin") {
+            else if (role == "teacher") {
                 val intent = Intent(this, AdminHomePage::class.java)
-                startActivity(intent)
-                finish()
-                return
-            }
-            else if (role == "teacher" && isApproved == "true") {
-                val intent = Intent(this, TeacherDashboard::class.java)
                 startActivity(intent)
                 finish()
                 return

@@ -38,19 +38,23 @@ class CreateAccount : AppCompatActivity() {
         submitButton.setOnClickListener {
             val name = findViewById<EditText>(R.id.name_input).text.toString().trim()
             val section = findViewById<EditText>(R.id.section_input).text.toString().trim()
-            val email = findViewById<EditText>(R.id.email_input).text.toString().trim()
+            val lrn = findViewById<EditText>(R.id.LRN_input).text.toString().trim()
             val password = findViewById<EditText>(R.id.password_input).text.toString().trim()
             val confirmPassword = findViewById<EditText>(R.id.confirm_password_input).text.toString().trim()
-            val role = if (findViewById<RadioButton>(R.id.radio_teacher).isChecked) "teacher" else "student"
-
-            if (name.isEmpty() || section.isEmpty() || email.isEmpty() || password.isEmpty() || confirmPassword.isEmpty()) {
+            val grade = when {
+                findViewById<RadioButton>(R.id.radio_g8).isChecked -> "Grade 8"
+                findViewById<RadioButton>(R.id.radio_g9).isChecked -> "Grade 9"
+                findViewById<RadioButton>(R.id.radio_g10).isChecked -> "Grade 10"
+                else -> ""
+            }
+            if (name.isEmpty() || section.isEmpty() || lrn.isEmpty() || password.isEmpty() || confirmPassword.isEmpty()) {
                 Toast.makeText(this, "Please fill in all fields", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
 
-            if (!validateEmail()) {
-                return@setOnClickListener
-            }
+//            if (!validateEmail()) {
+//                return@setOnClickListener
+//            }
 
             if (password != confirmPassword) {
                 Toast.makeText(this, "Passwords does not match", Toast.LENGTH_SHORT).show()
@@ -63,11 +67,11 @@ class CreateAccount : AppCompatActivity() {
             }
 
             firestore.collection("users")
-                .whereEqualTo("email", email)
+                .whereEqualTo("LRN", lrn)
                 .get()
-                .addOnSuccessListener { emailDocs ->
-                    if (!emailDocs.isEmpty) {
-                        Toast.makeText(this, "Email already exists", Toast.LENGTH_SHORT).show()
+                .addOnSuccessListener { lrnDocs ->
+                    if (!lrnDocs.isEmpty) {
+                        Toast.makeText(this, "LRN already exists", Toast.LENGTH_SHORT).show()
                         return@addOnSuccessListener
                     }
 
@@ -85,11 +89,12 @@ class CreateAccount : AppCompatActivity() {
                             val userMap = hashMapOf(
                                 "name" to name,
                                 "section" to section,
-                                "email" to email,
+                                "LRN" to lrn,
                                 "password" to password,
-                                "role" to role,
+                                "role" to "student",
                                 "createdDate" to createdDate,
-                                "isApproved" to ""
+                                "isApproved" to "",
+                                "grade" to grade
                             )
 
                             firestore.collection("users")
@@ -98,7 +103,7 @@ class CreateAccount : AppCompatActivity() {
                                 .addOnSuccessListener {
                                     Toast.makeText(this, "Account Created Successfully!", Toast.LENGTH_SHORT).show()
                                     val intent = Intent(this, LoginPage::class.java)
-                                    intent.putExtra("userType", role)
+                                    intent.putExtra("userType", "student")
                                     startActivity(intent)
                                     finish()
                                 }
@@ -122,11 +127,14 @@ class CreateAccount : AppCompatActivity() {
             startActivity(intent)
         }
 
-        val radioTeacher = findViewById<RadioButton>(R.id.radio_teacher)
-        val radioStudent = findViewById<RadioButton>(R.id.radio_student)
+        val radioGrade8 = findViewById<RadioButton>(R.id.radio_g8)
+        val radioGrade9 = findViewById<RadioButton>(R.id.radio_g9)
+        val radioGrade10 = findViewById<RadioButton>(R.id.radio_g10)
 
-        radioTeacher.buttonTintList = ContextCompat.getColorStateList(this, R.color.green_checked)
-        radioStudent.buttonTintList = ContextCompat.getColorStateList(this, R.color.green_checked)
+        radioGrade8.buttonTintList = ContextCompat.getColorStateList(this, R.color.green_checked)
+        radioGrade9.buttonTintList = ContextCompat.getColorStateList(this, R.color.green_checked)
+        radioGrade10.buttonTintList = ContextCompat.getColorStateList(this, R.color.green_checked)
+
 
         setupPasswordValidation()
         setupPasswordMatchValidation()
@@ -207,24 +215,24 @@ class CreateAccount : AppCompatActivity() {
         confirmPasswordInput.addTextChangedListener(watcher)
     }
 
-    private fun validateEmail(): Boolean {
-        val emailInput = findViewById<EditText>(R.id.email_input)
-        val email = emailInput.text.toString().trim()
-
-        return if (email.isEmpty()) {
-            emailInput.error = "Email is required"
-            Toast.makeText(applicationContext, "Email is required", Toast.LENGTH_SHORT).show()
-
-            false
-        } else if (!android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
-            emailInput.error = "Enter a valid email address"
-            Toast.makeText(applicationContext, "Enter a valid email address", Toast.LENGTH_SHORT).show()
-
-            false
-        } else {
-            emailInput.error = null // clear error
-            true
-        }
-    }
+//    private fun validateEmail(): Boolean {
+//        val emailInput = findViewById<EditText>(R.id.email_input)
+//        val email = emailInput.text.toString().trim()
+//
+//        return if (email.isEmpty()) {
+//            emailInput.error = "Email is required"
+//            Toast.makeText(applicationContext, "Email is required", Toast.LENGTH_SHORT).show()
+//
+//            false
+//        } else if (!android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+//            emailInput.error = "Enter a valid email address"
+//            Toast.makeText(applicationContext, "Enter a valid email address", Toast.LENGTH_SHORT).show()
+//
+//            false
+//        } else {
+//            emailInput.error = null // clear error
+//            true
+//        }
+//    }
 
 }

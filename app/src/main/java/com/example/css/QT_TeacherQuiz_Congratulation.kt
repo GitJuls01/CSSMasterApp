@@ -51,7 +51,7 @@ class QT_TeacherQuiz_Congratulation : AppCompatActivity() {
         //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
         val quizId = intent.getStringExtra("quiz_id") ?: ""
-        val email = intent.getStringExtra("email") ?: "" // pass current user email from previous activity
+        val lrn = intent.getStringExtra("lrn") ?: "" // pass current user email from previous activity
         val correctCount = intent.getIntExtra("correct_count", 0)
         val totalCount = intent.getIntExtra("total_count", 0)
         val percentage = intent.getIntExtra("percentage", 0)
@@ -88,7 +88,7 @@ class QT_TeacherQuiz_Congratulation : AppCompatActivity() {
                     // Loop to find participant and update score
                     for (i in participants.indices) {
                         val participant = participants[i]
-                        if (participant["email"] == email) {
+                        if (participant["LRN"] == lrn) {
                             val updatedParticipant = participant.toMutableMap()
                             updatedParticipant["score"] = correctCount  // Replace with actual score variable
                             participants[i] = updatedParticipant
@@ -99,7 +99,7 @@ class QT_TeacherQuiz_Congratulation : AppCompatActivity() {
 
                     // If participant not in list, add them
                     if (!updated) {
-                        participants.add(mapOf("email" to email, "score" to correctCount))
+                        participants.add(mapOf("LRN" to lrn, "score" to correctCount))
                     }
 
                     // Write back updated participants list
