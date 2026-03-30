@@ -18,6 +18,9 @@
         android:theme="@style/Theme.CSS"
         tools:targetApi="31">
         <activity
+            android:name=".QTTeacherQuizThankYou"
+            android:exported="false" />
+        <activity
             android:name=".AdminStudentActivitiesDetails"
             android:exported="false" />
         <activity

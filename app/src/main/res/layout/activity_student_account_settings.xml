@@ -53,6 +53,26 @@
             android:textColor="@color/black"
             android:layout_marginTop="16dp"/>
 
+        <!-- LRN -->
+        <TextView
+            android:id="@+id/text_lrn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="LRN: "
+            android:textSize="18sp"
+            android:textColor="@color/black"
+            android:layout_marginTop="8dp"/>
+
+        <!-- Grade -->
+        <TextView
+            android:id="@+id/text_grade"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Grade: "
+            android:textSize="18sp"
+            android:textColor="@color/black"
+            android:layout_marginTop="8dp"/>
+
         <!-- Email -->
         <TextView
             android:id="@+id/text_email"
@@ -60,6 +80,7 @@
             android:layout_height="wrap_content"
             android:text="Email Address: "
             android:textSize="18sp"
+            android:visibility="gone"
             android:textColor="@color/black"
             android:layout_marginTop="8dp"/>
 

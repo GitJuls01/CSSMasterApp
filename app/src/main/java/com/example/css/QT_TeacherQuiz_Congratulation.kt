@@ -62,8 +62,8 @@ class QT_TeacherQuiz_Congratulation : AppCompatActivity() {
         percentageText.text = getString(R.string.quiz_percentage, percentage)
 
         val backButton = findViewById<ImageButton>(R.id.back_button)
-        val nextQuizBtn = findViewById<ImageButton>(R.id.btn_next)
-        val reviewAnswerBtn = findViewById<ImageButton>(R.id.btn_review)
+        val finishBtn = findViewById<ImageButton>(R.id.btn_finish)
+        val retakeQuizBtn = findViewById<ImageButton>(R.id.btn_retake)
 
         val results = intent.getSerializableExtra("question_results") as? ArrayList<QT_TeacherQuiz_MainGame.QuestionResult>
 
@@ -114,26 +114,28 @@ class QT_TeacherQuiz_Congratulation : AppCompatActivity() {
                 }
             }
 
-
-
-
-
         backButton.setOnClickListener {
             val intent = Intent(this, QT_TeacherQuiz::class.java)
             startActivity(intent)
             finish()
         }
-        nextQuizBtn.setOnClickListener {
-            val intent = Intent(this, QT_TeacherQuiz::class.java)
+        finishBtn.setOnClickListener {
+            val intent = Intent(this, QTTeacherQuizThankYou::class.java)
             startActivity(intent)
             finish()
+        }
+        retakeQuizBtn.setOnClickListener {
+//            val intent = Intent(this, ReviewAnswers::class.java)
+//            intent.putExtra("question_results", results)
+//            startActivity(intent)
+//            finish()
         }
 
-        reviewAnswerBtn.setOnClickListener {
-            val intent = Intent(this, ReviewAnswers::class.java)
-            intent.putExtra("question_results", results)
-            startActivity(intent)
-            finish()
-        }
+//        reviewAnswerBtn.setOnClickListener {
+//            val intent = Intent(this, ReviewAnswers::class.java)
+//            intent.putExtra("question_results", results)
+//            startActivity(intent)
+//            finish()
+//        }
     }
 }

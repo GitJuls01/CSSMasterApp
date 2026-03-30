@@ -6,7 +6,9 @@
     <string name="email_label">Email Address: %1$s</string>
     <string name="items_quiz">Items: %1$s</string>
     <string name="quiz_summary">You answered %1$d out of %2$d \n questions correctly!</string>
-    <string name="quiz_percentage">You score: %1$d%%</string>
+    <string name="quiz_percentage">Your score: %1$d%%</string>
+    <!--    <string name="quiz_attempt">1 attempt out of 5</string>-->
+    <!--    <string name="quiz_attempts_remaining">4 attempts remaining</string>-->
     <string name="quiz_hardware_score">%1$d/%2$d</string>
     <string name="user_rank">Rank: %1$d</string>
     <string name="user_not_ranked">Not Ranked</string>
