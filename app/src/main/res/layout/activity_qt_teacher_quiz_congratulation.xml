@@ -67,6 +67,15 @@
             android:text="Your score: 85%"
             android:textSize="18sp"
             android:textColor="@android:color/black"
+            android:layout_marginBottom="10dp" />
+
+        <TextView
+            android:id="@+id/attempt_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="1 attempt out of 5"
+            android:textSize="12sp"
+            android:textColor="@android:color/black"
             android:layout_marginBottom="30dp" />
 
         <TextView
@@ -89,32 +98,59 @@
 
         <!-- Review and Next buttons -->
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:gravity="center"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="15dp"
             android:layout_marginBottom="24dp"
-            android:layout_gravity="center_horizontal"
             android:layout_marginHorizontal="16dp">
 
-            <ImageButton
-                android:id="@+id/btn_review"
-                android:layout_width="wrap_content"
+            <!-- LEFT SIDE (Review + Text) -->
+            <LinearLayout
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="10dp"
-                android:background="@null"
-                android:src="@drawable/tq_review_answer_button"
-                tools:ignore="SpeakableTextPresentCheck" />
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:gravity="center_horizontal">
 
-            <ImageButton
-                android:id="@+id/btn_next"
-                android:layout_width="wrap_content"
+                <ImageButton
+                    android:id="@+id/btn_retake"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@null"
+                    android:src="@drawable/tq_retake_quiz_button"
+                    tools:ignore="SpeakableTextPresentCheck" />
+
+                <TextView
+                    android:id="@+id/attempts_remaining_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="4 attempts remaining"
+                    android:textSize="11sp"
+                    android:textColor="#625F5F"
+                    android:layout_marginTop="1dp"/>
+            </LinearLayout>
+
+            <!-- RIGHT SIDE (Next button only) -->
+            <LinearLayout
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:background="@null"
-                android:src="@drawable/tq_next_quiz_button"
-                tools:ignore="SpeakableTextPresentCheck" />
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:gravity="center_horizontal">
+
+                <ImageButton
+                    android:id="@+id/btn_finish"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@null"
+                    android:src="@drawable/tq_finish_button"
+                    tools:ignore="SpeakableTextPresentCheck" />
+            </LinearLayout>
+
         </LinearLayout>
+
+
     </LinearLayout>
 
 
