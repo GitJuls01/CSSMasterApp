@@ -104,36 +104,23 @@ class LoginPage : AppCompatActivity() {
                         val role = userDoc.getString("role")
                         val name = userDoc.getString("name")
                         val isApproved =  userDoc.getString("isApproved") ?: "false"
+                        val grade = userDoc.getString("grade")
 
-                        if (role == "teacher" && isApproved == "true") {
-                            val intent = Intent(this, TeacherDashboard::class.java)
-                            intent.putExtra("userId", userDoc.id)
-                            startActivity(intent)
-                            finish()
-                            Toast.makeText(this, "Login Successful", Toast.LENGTH_SHORT).show()
-                        }
-                        else if (role == "teacher" && isApproved == "") {
-                            Toast.makeText(this, "Your account is pending. Please wait for approval.", Toast.LENGTH_SHORT).show()
 
-                        }
-                        else if (role == "teacher" && isApproved == "false") {
-                            Toast.makeText(this, "Your account was rejected by Admin.", Toast.LENGTH_SHORT).show()
-
-                        }
-                        else if (role == "admin") {
-                            val intent = Intent(this, AdminHomePage::class.java)
-                            intent.putExtra("userId", userDoc.id)
-                            startActivity(intent)
-                            finish()
-                            Toast.makeText(this, "Login Successful", Toast.LENGTH_SHORT).show()
-                        }
-                        else {
+                        if (role == "student" && isApproved == "true") {
                             val intent = Intent(this, MainActivity::class.java)
                             intent.putExtra("openFragment", "studentDashboard")
                             intent.putExtra("userId", userDoc.id)
                             startActivity(intent)
                             finish()
                             Toast.makeText(this, "Login Successful", Toast.LENGTH_SHORT).show()
+                        }
+                        else if (role == "student" && isApproved == "") {
+                            Toast.makeText(this, "Your account is pending. Please wait for approval.", Toast.LENGTH_SHORT).show()
+
+                        }
+                        else {
+                            Toast.makeText(this, "Your account was rejected by Admin.", Toast.LENGTH_SHORT).show()
                         }
 
                         // Save session data using SharedPreferences
@@ -145,8 +132,7 @@ class LoginPage : AppCompatActivity() {
                             putString("LRN", lrn)
                             putString("userId", userDoc.id)
                             putString("isApproved", isApproved)
-
-
+                            putString("grade", grade)
 
                             apply()
                         }

@@ -33,7 +33,7 @@ class StudentDashboardFragment : Fragment() {
 
 
         // Load and display progress
-        fetchUserProgress()
+        fetchUserProgressAndTotalAttachments()
         // Set OnClickListener to navigate to ModuleHardware
         view.findViewById<ImageButton>(R.id.hardware_card).setOnClickListener {
             startActivity(Intent(requireContext(), ModuleHardware::class.java))
@@ -45,48 +45,88 @@ class StudentDashboardFragment : Fragment() {
         }
     }
 
-    private fun fetchUserProgress() {
+    private fun fetchUserProgressAndTotalAttachments() {
         val sharedPreferences = requireContext().getSharedPreferences("user_data", android.content.Context.MODE_PRIVATE)
         val userName = sharedPreferences.getString("name", "Default Name") ?: "Default Name"
 
-        firestore.collection("user_progress_hw")
-            .document(userName)
+        val firestore = FirebaseFirestore.getInstance()
+
+        // --- Hardware ---
+        firestore.collection("attachments_hardware")
             .get()
-            .addOnSuccessListener { document ->
-                if (document.exists()) {
-                    val q1 = document.getLong("1") ?: 0
-                    val q2 = document.getLong("2") ?: 0
-                    val q3 = document.getLong("3") ?: 0
-                    val q4 = document.getLong("4") ?: 0
-                    val q5 = document.getLong("5") ?: 0
-                    val q6 = document.getLong("6") ?: 0
+            .addOnSuccessListener { hwResult ->
+                val totalHw = hwResult.size() // total hardware PDFs
 
-                    val total = q1 + q2 + q3 + q4 + q5 + q6
-                    progressHardware.text = "Hardware: $total/6"
-                }
-            }
-            .addOnFailureListener {
+                firestore.collection("user_progress_hw")
+                    .document(userName)
+                    .get()
+                    .addOnSuccessListener { doc ->
+                        val completedHw = doc.data?.values?.sumOf { it as? Long ?: 0 } ?: 0
+
+                        progressHardware.text = "Hardware: $completedHw/$totalHw"
+                    }
             }
 
-        firestore.collection("user_progress_sw")
-            .document(userName)
+        // --- Software ---
+        firestore.collection("attachments_software")
             .get()
-            .addOnSuccessListener { document ->
-                if (document.exists()) {
-                    val q1 = document.getLong("1") ?: 0
-                    val q2 = document.getLong("2") ?: 0
-                    val q3 = document.getLong("3") ?: 0
-                    val q4 = document.getLong("4") ?: 0
-                    val q5 = document.getLong("5") ?: 0
-                    val q6 = document.getLong("6") ?: 0
+            .addOnSuccessListener { swResult ->
+                val totalSw = swResult.size() // total software PDFs
 
-                    val total = q1 + q2 + q3 + q4 + q5 + q6
-                    progressSoftware.text = "Software: $total/6"
+                firestore.collection("user_progress_sw")
+                    .document(userName)
+                    .get()
+                    .addOnSuccessListener { doc ->
+                        val completedSw = doc.data?.values
+                            ?.map { it as? Long ?: 0 }
+                            ?.sum() ?: 0
 
-                }
-            }
-            .addOnFailureListener {
+                        progressSoftware.text = "Software: $completedSw/$totalSw"
+                    }
             }
     }
+//    private fun fetchUserProgress() {
+//        val sharedPreferences = requireContext().getSharedPreferences("user_data", android.content.Context.MODE_PRIVATE)
+//        val userName = sharedPreferences.getString("name", "Default Name") ?: "Default Name"
+//
+//        firestore.collection("user_progress_hw")
+//            .document(userName)
+//            .get()
+//            .addOnSuccessListener { document ->
+//                if (document.exists()) {
+//                    val q1 = document.getLong("1") ?: 0
+//                    val q2 = document.getLong("2") ?: 0
+//                    val q3 = document.getLong("3") ?: 0
+//                    val q4 = document.getLong("4") ?: 0
+//                    val q5 = document.getLong("5") ?: 0
+//                    val q6 = document.getLong("6") ?: 0
+//
+//                    val total = q1 + q2 + q3 + q4 + q5 + q6
+//                    progressHardware.text = "Hardware: $total/6"
+//                }
+//            }
+//            .addOnFailureListener {
+//            }
+//
+//        firestore.collection("user_progress_sw")
+//            .document(userName)
+//            .get()
+//            .addOnSuccessListener { document ->
+//                if (document.exists()) {
+//                    val q1 = document.getLong("1") ?: 0
+//                    val q2 = document.getLong("2") ?: 0
+//                    val q3 = document.getLong("3") ?: 0
+//                    val q4 = document.getLong("4") ?: 0
+//                    val q5 = document.getLong("5") ?: 0
+//                    val q6 = document.getLong("6") ?: 0
+//
+//                    val total = q1 + q2 + q3 + q4 + q5 + q6
+//                    progressSoftware.text = "Software: $total/6"
+//
+//                }
+//            }
+//            .addOnFailureListener {
+//            }
+//    }
 }
 

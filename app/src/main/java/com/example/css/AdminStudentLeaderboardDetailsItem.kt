@@ -3,5 +3,6 @@ package com.example.css
 data class AdminStudentLeaderboardDetailsItem(
     val name: String,
     val score: Int,
-    val attempts: Int
+    val attempts: Int,
+    val rank: Int
 )

@@ -105,6 +105,9 @@ class LoginPageTeacher : AppCompatActivity() {
                         if (role == "teacher") {
                             val intent = Intent(this, AdminHomePage::class.java)
                             intent.putExtra("userId", userDoc.id)
+                            intent.putExtra("grade", grade)
+                            intent.putExtra("name", name)
+
                             startActivity(intent)
                             finish()
                             Toast.makeText(this, "Login Successful", Toast.LENGTH_SHORT).show()
