@@ -1,6 +1,7 @@
 package com.example.css
 
 import android.content.Intent
+import android.content.SharedPreferences
 import android.os.Bundle
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
@@ -8,8 +9,12 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import android.widget.FrameLayout
 import android.widget.ImageButton
+import android.widget.TextView
 
 class AdminHomePage : AppCompatActivity() {
+
+    private lateinit var sharedPreferences: SharedPreferences
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -26,6 +31,15 @@ class AdminHomePage : AppCompatActivity() {
         val cardQuiz = findViewById<FrameLayout>(R.id.card_quiz)
         val cardLeaderboard = findViewById<FrameLayout>(R.id.card_leaderboard)
         val settingsButton = findViewById<ImageButton>(R.id.setting_button)
+        val welcome =  findViewById<TextView>(R.id.tv_welcome)
+
+        // Access SharedPreferences
+        sharedPreferences = getSharedPreferences("user_data", MODE_PRIVATE)
+
+        val grade = sharedPreferences.getString("name", "Default Name")
+        val name = sharedPreferences.getString("grade", "Default Grade")
+
+        welcome.text = getString(R.string.admin_home_label, grade, name)
 
         settingsButton.setOnClickListener {
             val intent = Intent(this, TeacherAccountSettings::class.java)

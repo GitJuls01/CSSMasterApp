@@ -78,7 +78,6 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="12dp"
             android:textColor="@color/black"
-            android:text="Welcome Grade (number),\nTeacher (name)"
             android:textSize="16sp"
             android:textStyle="bold"/>
     </LinearLayout>

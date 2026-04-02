@@ -28,14 +28,19 @@ class StudentAccountSettings : Fragment() {
         sharedPreferences = requireActivity().getSharedPreferences("user_data", MODE_PRIVATE)
 
         val userName = sharedPreferences.getString("name", "Default Name") // Default name if not found
-        val userEmail = sharedPreferences.getString("email", "Default Email") // Default email if not found
+        val userLrn = sharedPreferences.getString("LRN", "Default LRN") // Default email if not found
+        val userGrade = sharedPreferences.getString("grade", "Default grade")
 
         // Display them in TextViews
         val nameTextView = view?.findViewById<TextView>(R.id.text_name)
-        val emailTextView = view?.findViewById<TextView>(R.id.text_email)
+        val lrnTextView = view?.findViewById<TextView>(R.id.text_lrn)
+        val gradeTextView = view?.findViewById<TextView>(R.id.text_grade)
+
 
         nameTextView?.text = getString(R.string.name_label, userName)
-        emailTextView?.text = getString(R.string.email_label, userEmail)
+        lrnTextView?.text = getString(R.string.lrn_label, userLrn)
+        gradeTextView?.text = getString(R.string.grade_label, userGrade)
+
 
 
         // Initialize backButton

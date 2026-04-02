@@ -21,6 +21,7 @@ class AdminStudentLeaderboard : AppCompatActivity() {
     private lateinit var sharedPreferences: SharedPreferences
     private lateinit var firestore: FirebaseFirestore
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -36,15 +37,8 @@ class AdminStudentLeaderboard : AppCompatActivity() {
         val userName = sharedPreferences.getString("name", "") ?: ""
         firestore = FirebaseFirestore.getInstance()
 
-        val topStudentContainer = findViewById<LinearLayout>(R.id.top_student_container)
         val backBtn = findViewById<ImageButton>(R.id.back_button)
         val settingBtn = findViewById<ImageButton>(R.id.setting_button)
-
-        // Set click listener
-        topStudentContainer.setOnClickListener {
-            val intent = Intent(this, AdminStudentLeaderboardDetails::class.java)
-            startActivity(intent)
-        }
 
         backBtn.setOnClickListener {
             val intent = Intent(this, AdminStudentDashboard::class.java)
@@ -70,19 +64,28 @@ class AdminStudentLeaderboard : AppCompatActivity() {
                 for (document in result) {
                     val quizId = document.id
                     val title = document.getString("title") ?: "Untitled Quiz"
-//                    val participantsList = document.get("participants") as? List<*> ?: emptyList<Any>()
-//                    val participantsCount = participantsList.size
+                    val participants = document.get("participants") as? List<Map<String, Any>> ?: emptyList()
+
+                    val topScorer = participants.maxByOrNull {
+                        (it["score"] as? Long ?: 0L).toInt()
+                    }
+
+                    val topName = topScorer?.get("name")?.toString() ?: "No participants"
+//                    val topScore = (topScorer?.get("score") as? Long)?.toInt() ?: 0
 
                     val quizView = layoutInflater.inflate(R.layout.admin_student_leaderboard_item, topStudentContainer, false)
 
                     val titleView = quizView.findViewById<TextView>(R.id.quiz_text)
-
                     titleView.text = title
 
-                    titleView.setOnClickListener {
+                    val topStudentView = quizView.findViewById<TextView>(R.id.top_student_name)
+                    topStudentView.text = getString(R.string.rank_label, topName)
+
+                    quizView.setOnClickListener {
                         //Toast.makeText(this, "Quiz deleted successfully", Toast.LENGTH_SHORT).show()
                         val intent = Intent(this, AdminStudentLeaderboardDetails::class.java)
                         intent.putExtra("quizId", quizId)
+                        intent.putExtra("quizTitle", title)
                         startActivity(intent)
 
                     }

@@ -4,6 +4,7 @@ import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.LinearLayout
@@ -80,14 +81,13 @@ class AdminApprovalPage : AppCompatActivity() {
     private fun fetchStudentGrade() {
         val emailContainer = findViewById<LinearLayout>(R.id.email_container)
         val userGrade = sharedPreferences.getString("grade", "") ?: ""
-        Toast.makeText(this@AdminApprovalPage, userGrade, Toast.LENGTH_SHORT).show()
+        //Toast.makeText(this@AdminApprovalPage, userGrade, Toast.LENGTH_SHORT).show()
 
         emailContainer.removeAllViews()
 
         firestore.collection("users")
             .whereEqualTo("grade", userGrade)   // match Grade
             .whereEqualTo("role", "student")    // match student
-            .whereEqualTo("isApproved", "")     // match not approved
             .get()
             .addOnSuccessListener { result ->
                 for (document in result) {
@@ -106,6 +106,15 @@ class AdminApprovalPage : AppCompatActivity() {
                     val adminRejectButton = teacherView.findViewById<ImageView>(R.id.admin_reject_button)
 
 
+                    if (isApproved == "") {
+                        adminApprovedButton.visibility = View.VISIBLE
+                        adminRejectButton.visibility = View.VISIBLE
+                    }
+                    else {
+                        adminApprovedButton.visibility = View.GONE
+                        adminRejectButton.visibility = View.GONE
+                    }
+
                     lrnText.text = lrn
 
                     viewDetailsButton.setOnClickListener {
@@ -115,7 +124,6 @@ class AdminApprovalPage : AppCompatActivity() {
                         intent.putExtra("Section", section)
                         intent.putExtra("isApproved", isApproved)
                         intent.putExtra("userId", userId)
-
 
                         startActivity(intent)
                     }
@@ -132,7 +140,8 @@ class AdminApprovalPage : AppCompatActivity() {
                                     .addOnSuccessListener {
 
                                         //sendEmailApproved(lrn)
-                                        emailContainer.removeAllViews()
+                                        adminApprovedButton.visibility = View.GONE
+                                        adminRejectButton.visibility = View.GONE
                                         Toast.makeText(this@AdminApprovalPage, "Student approved", Toast.LENGTH_SHORT).show()
                                     }
                             }
@@ -162,8 +171,8 @@ class AdminApprovalPage : AppCompatActivity() {
                                     .document(userId)
                                     .update("isApproved", "false")
                                     .addOnSuccessListener {
-//                                        adminApprovedButton.visibility = View.GONE
-//                                        adminRejectButton.visibility = View.GONE
+                                        adminApprovedButton.visibility = View.GONE
+                                        adminRejectButton.visibility = View.GONE
 //                                        adminApprovedButton.alpha = 0.5f
 //                                        adminApprovedButton.isEnabled = false
 //

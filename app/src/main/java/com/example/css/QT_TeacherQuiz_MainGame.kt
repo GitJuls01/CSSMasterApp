@@ -31,6 +31,7 @@ class QT_TeacherQuiz_MainGame : AppCompatActivity() {
     private val interval = 100L
     private var correctAnswers = 0
     private var quizId = ""
+    private var attempts: Int = 1
     private lateinit var sharedPreferences: SharedPreferences
 
     private val questionResults = mutableListOf<QuestionResult>()
@@ -84,6 +85,7 @@ class QT_TeacherQuiz_MainGame : AppCompatActivity() {
         timerProgressBar.max = 100
 
         quizId = intent.getStringExtra("quiz_id") ?: return
+        attempts = intent.getIntExtra("attempts", 1)
         val db = FirebaseFirestore.getInstance()
 
         db.collection("quizzes").document(quizId).get()
@@ -261,6 +263,8 @@ class QT_TeacherQuiz_MainGame : AppCompatActivity() {
                     intent.putExtra("total_count", questionList.size)
                     intent.putExtra("percentage", percentage)
                     intent.putExtra("question_results", ArrayList(questionResults))
+                    intent.putExtra("attempts", attempts )
+
                     startActivity(intent)
                     finish()
                 }
@@ -268,17 +272,6 @@ class QT_TeacherQuiz_MainGame : AppCompatActivity() {
                     Toast.makeText(this, "Failed to save quiz result", Toast.LENGTH_SHORT).show()
                     Log.e("QTQuiz", "Error writing quiz history", e)
                 }
-
-//            // Navigate to QT_TeacherQuiz_Congratulation
-//            val intent = Intent(this, QT_TeacherQuiz_Congratulation::class.java)
-//            intent.putExtra("correct_count", correctAnswers)
-//            intent.putExtra("total_count", questionList.size)
-//            val percentage = ((correctAnswers.toFloat() / questionList.size) * 100).toInt()
-//            intent.putExtra("percentage", percentage)
-//            startActivity(intent)
-//            finish()
-
-
         }
     }
 

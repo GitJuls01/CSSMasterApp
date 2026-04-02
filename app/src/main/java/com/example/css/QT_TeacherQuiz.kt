@@ -26,7 +26,7 @@ class QT_TeacherQuiz : AppCompatActivity() {
     private lateinit var quizListContainer: LinearLayout
     private var backPressedOnce = false
     private lateinit var sharedPreferences: SharedPreferences
-
+    private var attempts: Int = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -48,13 +48,6 @@ class QT_TeacherQuiz : AppCompatActivity() {
         sharedPreferences = getSharedPreferences("user_data", MODE_PRIVATE)
 
         fetchAndDisplayQuizzes()
-
-//        val backButton = findViewById<ImageButton>(R.id.back_button)
-//        backButton.setOnClickListener {
-//            val intent = Intent(this, QuizTime::class.java)
-//            startActivity(intent)
-//            finish()
-//        }
 
         val backButton = findViewById<ImageButton>(R.id.back_button)
         backButton.setOnClickListener {
@@ -128,10 +121,10 @@ class QT_TeacherQuiz : AppCompatActivity() {
                         descView.text = description
                         itemsView.text = getString(R.string.items_quiz, questionCount.toString())
 
-                            val alreadyTaken = participants.any { it["LRN"] == userLrn }
+                        val existing = participants.find { it["LRN"] == userLrn }
+                        attempts = (existing?.get("attempts") as? Long)?.toInt() ?: 0
 
-                        // Dim the button immediately if already participated
-                        if (alreadyTaken) {
+                        if (existing != null && attempts >= 5) {
                             takeButton.alpha = 0.5f
                         }
 
@@ -143,31 +136,46 @@ class QT_TeacherQuiz : AppCompatActivity() {
                             showTitleAndDescription(title, description )
                         }
 
-                        val participantData = mapOf(
-                            "name" to userName,
-                            "LRN" to userLrn,
-                            "score" to 0
-                        )
                         takeButton.setOnClickListener {
-                            // Check if user has already participated
-                            if (alreadyTaken) {
-                                Toast.makeText(this, "You already took this quiz: $title", Toast.LENGTH_SHORT).show()
-                            }  else {
-                                showCountdownDialog {
-                                    firestore.collection("quizzes").document(quizId)
-                                        .update(
+                            // Check if user has reached maximum attempts
+                            if (existing != null && attempts >= 5) {
+                                Toast.makeText(this, "$attempts out of 5 attempts", Toast.LENGTH_SHORT).show()
+                                return@setOnClickListener
+                            }
+
+                            showCountdownDialog {
+
+                                val quizRef = firestore.collection("quizzes").document(quizId)
+
+                                // Fetch participants to check if LRN exists
+                                quizRef.get().addOnSuccessListener { document ->
+
+                                    val participants = document.get("participants") as? List<Map<String, Any>> ?: emptyList()
+
+                                    // Only add if LRN not already in participants
+                                    val existing = participants.any { it["LRN"] == userLrn }
+
+                                    if (!existing) {
+                                        val participantData = mapOf(
+                                            "name" to userName,
+                                            "LRN" to userLrn,
+                                            "score" to 0,
+                                            "attempts" to 0,
+                                        )
+
+                                        quizRef.update(
                                             "participants",
                                             com.google.firebase.firestore.FieldValue.arrayUnion(participantData)
-                                        )
-                                        .addOnSuccessListener {
-                                            val intent =
-                                                Intent(this, QT_TeacherQuiz_MainGame::class.java)
-                                            intent.putExtra("quiz_id", quizId)
-                                            startActivity(intent)
-                                        }
-                                        .addOnFailureListener { e ->
+                                        ).addOnFailureListener { e ->
                                             Toast.makeText(this, "Failed to join quiz: ${e.message}", Toast.LENGTH_SHORT).show()
                                         }
+                                    }
+
+                                    // ALWAYS go to the game
+                                    val intent = Intent(this, QT_TeacherQuiz_MainGame::class.java)
+                                    intent.putExtra("quiz_id", quizId)
+                                    intent.putExtra("attempts", attempts + 1) // increment attempt
+                                    startActivity(intent)
                                 }
                             }
                         }
@@ -220,7 +228,4 @@ class QT_TeacherQuiz : AppCompatActivity() {
 
         dialog.show()
     }
-
-
-
 }

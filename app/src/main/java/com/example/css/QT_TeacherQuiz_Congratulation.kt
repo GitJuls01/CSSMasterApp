@@ -15,7 +15,6 @@ import com.google.firebase.firestore.FirebaseFirestore
 class QT_TeacherQuiz_Congratulation : AppCompatActivity() {
 
     private var backPressedOnce = false
-    private lateinit var firestore: FirebaseFirestore
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -55,6 +54,8 @@ class QT_TeacherQuiz_Congratulation : AppCompatActivity() {
         val correctCount = intent.getIntExtra("correct_count", 0)
         val totalCount = intent.getIntExtra("total_count", 0)
         val percentage = intent.getIntExtra("percentage", 0)
+        val attempts = intent.getIntExtra("attempts", 0)
+
 
         val summaryText = findViewById<TextView>(R.id.summary_text)
         val percentageText = findViewById<TextView>(R.id.score_text)
@@ -64,11 +65,25 @@ class QT_TeacherQuiz_Congratulation : AppCompatActivity() {
         val backButton = findViewById<ImageButton>(R.id.back_button)
         val finishBtn = findViewById<ImageButton>(R.id.btn_finish)
         val retakeQuizBtn = findViewById<ImageButton>(R.id.btn_retake)
+        val remainingAttempts = findViewById<TextView>(R.id.attempts_remaining_text)
+        val attemptsOutOf = findViewById<TextView>(R.id.attempt_text)
 
-        val results = intent.getSerializableExtra("question_results") as? ArrayList<QT_TeacherQuiz_MainGame.QuestionResult>
+        val attemptsRemaining = 5 - attempts
+        if (attemptsRemaining <= 1) {
+            remainingAttempts.text = getString(R.string.attempt_remaining, attemptsRemaining)
+        }
+        else {
+            remainingAttempts.text = getString(R.string.attempts_remaining, attemptsRemaining)
+        }
 
-//        Toast.makeText(this, ": ${quizId}", Toast.LENGTH_SHORT).show()
-//        Toast.makeText(this, ": ${email}", Toast.LENGTH_SHORT).show()
+        if (attempts > 1) {
+            attemptsOutOf.text = getString(R.string.attempts_out_of, attempts)
+        }
+        else {
+            attemptsOutOf.text = getString(R.string.attempt_out_of, attempts)
+        }
+
+        //val results = intent.getSerializableExtra("question_results") as? ArrayList<QT_TeacherQuiz_MainGame.QuestionResult>
 
         val db = FirebaseFirestore.getInstance()
 
@@ -83,23 +98,50 @@ class QT_TeacherQuiz_Congratulation : AppCompatActivity() {
                         ?: mutableListOf()
 
                     // Flag to track if participant exists
-                    var updated = false
+                    //var updated = false
 
                     // Loop to find participant and update score
+//                    for (i in participants.indices) {
+//                        val participant = participants[i]
+//                        if (participant["LRN"] == lrn) {
+//                            val updatedParticipant = participant.toMutableMap()
+//                            updatedParticipant["score"] = correctCount  // Replace with actual score variable
+//                            updatedParticipant["attempts"] = attempts
+//                            participants[i] = updatedParticipant
+//                            updated = true
+//                            break
+//                        }
+//                    }
+//
+//                    // If participant not in list, add them
+//                    if (updated) {
+//                        participants.add(mapOf("score" to correctCount, "attempts" to attempts))
+//                    }
+
+                    // Flag to track if participant exists
+                    var updated = false
+
                     for (i in participants.indices) {
                         val participant = participants[i]
                         if (participant["LRN"] == lrn) {
                             val updatedParticipant = participant.toMutableMap()
-                            updatedParticipant["score"] = correctCount  // Replace with actual score variable
+                            updatedParticipant["score"] = correctCount
+                            updatedParticipant["attempts"] = attempts
+
                             participants[i] = updatedParticipant
                             updated = true
                             break
                         }
                     }
 
-                    // If participant not in list, add them
+                    // If participant does NOT exist → add new one
                     if (!updated) {
-                        participants.add(mapOf("LRN" to lrn, "score" to correctCount))
+                        participants.add(mapOf(
+                                "LRN" to lrn,
+                                "score" to correctCount,
+                                "attempts" to attempts
+                            )
+                        )
                     }
 
                     // Write back updated participants list
@@ -125,10 +167,14 @@ class QT_TeacherQuiz_Congratulation : AppCompatActivity() {
             finish()
         }
         retakeQuizBtn.setOnClickListener {
-//            val intent = Intent(this, ReviewAnswers::class.java)
-//            intent.putExtra("question_results", results)
-//            startActivity(intent)
-//            finish()
+            if (attempts >= 5)
+                return@setOnClickListener
+            val intent = Intent(this, QT_TeacherQuiz_MainGame::class.java)
+            val newAttempts = attempts + 1
+            intent.putExtra("quiz_id", quizId)
+            intent.putExtra("attempts", newAttempts)
+            startActivity(intent)
+            finish()
         }
 
 //        reviewAnswerBtn.setOnClickListener {
