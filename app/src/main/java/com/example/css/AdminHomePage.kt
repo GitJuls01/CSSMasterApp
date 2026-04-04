@@ -30,6 +30,7 @@ class AdminHomePage : AppCompatActivity() {
         val cardApproval = findViewById<FrameLayout>(R.id.card_approval)
         val cardQuiz = findViewById<FrameLayout>(R.id.card_quiz)
         val cardLeaderboard = findViewById<FrameLayout>(R.id.card_leaderboard)
+        val cardUpload = findViewById<FrameLayout>(R.id.card_upload)
         val settingsButton = findViewById<ImageButton>(R.id.setting_button)
         val welcome =  findViewById<TextView>(R.id.tv_welcome)
 
@@ -37,9 +38,9 @@ class AdminHomePage : AppCompatActivity() {
         sharedPreferences = getSharedPreferences("user_data", MODE_PRIVATE)
 
         val grade = sharedPreferences.getString("name", "Default Name")
-        val name = sharedPreferences.getString("grade", "Default Grade")
+//        val name = sharedPreferences.getString("grade", "Default Grade")
 
-        welcome.text = getString(R.string.admin_home_label, grade, name)
+        welcome.text = getString(R.string.admin_home_label, grade)
 
         settingsButton.setOnClickListener {
             val intent = Intent(this, TeacherAccountSettings::class.java)
@@ -59,6 +60,11 @@ class AdminHomePage : AppCompatActivity() {
 
         cardLeaderboard.setOnClickListener {
             val intent = Intent(this, AdminStudentDashboard::class.java)
+            startActivity(intent)
+        }
+
+        cardUpload.setOnClickListener {
+            val intent = Intent(this, AdminUploadModule::class.java)
             startActivity(intent)
         }
     }

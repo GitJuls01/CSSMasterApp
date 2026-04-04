@@ -73,15 +73,15 @@
             android:background="@drawable/teacher_cq_tab_selected"
             android:textStyle="bold"/>
 
-        <TextView
-            android:id="@+id/tab_tf"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:padding="12dp"
-            android:text="True/False"
-            android:textColor="#A09CAB"/>
+<!--        <TextView-->
+<!--            android:id="@+id/tab_tf"-->
+<!--            android:layout_width="0dp"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_weight="1"-->
+<!--            android:gravity="center"-->
+<!--            android:padding="12dp"-->
+<!--            android:text="True/False"-->
+<!--            android:textColor="#A09CAB"/>-->
     </LinearLayout>
 
     <!-- ViewFlipper to switch content -->
