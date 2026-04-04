@@ -46,7 +46,7 @@
     <string name="section_label">Section: %1$s</string>
     <string name="quiz_label">Title: %1$s</string>
     <string name="rank_label">Rank 1: %1$s</string>
-    <string name="admin_home_label">Welcome %1$s,\nTeacher %2$s</string>
+    <string name="admin_home_label">Hi, %1$s Teacher!</string>
     <string name="grade_label">Grade: %1$s</string>
 
     <string name="attempt_out_of">%1$d attempt out of 5</string>
@@ -54,10 +54,6 @@
 
     <string name="attempts_remaining">%1$d attempts remaining</string>
     <string name="attempt_remaining">%1$d attempt remaining</string>
-
-
-
-
 
 
 </resources>

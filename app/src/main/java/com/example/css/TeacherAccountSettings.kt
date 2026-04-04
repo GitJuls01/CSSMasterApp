@@ -30,15 +30,15 @@ class TeacherAccountSettings : AppCompatActivity() {
         // Access SharedPreferences
         sharedPreferences = getSharedPreferences("user_data", MODE_PRIVATE)
 
-        val userName = sharedPreferences.getString("name", "Default Name")
+//        val userName = sharedPreferences.getString("name", "Default Name")
         val userEmail = sharedPreferences.getString("email", "Default Email")
         val backBtn = findViewById<ImageButton>(R.id.back_button)
 
         // Display them in TextViews
-        val nameTextView = findViewById<TextView>(R.id.text_name)
+//        val nameTextView = findViewById<TextView>(R.id.text_name)
         val emailTextView = findViewById<TextView>(R.id.text_email)
 
-        nameTextView.text = getString(R.string.name_label, userName)
+//        nameTextView.text = getString(R.string.name_label, userName)
         emailTextView.text = getString(R.string.email_label, userEmail)
 
         // Initialize logoutButton
