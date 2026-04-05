@@ -6,6 +6,7 @@ import android.net.Uri
 import android.os.Bundle
 import android.util.Base64
 import android.widget.Button
+import android.widget.FrameLayout
 import android.widget.ImageButton
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
@@ -34,6 +35,8 @@ class AdminUploadModule : AppCompatActivity() {
 
         val settingsButton = findViewById<ImageButton>(R.id.setting_button)
         val backButton = findViewById<ImageButton>(R.id.back_button)
+        val viewHardwareButton = findViewById<ImageButton>(R.id.btn_view_hardware)
+        val viewSoftwareButton = findViewById<ImageButton>(R.id.btn_view_software)
         val uploadPDFSoftware = findViewById<ImageButton>(R.id.btn_upload_software)
         val uploadPDFHardware = findViewById<ImageButton>(R.id.btn_upload_hardware)
 
@@ -44,6 +47,18 @@ class AdminUploadModule : AppCompatActivity() {
 
         backButton.setOnClickListener {
             val intent = Intent(this, AdminHomePage::class.java)
+            startActivity(intent)
+        }
+
+        viewHardwareButton.setOnClickListener {
+            val intent = Intent(this, AdminViewUploadedModule::class.java)
+            intent.putExtra("category", "hardware")
+            startActivity(intent)
+        }
+
+        viewSoftwareButton.setOnClickListener {
+            val intent = Intent(this, AdminViewUploadedModule::class.java)
+            intent.putExtra("category", "software")
             startActivity(intent)
         }
 

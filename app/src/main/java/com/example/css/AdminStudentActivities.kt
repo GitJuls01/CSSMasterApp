@@ -74,7 +74,7 @@ class AdminStudentActivities : AppCompatActivity() {
                     val studentName = document.getString("name") ?: "No Name"
 
                     val studentView = layoutInflater.inflate(R.layout.admin_student_activities_item, studentNameContainer, false)
-                    val viewDetails = studentView.findViewById<ImageView>(R.id.view_details)
+                    val deleteBtn = studentView.findViewById<ImageButton>(R.id.btn_delete_student_record)
 
                     // Example: assuming your layout has a TextView with id tvStudentName
                     val tvName = studentView.findViewById<TextView>(R.id.name_text)
@@ -86,11 +86,11 @@ class AdminStudentActivities : AppCompatActivity() {
                         intent.putExtra("name", studentName)
                         startActivity(intent)
                     }
-                    viewDetails.setOnClickListener {
-                        val intent = Intent(this, AdminStudentActivitiesDetails::class.java)
-                        intent.putExtra("grade", userGrade)
-                        intent.putExtra("name", studentName)
-                        startActivity(intent)
+                    deleteBtn.setOnClickListener {
+                        // stop click from propagating
+                        it.parent.requestDisallowInterceptTouchEvent(true)
+
+                        Toast.makeText(this, "Delete clicked for $studentName", Toast.LENGTH_SHORT).show()
                     }
 
                     // Add the view to the container
