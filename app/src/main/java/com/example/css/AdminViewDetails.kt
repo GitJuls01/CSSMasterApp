@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.View
 import android.widget.ImageButton
 import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
@@ -37,6 +38,7 @@ class AdminViewDetails : AppCompatActivity() {
         val sectionText = findViewById<TextView>(R.id.teacher_section)
         val approvedButton = findViewById<ImageView>(R.id.admin_approve_button)
         val rejectButton = findViewById<ImageView>(R.id.admin_reject_button)
+        val container = findViewById<LinearLayout>(R.id.container)
 
         val lrn = intent.getStringExtra("LRN") ?: "No LRN"
         val name = intent.getStringExtra("Name")
@@ -48,10 +50,10 @@ class AdminViewDetails : AppCompatActivity() {
         nameText.text = getString(R.string.name1_label, name)
         sectionText.text = getString(R.string.section_label, section)
 
-        approvedButton.visibility =
-            if (isApproved == "") View.VISIBLE else View.GONE
-        rejectButton.visibility =
-            if (isApproved == "") View.VISIBLE else View.GONE
+//        approvedButton.visibility =
+//            if (isApproved == "") View.VISIBLE else View.GONE
+//        rejectButton.visibility =
+//            if (isApproved == "") View.VISIBLE else View.GONE
 
 //        if (isApproved !== "") {
 //            approvedButton.alpha = 0.5f
@@ -80,8 +82,8 @@ class AdminViewDetails : AppCompatActivity() {
                             .document(userId)
                             .update("isApproved", "true")
                             .addOnSuccessListener {
-                                approvedButton.visibility = View.GONE
-                                rejectButton.visibility = View.GONE
+//                                approvedButton.visibility = View.GONE
+//                                rejectButton.visibility = View.GONE
 
 //                                approvedButton.alpha = 0.5f
 //                                approvedButton.isEnabled = false
@@ -90,6 +92,7 @@ class AdminViewDetails : AppCompatActivity() {
 //                                rejectButton.isEnabled = false
 
                                 //sendEmailApproved(email)
+                                container.visibility = View.GONE
                                 Toast.makeText(this@AdminViewDetails, "Student approved", Toast.LENGTH_SHORT).show()
                             }
                     }
@@ -121,8 +124,8 @@ class AdminViewDetails : AppCompatActivity() {
                             .document(userId)
                             .update("isApproved", "false")
                             .addOnSuccessListener {
-                                approvedButton.visibility = View.GONE
-                                rejectButton.visibility = View.GONE
+//                                approvedButton.visibility = View.GONE
+//                                rejectButton.visibility = View.GONE
 
 //                                approvedButton.alpha = 0.5f
 //                                approvedButton.isEnabled = false
@@ -131,6 +134,7 @@ class AdminViewDetails : AppCompatActivity() {
 //                                rejectButton.isEnabled = false
 
                                 //sendEmailReject(email)
+                                container.visibility = View.GONE
                                 Toast.makeText(this@AdminViewDetails, "Student rejected", Toast.LENGTH_SHORT).show()
                             }
                     }

@@ -88,6 +88,7 @@ class AdminApprovalPage : AppCompatActivity() {
         firestore.collection("users")
             .whereEqualTo("grade", userGrade)   // match Grade
             .whereEqualTo("role", "student")    // match student
+            .whereEqualTo("isApproved", "")     // match isApproved
             .get()
             .addOnSuccessListener { result ->
                 for (document in result) {
@@ -106,14 +107,14 @@ class AdminApprovalPage : AppCompatActivity() {
                     val adminRejectButton = teacherView.findViewById<ImageView>(R.id.admin_reject_button)
 
 
-                    if (isApproved == "") {
-                        adminApprovedButton.visibility = View.VISIBLE
-                        adminRejectButton.visibility = View.VISIBLE
-                    }
-                    else {
-                        adminApprovedButton.visibility = View.GONE
-                        adminRejectButton.visibility = View.GONE
-                    }
+//                    if (isApproved == "") {
+//                        adminApprovedButton.visibility = View.VISIBLE
+//                        adminRejectButton.visibility = View.VISIBLE
+//                    }
+//                    else {
+//                        adminApprovedButton.visibility = View.GONE
+//                        adminRejectButton.visibility = View.GONE
+//                    }
 
                     lrnText.text = lrn
 
@@ -131,7 +132,7 @@ class AdminApprovalPage : AppCompatActivity() {
                     adminApprovedButton.setOnClickListener {
                         val dialog = AlertDialog.Builder(this@AdminApprovalPage)
                             .setTitle("Confirm Approval")
-                            .setMessage("Are you sure you want to approve this student? $lrn")
+                            .setMessage("Are you sure you want to approve this student?")
                             .setCancelable(false)
                             .setPositiveButton("Yes") { _, _ ->
                                 firestore.collection("users")
@@ -140,8 +141,9 @@ class AdminApprovalPage : AppCompatActivity() {
                                     .addOnSuccessListener {
 
                                         //sendEmailApproved(lrn)
-                                        adminApprovedButton.visibility = View.GONE
-                                        adminRejectButton.visibility = View.GONE
+//                                        adminApprovedButton.visibility = View.GONE
+//                                        adminRejectButton.visibility = View.GONE
+                                        emailContainer.removeAllViews()
                                         Toast.makeText(this@AdminApprovalPage, "Student approved", Toast.LENGTH_SHORT).show()
                                     }
                             }
@@ -171,8 +173,8 @@ class AdminApprovalPage : AppCompatActivity() {
                                     .document(userId)
                                     .update("isApproved", "false")
                                     .addOnSuccessListener {
-                                        adminApprovedButton.visibility = View.GONE
-                                        adminRejectButton.visibility = View.GONE
+//                                        adminApprovedButton.visibility = View.GONE
+//                                        adminRejectButton.visibility = View.GONE
 //                                        adminApprovedButton.alpha = 0.5f
 //                                        adminApprovedButton.isEnabled = false
 //
@@ -180,7 +182,7 @@ class AdminApprovalPage : AppCompatActivity() {
 //                                        adminRejectButton.isEnabled = false
 
                                         //sendEmailReject(email)
-                                        emailContainer.removeAllViews()
+                                            emailContainer.removeAllViews()
                                         Toast.makeText(this@AdminApprovalPage, "Student rejected", Toast.LENGTH_SHORT).show()
                                     }
                             }
