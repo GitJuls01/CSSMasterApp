@@ -10,6 +10,7 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
@@ -55,10 +56,8 @@ class AdminStudentActivities : AppCompatActivity() {
 
     private fun fetchAllStudentByGrade(userGrade: String) {
         val studentNameContainer = findViewById<LinearLayout>(R.id.student_name_container)
+        studentNameContainer.removeAllViews()
 
-        studentNameContainer.removeAllViews() // Clear old data
-
-        // Fetch students from Firestore where grade matches
         firestore.collection("users")
             .whereEqualTo("grade", userGrade)
             .whereEqualTo("role", "student")
@@ -76,7 +75,6 @@ class AdminStudentActivities : AppCompatActivity() {
                     val studentView = layoutInflater.inflate(R.layout.admin_student_activities_item, studentNameContainer, false)
                     val deleteBtn = studentView.findViewById<ImageButton>(R.id.btn_delete_student_record)
 
-                    // Example: assuming your layout has a TextView with id tvStudentName
                     val tvName = studentView.findViewById<TextView>(R.id.name_text)
                     tvName.text = studentName
 
@@ -87,13 +85,36 @@ class AdminStudentActivities : AppCompatActivity() {
                         startActivity(intent)
                     }
                     deleteBtn.setOnClickListener {
-                        // stop click from propagating
-                        it.parent.requestDisallowInterceptTouchEvent(true)
 
-                        Toast.makeText(this, "Delete clicked for $studentName", Toast.LENGTH_SHORT).show()
+                        val dialog = AlertDialog.Builder(this)
+                            .setTitle("Delete Student")
+                            .setMessage("Are you sure you want to delete this student?")
+                            .setCancelable(false)
+                            .setPositiveButton("Yes") { _, _ ->
+
+                                firestore.collection("users")
+                                    .document(document.id)
+                                    .delete()
+                                    .addOnSuccessListener {
+                                        Toast.makeText(this, "Student deleted", Toast.LENGTH_SHORT).show()
+                                        (studentView.parent as? LinearLayout)?.removeView(studentView)
+                                    }
+
+                            }
+                            .setNegativeButton("No") { dialogInterface, _ ->
+                                dialogInterface.dismiss()
+                            }
+                            .create()
+
+                        dialog.setOnShowListener {
+                            val darkGreen = getColor(R.color.dark_green)
+                            dialog.getButton(AlertDialog.BUTTON_POSITIVE)?.setTextColor(darkGreen)
+                            dialog.getButton(AlertDialog.BUTTON_NEGATIVE)?.setTextColor(darkGreen)
+                        }
+
+                        dialog.show()
                     }
 
-                    // Add the view to the container
                     studentNameContainer.addView(studentView)
                 }
             }
